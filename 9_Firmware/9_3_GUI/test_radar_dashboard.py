@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Tests for AERIS-10 Radar Dashboard protocol parsing, command building,
+Tests for XPA-105 Radar Dashboard protocol parsing, command building,
 data recording, and acquisition logic.
 
 Run: python -m pytest test_radar_dashboard.py -v

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AERIS-10 UART Diagnostic Capture Tool
+XPA-105 UART Diagnostic Capture Tool
 
 Captures STM32 DIAG output from USART3 (115200 8N1) and writes to both
 the terminal and a timestamped log file. Designed for board-day bring-up.
@@ -266,7 +266,7 @@ def capture(port, baud, log_file, filter_subsys, errors_only, use_color):
     if log_file:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         flog = open(log_file, "w", encoding=ENCODING)
-        flog.write(f"# AERIS-10 UART capture — {datetime.datetime.now().isoformat()}\n")
+        flog.write(f"# XPA-105 UART capture — {datetime.datetime.now().isoformat()}\n")
         flog.write(f"# Port: {port}  Baud: {baud}\n")
         flog.write(f"# Host: {os.uname().nodename}\n\n")
         flog.flush()
@@ -320,7 +320,7 @@ def capture(port, baud, log_file, filter_subsys, errors_only, use_color):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="AERIS-10 UART Diagnostic Capture Tool",
+        description="XPA-105 UART Diagnostic Capture Tool",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__.split("Usage:")[0],
     )

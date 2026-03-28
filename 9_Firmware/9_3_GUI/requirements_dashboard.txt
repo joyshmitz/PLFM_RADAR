@@ -1,4 +1,4 @@
-# AERIS-10 Radar Dashboard dependencies
+# XPA-105 Radar Dashboard dependencies
 # Install: pip install -r requirements_dashboard.txt
 
 numpy>=1.24

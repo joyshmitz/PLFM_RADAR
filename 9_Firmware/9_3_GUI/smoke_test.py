@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AERIS-10 Board Bring-Up Smoke Test — Host-Side Script
+XPA-105 Board Bring-Up Smoke Test — Host-Side Script
 ======================================================
 Sends opcode 0x30 to trigger the FPGA self-test, then reads back
 the results via opcode 0x31. Decodes per-subsystem PASS/FAIL and
@@ -78,7 +78,7 @@ class SmokeTest:
         Returns True if all tests pass, False otherwise.
         """
         log.info("=" * 60)
-        log.info("  AERIS-10 Board Bring-Up Smoke Test")
+        log.info("  XPA-105 Board Bring-Up Smoke Test")
         log.info("=" * 60)
         log.info("")
 
@@ -203,7 +203,7 @@ class SmokeTest:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="AERIS-10 Board Smoke Test")
+    parser = argparse.ArgumentParser(description="XPA-105 Board Smoke Test")
     parser.add_argument("--live", action="store_true",
                         help="Use real FT601 hardware (default: mock)")
     parser.add_argument("--device", type=int, default=0,

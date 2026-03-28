@@ -1,4 +1,4 @@
-# AERIS-10: Open Source Pulse Linear Frequency Modulated Phased Array Radar
+# XPA-105: Open Source Pulse Linear Frequency Modulated Phased Array Radar
 
 [![Hardware: CERN-OHL-P](https://img.shields.io/badge/Hardware-CERN--OHL--P-blue.svg)](https://ohwr.org/cern_ohl_p_v2.txt)
 [![Software: MIT](https://img.shields.io/badge/Software-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -6,23 +6,23 @@
 [![Frequency: 10.5GHz](https://img.shields.io/badge/Frequency-10.5GHz-blue)](https://github.com/NawfalMotii79/PLFM_RADAR))
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/NawfalMotii79/PLFM_RADAR/pulls)
 
-![AERIS-10 Radar System](8_Utils/3fb1dabf-2c6d-4b5d-b471-48bc461ce914.jpg)
+![XPA-105 Radar System](8_Utils/3fb1dabf-2c6d-4b5d-b471-48bc461ce914.jpg)
 
 
-AERIS-10 is an open-source, low-cost 10.5 GHz phased array radar system featuring Pulse Linear Frequency Modulated (LFM) modulation. Available in two versions (3km and 20km range), it's designed for researchers, drone developers, and serious SDR enthusiasts who want to explore and experiment with phased array radar technology.
+XPA-105 is an open-source, low-cost 10.5 GHz phased array radar system featuring Pulse Linear Frequency Modulated (LFM) modulation. The current family is structured around two array configurations, `8x16` and `32x16`, for teams experimenting with phased array radar technology and preparing more product-oriented derivatives.
 
-![AERIS-10 Radar System](8_Utils/Antenna_Array.jpg)
+![XPA-105 Radar System](8_Utils/Antenna_Array.jpg)
 
 ## 📡 Overview
 
-The AERIS-10 project aims to democratize radar technology by providing a fully open-source, modular, and hackable radar system. Whether you're a university researcher, a drone startup, or an advanced maker, AERIS-10 offers a platform for experimenting with beamforming, pulse compression, Doppler processing, and target tracking.
+The XPA-105 project family aims to provide a modular phased-array radar baseline that can be studied, reworked, and extended into more product-oriented systems. Whether you're a university researcher, a drone startup, or an advanced maker, XPA-105 offers a platform for experimenting with beamforming, pulse compression, Doppler processing, and target tracking.
 
 ## 🔬 Key Features
 
 - **Open Source Hardware & Software** - Complete schematics, PCB layouts, firmware, and software available
 - **Dual Version Availability**:
-  - **AERIS-10N (Nexus)**: 3km range with 8x16 patch antenna array
-  - **AERIS-10E (Extended)**: 20km range with 32x16 dielectric-filled slotted waveguide array
+  - **XPA-105 8x16**: 3km-class configuration with 8x16 patch antenna array
+  - **XPA-105 32x16**: 20km-class configuration with 32x16 dielectric-filled slotted waveguide array
 - **Full Electronic Beam Steering** - ±45° electronic steering in elevation and azimuth
 - **Advanced Signal Processing** - On-board FPGA handles pulse compression, Doppler FFT, MTI, and CFAR
 - **Python GUI** - User-friendly interface with map integration
@@ -31,11 +31,11 @@ The AERIS-10 project aims to democratize radar technology by providing a fully o
 
 ## 🏗️ System Architecture
 
-![AERIS-10 Radar System](8_Utils/RADAR_V6_V2.png)
+![XPA-105 Radar System](8_Utils/RADAR_V6_V2.png)
 
 ### Hardware Components
 
-The AERIS-10 main sub-systems are:
+The XPA-105 main sub-systems are:
 
 - **Power Management Board** - Supplies all necessary voltage levels to the electronics components with proper filtering and sequencing (sequencing ensured by the microcontroller)
 
@@ -77,11 +77,11 @@ The AERIS-10 main sub-systems are:
       - 8x ADS7830 Temperature Sensors for cooling fan control
       - RF switches
 
-- **16x Power Amplifier Boards** - Used only for AERIS-10E version, featuring 10Watt QPA2962 GaN amplifier for extended range
+- **16x Power Amplifier Boards** - Used only for the XPA-105 32x16 configuration, featuring 10Watt QPA2962 GaN amplifier for extended range
 
 - **Antenna Arrays**:
-  - **AERIS-10N (Nexus)** - 8x16 patch antenna array
-  - **AERIS-10X (Extended)** - 32x16 dielectric-filled slotted waveguide antenna array
+  - **XPA-105 8x16** - 8x16 patch antenna array
+  - **XPA-105 32x16** - 32x16 dielectric-filled slotted waveguide antenna array
 
 - **Miscellaneous Components**:
   - Slip-Ring
@@ -112,11 +112,11 @@ The AERIS-10 main sub-systems are:
    - Map integration
    - Radar control interface
 
-![AERIS-10 Radar System](9_Firmware/9_3_GUI/GUI_V6.gif)
+![XPA-105 Radar System](9_Firmware/9_3_GUI/GUI_V6.gif)
 
 ## 📊 Technical Specifications
 
-| Parameter | AERIS-10N (Nexus) | AERIS-10X (Extended) |
+| Parameter | XPA-105 8x16 | XPA-105 32x16 |
 |-----------|-------------------|----------------------|
 | **Frequency** | 10.5 GHz | 10.5 GHz |
 | **Max Range** | 3 km | 20 km |
@@ -133,7 +133,7 @@ The AERIS-10 main sub-systems are:
 To keep the repository root clean and make artifacts easy to find, place generated files in the following locations:
 
 - **Published reports (tracked, GitHub Pages):** `docs/`
-  - Example: `docs/AERIS_Simulation_Report_v2.pdf`
+  - Example: `docs/XPA-105_Simulation_Report_v2_ua.pdf`
 - **Simulation-generated outputs (local, gitignored):** `5_Simulations/generated/`
   - Plots, scenario outputs, temporary analysis directories
 - **FPGA/Vivado generated artifacts (local, gitignored):** `9_Firmware/9_2_FPGA/reports/`
@@ -206,4 +206,4 @@ For collaboration, licensing, or business inquiries:
 📧 nawfal.motii.33 [at] gmail [dot] com
 
 ## SPONSORS
-![AERIS-10 Radar System](8_Utils/PCBWAY.jpg)
+![XPA-105 Radar System](8_Utils/PCBWAY.jpg)

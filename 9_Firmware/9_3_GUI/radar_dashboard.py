@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-AERIS-10 Radar Dashboard — Board Bring-Up Edition
+XPA-105 Radar Dashboard — Board Bring-Up Edition
 ===================================================
-Real-time visualization and control for the AERIS-10 phased-array radar
+Real-time visualization and control for the XPA-105 phased-array radar
 via FT601 USB 3.0 interface.
 
 Features:
@@ -94,7 +94,7 @@ class RadarDashboard:
         self.conn = connection
         self.recorder = recorder
 
-        self.root.title("AERIS-10 Radar Dashboard — Bring-Up Edition")
+        self.root.title("XPA-105 Radar Dashboard — Bring-Up Edition")
         self.root.geometry("1600x950")
         self.root.configure(bg=BG)
 
@@ -567,7 +567,7 @@ class _TextHandler(logging.Handler):
 # ============================================================================
 
 def main():
-    parser = argparse.ArgumentParser(description="AERIS-10 Radar Dashboard")
+    parser = argparse.ArgumentParser(description="XPA-105 Radar Dashboard")
     parser.add_argument("--live", action="store_true",
                         help="Use real FT601 hardware (default: mock mode)")
     parser.add_argument("--replay", type=str, metavar="NPY_DIR",

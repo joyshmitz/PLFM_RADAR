@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AERIS-10 Radar Protocol Layer
+XPA-105 Radar Protocol Layer
 ===============================
 Pure-logic module for FT601 packet parsing and command building.
 No GUI dependencies — safe to import from tests and headless scripts.
@@ -831,7 +831,7 @@ class DataRecorder:
             return
         try:
             self._file = h5py.File(filepath, "w")
-            self._file.attrs["creator"] = "AERIS-10 Radar Dashboard"
+            self._file.attrs["creator"] = "XPA-105 Radar Dashboard"
             self._file.attrs["start_time"] = time.time()
             self._file.attrs["range_bins"] = NUM_RANGE_BINS
             self._file.attrs["doppler_bins"] = NUM_DOPPLER_BINS
