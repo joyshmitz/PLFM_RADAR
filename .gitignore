@@ -45,8 +45,8 @@ __pycache__/
 
 # Local simulation workspaces and generated outputs
 5_Simulations/generated/
-5_Simulations/aeris10_antenna_sim.py
-5_Simulations/aeris10_radar_sim.py
+5_Simulations/xpa105_antenna_sim.py
+5_Simulations/xpa105_radar_sim.py
 
 # Local FPGA report dumps and scratch constraints
 9_Firmware/9_2_FPGA/reports/

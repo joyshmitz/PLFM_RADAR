@@ -131,9 +131,6 @@ def resolve_magick_font() -> str | None:
 def brand_text(text: str) -> str:
     replacements = [
         ("XPA-105 Radar Systems", PRODUCT_FAMILY_FOOTER),
-        ("XPA-105 32x16", PRODUCT_VARIANT_3216),
-        ("XPA-105 8x16", PRODUCT_VARIANT_816),
-        ("XPA-105", PRODUCT_FAMILY),
     ]
     for old, new in replacements:
         text = text.replace(old, new)
@@ -840,7 +837,7 @@ def build_pages(project_root: Path, image_dir: Path) -> list[Page]:
         page.cursor = page.text(LEFT, page.cursor, CONTENT_W, body, 9.15) + 14
     footer_text = (
         "Звіт сформовано в межах XPA-105 Phase 0 - програмне моделювання та валідація\n"
-        "Моделювання OpenEMS FDTD на Apple Silicon M-series, macOS 15.x | Скрипт: aeris10_antenna_sim.py\n"
+        "Моделювання OpenEMS FDTD на Apple Silicon M-series, macOS 15.x | Джерело: legacy antenna simulation workflow\n"
         f"{repo_provenance_text(project_root)}"
     )
     page.footer(footer_text)

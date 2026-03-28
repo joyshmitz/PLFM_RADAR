@@ -17,7 +17,7 @@ variants:
       - pdftotext
       - manual normalization
     figure_seed:
-      - "tmp/pdfs full simulation extraction outputs"
+      - tmp/pdfs/xpa105_sim_full_images/img-*.png
       - tmp/pdfs/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1
   ua:
@@ -31,6 +31,6 @@ variants:
       - tmp/pdfs/build_xpa105_simulation_report_ua.py
       - manual normalization
     figure_seed:
-      - "tmp/pdfs full simulation extraction outputs"
+      - tmp/pdfs/xpa105_sim_full_images/img-*.png
       - tmp/pdfs/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1

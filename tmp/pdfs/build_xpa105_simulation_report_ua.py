@@ -158,9 +158,6 @@ def build_styles():
 def p(text: str, style: ParagraphStyle) -> Paragraph:
     replacements = [
         ("XPA-105 Radar Systems", PRODUCT_FAMILY_FOOTER),
-        ("XPA-105 32x16", PRODUCT_VARIANT_3216),
-        ("XPA-105 8x16", PRODUCT_VARIANT_816),
-        ("XPA-105", PRODUCT_FAMILY),
     ]
     for old, new in replacements:
         text = text.replace(old, new)
@@ -262,7 +259,7 @@ def build_story(style_map):
         ),
         Spacer(1, 1.9 * inch),
         p("XPA-105 Radar Systems | Березень 2026 | Версія 1.0", style_map["cover_scope"]),
-        p("Simulation code: aeris10_radar_sim.py | Based on github.com/NawfalMotii79/PLFM_RADAR", style_map["cover_scope"]),
+        p("Simulation lineage: legacy radar simulation workflow | Based on github.com/NawfalMotii79/PLFM_RADAR", style_map["cover_scope"]),
         PageBreak(),
     ]
 
@@ -688,7 +685,7 @@ def build_story(style_map):
         ),
         Spacer(1, 0.18 * inch),
         p(
-            "XPA-105 Radar Systems | Технічний звіт про моделювання | Березень 2026 | Усі параметри взято з github.com/NawfalMotii79/PLFM_RADAR (MIT License)\nSimulation code: aeris10_radar_sim.py | PDF generator: generate_sim_report_pdf.py | Environment: Python 3.14 + NumPy + Matplotlib + ReportLab",
+            "XPA-105 Radar Systems | Технічний звіт про моделювання | Березень 2026 | Усі параметри взято з github.com/NawfalMotii79/PLFM_RADAR (MIT License)\nSimulation lineage: legacy radar simulation workflow | PDF generator: generate_sim_report_pdf.py | Environment: Python 3.14 + NumPy + Matplotlib + ReportLab",
             style_map["caption"],
         ),
     ]

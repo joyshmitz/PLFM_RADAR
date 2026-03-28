@@ -51,9 +51,6 @@ def to_color(value: str):
 def brand_text(text: str) -> str:
     replacements = [
         ("XPA-105 Radar Systems", PRODUCT_FAMILY_FOOTER),
-        ("XPA-105 32x16", PRODUCT_VARIANT_3216),
-        ("XPA-105 8x16", PRODUCT_VARIANT_816),
-        ("XPA-105", PRODUCT_FAMILY),
     ]
     for old, new in replacements:
         text = text.replace(old, new)

@@ -5,7 +5,7 @@
 set script_dir [file dirname [file normalize [info script]]]
 set project_root [file normalize [file join $script_dir ".."]]
 
-set project_name "aeris10_te0713_umft601x_dev"
+set project_name "xpa105_te0713_umft601x_dev"
 set build_dir [file join $project_root "vivado_te0713_umft601x_dev"]
 set reports_dir [file join $build_dir "reports"]
 

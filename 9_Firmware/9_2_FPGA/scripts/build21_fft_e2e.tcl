@@ -43,7 +43,7 @@
 # 0. Configuration
 # ==============================================================================
 
-set project_name    "aeris10_radar"
+set project_name    "xpa105_radar"
 set project_dir     "/home/jason-stone/PLFM_RADAR_work/vivado_project"
 set rtl_dir         "/home/jason-stone/PLFM_RADAR_work/PLFM_RADAR/9_Firmware/9_2_FPGA"
 set top_module      "radar_system_top"
@@ -218,7 +218,7 @@ set bit_elapsed [expr {[clock seconds] - $bit_start}]
 puts "  Bitstream time: ${bit_elapsed}s"
 
 # Copy bitstream to known location
-set bit_src "${project_dir}/aeris10_radar.runs/impl_1/${top_module}.bit"
+set bit_src "${project_dir}/xpa105_radar.runs/impl_1/${top_module}.bit"
 if {[file exists $bit_src]} {
     file copy -force $bit_src "${bitstream_dir}/${top_module}_${build_tag}.bit"
     puts "  Bitstream: ${bitstream_dir}/${top_module}_${build_tag}.bit"

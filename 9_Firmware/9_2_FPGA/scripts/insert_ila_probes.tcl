@@ -33,9 +33,9 @@
 # ==============================================================================
 
 set project_base   "/home/jason-stone/PLFM_RADAR_work/vivado_project"
-set synth_dcp      "${project_base}/aeris10_radar.runs/synth_1/radar_system_top.dcp"
+set synth_dcp      "${project_base}/xpa105_radar.runs/synth_1/radar_system_top.dcp"
 set synth_xdc      "${project_base}/synth_only.xdc"
-set output_dir     "${project_base}/aeris10_radar.runs/impl_ila"
+set output_dir     "${project_base}/xpa105_radar.runs/impl_ila"
 set top_module     "radar_system_top"
 set part           "xc7a200tfbg484-2"
 

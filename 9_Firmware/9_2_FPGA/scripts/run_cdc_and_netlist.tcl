@@ -9,7 +9,7 @@ set project_dir "/home/jason-stone/PLFM_RADAR_work/vivado_project"
 set report_dir  "${project_dir}/reports_impl"
 
 # Open the routed checkpoint
-open_checkpoint ${project_dir}/aeris10_radar.runs/impl_1/radar_system_top_routed.dcp
+open_checkpoint ${project_dir}/xpa105_radar.runs/impl_1/radar_system_top_routed.dcp
 
 # ============================================================================
 # 1. report_cdc — identify all CDC crossings and the TIMING-9 source
@@ -23,12 +23,12 @@ report_cdc -details -file ${report_dir}/cdc_report.txt
 puts "INFO: Writing post-synthesis functional sim netlist..."
 
 # Post-synthesis (from synth checkpoint) — simpler, no routing delays
-open_checkpoint ${project_dir}/aeris10_radar.runs/synth_1/radar_system_top.dcp
+open_checkpoint ${project_dir}/xpa105_radar.runs/synth_1/radar_system_top.dcp
 write_verilog -force -mode funcsim \
     ${project_dir}/sim/post_synth_funcsim.v
 
 # Also write SDF for timing sim (from routed checkpoint)
-open_checkpoint ${project_dir}/aeris10_radar.runs/impl_1/radar_system_top_routed.dcp
+open_checkpoint ${project_dir}/xpa105_radar.runs/impl_1/radar_system_top_routed.dcp
 write_verilog -force -mode timesim \
     ${project_dir}/sim/post_impl_timesim.v
 write_sdf -force \
