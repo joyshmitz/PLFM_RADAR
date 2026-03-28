@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: cdc_single_bit
-// AERIS-10 Radar FPGA — CDC Single-Bit Synchronizer
+// XPA-105 Radar FPGA — CDC Single-Bit Synchronizer
 // Target: SymbiYosys with smtbmc/z3
 // ============================================================================
 module fv_cdc_single_bit;

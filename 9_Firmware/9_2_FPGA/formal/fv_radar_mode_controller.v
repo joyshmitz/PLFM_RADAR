@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: radar_mode_controller
-// AERIS-10 Radar FPGA — 7-state beam scan FSM
+// XPA-105 Radar FPGA — 7-state beam scan FSM
 // Target: SymbiYosys with smtbmc/z3
 //
 // Single-clock design: clk is an input wire, async2sync handles async reset.

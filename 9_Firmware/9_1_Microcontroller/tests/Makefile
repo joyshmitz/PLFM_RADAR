@@ -1,5 +1,5 @@
 ################################################################################
-# Makefile -- MCU firmware unit test harness for AERIS-10
+# Makefile -- MCU firmware unit test harness for XPA-105
 #
 # Builds and runs host-side (macOS) tests for all discovered firmware bugs.
 # Uses mock HAL + spy/recording pattern to test real firmware code without

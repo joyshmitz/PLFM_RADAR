@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-golden_reference.py — AERIS-10 FPGA bit-accurate golden reference model
+golden_reference.py — XPA-105 FPGA bit-accurate golden reference model
 
 Uses ADI CN0566 Phaser radar data (10.525 GHz X-band FMCW) to validate
 the FPGA signal processing pipeline stage by stage:
@@ -104,9 +104,9 @@ ADI_RAMP_TIME = 300e-6          # 300 us
 ADI_NUM_CHIRPS = 256
 ADI_SAMPLES_PER_CHIRP = 1079
 
-# AERIS-10 parameters
-AERIS_FS = 400e6                 # 400 MHz ADC clock
-AERIS_IF = 120e6                 # 120 MHz IF
+# XPA-105 parameters
+XPA105_FS = 400e6                 # 400 MHz ADC clock
+XPA105_IF = 120e6                 # 120 MHz IF
 
 
 # ===========================================================================
@@ -144,10 +144,10 @@ def load_and_quantize_adi_data(data_path, config_path, frame_idx=0):
     """
     Load ADI Phaser radar data and requantize to 8-bit unsigned ADC format.
     
-    The ADI data is complex IQ at baseband. AERIS-10 has a real 8-bit ADC
+    The ADI data is complex IQ at baseband. XPA-105 has a real 8-bit ADC
     with a 120 MHz IF. We need to:
     1. Take one frame of 256 chirps x 1079 samples
-    2. Use only 32 chirps (matching AERIS-10 CHIRPS_PER_FRAME)
+    2. Use only 32 chirps (matching XPA-105 CHIRPS_PER_FRAME)
     3. Truncate to 1024 samples (matching FFT_SIZE)
     4. Upconvert to 120 MHz IF (add I*cos - Q*sin) to create real signal
     5. Quantize to 8-bit unsigned (matching AD9484)
@@ -169,7 +169,7 @@ def load_and_quantize_adi_data(data_path, config_path, frame_idx=0):
     print(f"  Using frame {frame_idx}: {DOPPLER_CHIRPS} chirps x {FFT_SIZE} samples")
     
     # The ADI data is baseband complex IQ at 4 MSPS.
-    # AERIS-10 sees a real signal at 400 MSPS with 120 MHz IF.
+    # XPA-105 sees a real signal at 400 MSPS with 120 MHz IF.
     # To create a realistic ADC stimulus, we upconvert to IF:
     #   x_real(n) = Re{IQ(n)} * cos(2*pi*f_IF*n/Fs) - Im{IQ(n)} * sin(2*pi*f_IF*n/Fs)
     #
@@ -1163,7 +1163,7 @@ def compare_outputs(name, fixed_i, fixed_q, float_i, float_q):
 # Main
 # ===========================================================================
 def main():
-    parser = argparse.ArgumentParser(description="AERIS-10 FPGA golden reference model")
+    parser = argparse.ArgumentParser(description="XPA-105 FPGA golden reference model")
     parser.add_argument('--frame', type=int, default=0, help='Frame index to process')
     parser.add_argument('--plot', action='store_true', help='Show plots')
     parser.add_argument('--threshold', type=int, default=10000, help='Detection threshold (L1 magnitude)')
@@ -1179,7 +1179,7 @@ def main():
     output_dir = os.path.join(script_dir, "hex")
     
     print("=" * 72)
-    print("AERIS-10 FPGA Golden Reference Model")
+    print("XPA-105 FPGA Golden Reference Model")
     print("Using ADI CN0566 Phaser Radar Data (10.525 GHz X-band FMCW)")
     print("=" * 72)
     
@@ -1382,7 +1382,7 @@ def main():
     cfar_detections = np.argwhere(cfar_flags)
     cfar_det_list_file = os.path.join(output_dir, "fullchain_cfar_detections.txt")
     with open(cfar_det_list_file, 'w') as f:
-        f.write(f"# AERIS-10 Full-Chain CFAR Detection List\n")
+        f.write(f"# XPA-105 Full-Chain CFAR Detection List\n")
         f.write(f"# Chain: decim -> MTI -> Doppler -> DC notch(w={DC_NOTCH_WIDTH}) -> CA-CFAR\n")
         f.write(f"# CFAR: guard={CFAR_GUARD}, train={CFAR_TRAIN}, alpha=0x{CFAR_ALPHA:02X}, mode={CFAR_MODE}\n")
         f.write(f"# Format: range_bin doppler_bin magnitude threshold\n")
@@ -1404,7 +1404,7 @@ def main():
     # Save full-chain detection reference
     fc_det_file = os.path.join(output_dir, "fullchain_detections.txt")
     with open(fc_det_file, 'w') as f:
-        f.write(f"# AERIS-10 Full-Chain Golden Reference Detections\n")
+        f.write(f"# XPA-105 Full-Chain Golden Reference Detections\n")
         f.write(f"# Threshold: {args.threshold}\n")
         f.write(f"# Format: range_bin doppler_bin magnitude\n")
         for d in fc_detections:
@@ -1431,7 +1431,7 @@ def main():
     # Save detection list
     det_file = os.path.join(output_dir, "detections.txt")
     with open(det_file, 'w') as f:
-        f.write(f"# AERIS-10 Golden Reference Detections\n")
+        f.write(f"# XPA-105 Golden Reference Detections\n")
         f.write(f"# Threshold: {args.threshold}\n")
         f.write(f"# Format: range_bin doppler_bin magnitude\n")
         for d in detections:

@@ -2,7 +2,7 @@
 # RADAR SYSTEM FPGA CONSTRAINTS
 # ============================================================================
 # Device: XC7A50T-2FTG256I (FTG256 package)
-# Board:  AERIS-10 Phased Array Radar — Main Board
+# Board:  XPA-105 Phased Array Radar — Main Board
 # Source: Pin assignments extracted from Eagle schematic (RADAR_Main_Board.sch)
 #         FPGA = U42
 #

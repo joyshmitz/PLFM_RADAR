@@ -1,6 +1,6 @@
 /***************************************************************************//**
  *   @file   diag_log.h
- *   @brief  Bring-up diagnostic logging macros for AERIS-10 radar system.
+ *   @brief  Bring-up diagnostic logging macros for XPA-105 radar system.
  *
  *   Provides timestamped, subsystem-tagged diagnostic output over USART3.
  *   All output is observation-only instrumentation -- no behavioral changes.
@@ -17,7 +17,7 @@
  *     #define DIAG_DISABLE   -- suppress all DIAG output
  *     #define DIAG_VERBOSE   -- include file:line in every message
  *
- *   @author AERIS-10 Bring-up Instrumentation
+ *   @author XPA-105 Bring-up Instrumentation
  *   @date   2026
  *******************************************************************************/
 

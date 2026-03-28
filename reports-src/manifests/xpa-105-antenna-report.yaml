@@ -9,7 +9,7 @@ shared_assets_dir: reports-src/assets/xpa-105-antenna-report/common
 variants:
   en:
     markdown: reports-src/en/xpa-105-antenna-report.md
-    source_pdf: docs/AERIS_Antenna_Report.pdf
+    source_pdf: docs/XPA-105_Antenna_Report_en.pdf
     source_sha256: a23574276ef8b9f3c6c20f22c90002d0d576e949ebdf301cc4d28524b24300b1
     published_role: legacy-original
     assets_dir: reports-src/assets/xpa-105-antenna-report/en
@@ -34,13 +34,11 @@ variants:
     published_role: branded-translation
     assets_dir: reports-src/assets/xpa-105-antenna-report/ua
     text_seed:
-      - tmp/pdfs/aeris_ua/svg/page_02.svg
-      - tmp/pdfs/aeris_ua/svg/page_03.svg
-      - tmp/pdfs/aeris_ua/svg/page_04.svg
-      - manual normalization from build_aeris_report_ua.py
+      - "tmp/pdfs SVG page exports from the Ukrainian source run"
+      - manual normalization from tmp/pdfs/build_xpa105_report_ua.py
     figure_seed:
       - tmp/pdfs/extracted/img-*.png
-      - tmp/pdfs/aeris_ua/svg/page_*.svg
+      - "tmp/pdfs SVG page exports from the Ukrainian source run"
     normalized_assets:
       - reports-src/assets/xpa-105-antenna-report/common/s11-return-loss.png
       - reports-src/assets/xpa-105-antenna-report/common/input-impedance.png

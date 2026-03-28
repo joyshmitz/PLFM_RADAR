@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Co-simulation Comparison: RTL vs Python Model for AERIS-10 Doppler Processor.
+Co-simulation Comparison: RTL vs Python Model for XPA-105 Doppler Processor.
 
 Compares the RTL Doppler output (from tb_doppler_cosim.v) against the Python
 model golden reference (from gen_doppler_golden.py).

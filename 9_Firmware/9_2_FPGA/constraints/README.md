@@ -1,4 +1,4 @@
-# AERIS-10 FPGA Constraint Files
+# XPA-105 FPGA Constraint Files
 
 ## Four Targets
 
@@ -12,7 +12,7 @@
 ## Why Four Files
 
 The upstream prototype uses a smaller XC7A50T in an FTG256 package. The production
-AERIS-10 radar migrates to the XC7A200T for more logic, BRAM, and DSP resources.
+XPA-105 radar migrates to the XC7A200T for more logic, BRAM, and DSP resources.
 The two devices have completely different packages and pin names, so each needs its
 own constraint file.
 
@@ -88,7 +88,7 @@ read_xdc constraints/te0713_te0701_minimal.xdc
 | Target | Top module | Notes |
 |--------|------------|-------|
 | Upstream FTG256 | `radar_system_top` | Legacy board support |
-| Production FBG484 | `radar_system_top` | Main AERIS-10 board |
+| Production FBG484 | `radar_system_top` | Main XPA-105 board |
 | Trenz TE0712/TE0701 | `radar_system_top_te0712_dev` | Minimal bring-up wrapper while pinout/peripherals are migrated |
 | Trenz TE0713/TE0701 | `radar_system_top_te0713_dev` | Alternate SoM wrapper (TE0713 clock mapping) |
 

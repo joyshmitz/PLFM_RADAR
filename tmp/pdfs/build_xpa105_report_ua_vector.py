@@ -13,17 +13,17 @@ try:
     from reportlab.pdfgen import canvas
 except ModuleNotFoundError as exc:
     raise SystemExit(
-        "build_aeris_report_ua_vector.py requires reportlab. "
+        "build_xpa105_report_ua_vector.py requires reportlab. "
         "Install it with `uv pip install reportlab` or use the canonical "
-        "generator tmp/pdfs/build_aeris_report_ua.py instead."
+        "generator tmp/pdfs/build_xpa105_report_ua.py instead."
     ) from exc
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 # Experimental preview renderer only. The canonical published report generator is
-# tmp/pdfs/build_aeris_report_ua.py, which owns docs/XPA-105_Antenna_Report_ua.pdf.
-LEGACY_PATH = PROJECT_ROOT / "tmp" / "pdfs" / "build_aeris_report_ua.py"
-INPUT_PDF = PROJECT_ROOT / "docs" / "AERIS_Antenna_Report.pdf"
+# tmp/pdfs/build_xpa105_report_ua.py, which owns docs/XPA-105_Antenna_Report_ua.pdf.
+LEGACY_PATH = PROJECT_ROOT / "tmp" / "pdfs" / "build_xpa105_report_ua.py"
+INPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Antenna_Report_en.pdf"
 OUTPUT_PDF = PROJECT_ROOT / "tmp" / "pdfs" / "previews" / "XPA-105_Antenna_Report_ua_vector_preview.pdf"
 IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "extracted"
 PRODUCT_FAMILY = "XPA-105"
@@ -50,10 +50,10 @@ def to_color(value: str):
 
 def brand_text(text: str) -> str:
     replacements = [
-        ("AERIS Radar Systems", PRODUCT_FAMILY_FOOTER),
-        ("AERIS-10X", PRODUCT_VARIANT_3216),
-        ("AERIS-10N", PRODUCT_VARIANT_816),
-        ("AERIS-10", PRODUCT_FAMILY),
+        ("XPA-105 Radar Systems", PRODUCT_FAMILY_FOOTER),
+        ("XPA-105 32x16", PRODUCT_VARIANT_3216),
+        ("XPA-105 8x16", PRODUCT_VARIANT_816),
+        ("XPA-105", PRODUCT_FAMILY),
     ]
     for old, new in replacements:
         text = text.replace(old, new)
@@ -61,7 +61,7 @@ def brand_text(text: str) -> str:
 
 
 def load_legacy_module():
-    spec = importlib.util.spec_from_file_location("aeris_legacy", LEGACY_PATH)
+    spec = importlib.util.spec_from_file_location("xpa105_legacy", LEGACY_PATH)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Cannot load legacy script: {LEGACY_PATH}")
     module = importlib.util.module_from_spec(spec)

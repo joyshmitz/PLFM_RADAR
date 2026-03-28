@@ -2,12 +2,12 @@
 report_id: xpa-105-simulation-report-v2
 language: en
 status: normalized-markdown-v1
-source_pdf: docs/AERIS_Simulation_Report_v2.pdf
+source_pdf: docs/XPA-105_Simulation_Report_v2_en.pdf
 source_sha256: ae8ce4b16360ea5c627e2c3798e9c6d591ac27cfd3c2c5a04ca64f0c979fa63e
 assets_dir: reports-src/assets/xpa-105-simulation-report-v2/en
 shared_assets_dir: reports-src/assets/xpa-105-simulation-report-v2/common
-historical_aliases:
-  - AERIS-10
+product_variants:
+  - XPA-105
 ---
 
 # XPA-105 Simulation Report V2
@@ -17,8 +17,8 @@ historical_aliases:
 This is the normalized English Markdown source for the current-state FPGA and bring-up baseline report.
 
 - Product family now carried by this source: `XPA-105`
-- Legacy title preserved for traceability: `AERIS-10 Simulation Technical Report`
-- Original PDF input: [AERIS_Simulation_Report_v2.pdf](/Users/sd/projects/PLFM_RADAR/docs/AERIS_Simulation_Report_v2.pdf)
+- Active naming set: `XPA-105`
+- Original PDF input: [XPA-105_Simulation_Report_v2_en.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Simulation_Report_v2_en.pdf)
 - Shared curated figure: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-simulation-report-v2/common)
 
 The goal of this file is not byte-for-byte reproduction of the legacy PDF. The goal is to preserve the engineering baseline in a searchable, reviewable, and editable source form.
@@ -28,7 +28,7 @@ The goal of this file is not byte-for-byte reproduction of the legacy PDF. The g
 | Item | Value |
 | --- | --- |
 | Product family | XPA-105 |
-| Legacy title | AERIS-10 Simulation Technical Report |
+| Product title | XPA-105 Simulation Technical Report |
 | Report role | Current FPGA and bring-up baseline |
 | Scope | Post-timing-closure verification baseline, debug instrumentation status, and hardware bring-up readiness for XC7A200T deployment |
 | Legacy report date | 2026-03-18 |
@@ -115,6 +115,6 @@ This split-target architecture isolates board-specific pinout and clocking decis
 
 ## 7. Conclusion
 
-AERIS-10 has transitioned from simulation-centric readiness into a hardware-targeted baseline with timing closure, robust debug instrumentation, and reproducible bring-up workflows. Remaining uncertainty is now primarily physical-board execution risk, not unresolved architecture or verification gaps. This report should be treated as the current state reference replacing older simulation-only summaries.
+XPA-105 has transitioned from simulation-centric readiness into a hardware-targeted baseline with timing closure, robust debug instrumentation, and reproducible bring-up workflows. Remaining uncertainty is now primarily physical-board execution risk, not unresolved architecture or verification gaps. This report should be treated as the current state reference replacing older simulation-only summaries.
 
 Report classification: engineering baseline (current state).

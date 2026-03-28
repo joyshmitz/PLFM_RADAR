@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: cdc_handshake
-// AERIS-10 Radar FPGA — CDC Handshake (req/ack)
+// XPA-105 Radar FPGA — CDC Handshake (req/ack)
 // Target: SymbiYosys with smtbmc/z3
 //
 // This is the most critical CDC module. The properties verify protocol

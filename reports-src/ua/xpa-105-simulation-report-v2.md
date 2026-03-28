@@ -6,8 +6,8 @@ source_pdf: docs/XPA-105_Simulation_Report_v2_ua.pdf
 source_sha256: 25cdb1a74ab32940e640bcc1cdd6896468a5abab8c2c06272804f552e01738dd
 assets_dir: reports-src/assets/xpa-105-simulation-report-v2/ua
 shared_assets_dir: reports-src/assets/xpa-105-simulation-report-v2/common
-historical_aliases:
-  - AERIS-10
+product_variants:
+  - XPA-105
 ---
 
 # XPA-105 Звіт Про Моделювання V2
@@ -17,7 +17,7 @@ historical_aliases:
 Це нормалізована українська Markdown-версія звіту про поточну FPGA-базову лінію та готовність до пусконалагодження.
 
 - Поточне продуктове сімейство: `XPA-105`
-- Історичний заголовок для простежуваності: `AERIS-10 Simulation Technical Report`
+- Активний набір назв: `XPA-105`
 - Вихідний опублікований PDF: [XPA-105_Simulation_Report_v2_ua.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Simulation_Report_v2_ua.pdf)
 - Спільний керований рисунок: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-simulation-report-v2/common)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Co-simulation Comparison: RTL vs Python Model for AERIS-10 DDC Chain.
+Co-simulation Comparison: RTL vs Python Model for XPA-105 DDC Chain.
 
 Reads the ADC hex test vectors, runs them through the bit-accurate Python
 model (fpga_model.py), then compares the output against the RTL simulation

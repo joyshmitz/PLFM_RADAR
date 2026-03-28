@@ -6,9 +6,9 @@ source_pdf: docs/XPA-105_Antenna_Report_ua.pdf
 source_sha256: 19e34f752c35f11e7725477076af1f3e8fdd2fc1945b2fa660ca10c35a0dfd85
 assets_dir: reports-src/assets/xpa-105-antenna-report/ua
 shared_assets_dir: reports-src/assets/xpa-105-antenna-report/common
-historical_aliases:
-  - AERIS-10
-  - AERIS-10N
+product_variants:
+  - XPA-105
+  - XPA-105 8x16
 ---
 
 # XPA-105 Звіт Про Моделювання Антени
@@ -18,7 +18,7 @@ historical_aliases:
 Це нормалізована українська Markdown-версія антенного звіту.
 
 - Поточне продуктове сімейство: `XPA-105`
-- Історичні назви для простежуваності: `AERIS-10`, `AERIS-10N`
+- Активний набір назв: `XPA-105`, `XPA-105 8x16`
 - Вихідний опублікований PDF: [XPA-105_Antenna_Report_ua.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Antenna_Report_ua.pdf)
 - Спільні керовані графіки: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-antenna-report/common)
 
@@ -29,7 +29,7 @@ historical_aliases:
 | Пункт | Значення |
 | --- | --- |
 | Сімейство продукту | XPA-105 |
-| Історичний заголовок | AERIS-10 X-діапазонна фазована радарна решітка |
+| Назва продукту | XPA-105 X-діапазонна фазована радарна решітка |
 | Обсяг аналізу | Аналіз OpenEMS FDTD одного патч-елемента на 10.5 GHz |
 | Розв'язувач | OpenEMS v0.0.36 (FDTD) |
 | Платформа в історичному прогоні | macOS ARM64 |
@@ -90,7 +90,7 @@ historical_aliases:
 | Тип живлення | Щупове, lumped port | 50 Ohm при `y = 1.49 mm` від центру |
 | Земляна площина | 38.1 x 36.0 mm | Близько `lambda/2` запасу за межами патча |
 | Крок елементів | 14.285 mm | `lambda/2` на 10.5 GHz |
-| Конфігурація масиву | 8x16, 128 елементів | Історичний контекст AERIS-10N |
+| Конфігурація масиву | 8x16, 128 елементів | Контекст XPA-105 8x16 |
 
 ### 2.3 Помилка В `patch_antenna.py`
 

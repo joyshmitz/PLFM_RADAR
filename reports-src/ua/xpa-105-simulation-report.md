@@ -6,10 +6,10 @@ source_pdf: docs/XPA-105_Simulation_Report_ua.pdf
 source_sha256: 931a1685ef6cbd2daa86da5dc2408f6591e74edd89b576cf47c5d3f5d7f3d0f1
 assets_dir: reports-src/assets/xpa-105-simulation-report/ua
 shared_assets_dir: reports-src/assets/xpa-105-simulation-report/common
-historical_aliases:
-  - AERIS-10
-  - AERIS-10N
-  - AERIS-10X
+product_variants:
+  - XPA-105
+  - XPA-105 8x16
+  - XPA-105 32x16
 ---
 
 # XPA-105 Звіт Про Моделювання
@@ -19,7 +19,7 @@ historical_aliases:
 Це нормалізована українська Markdown-версія повного звіту про моделювання.
 
 - Поточне продуктове сімейство: `XPA-105`
-- Історичні назви для простежуваності: `AERIS-10`, `AERIS-10N`, `AERIS-10X`
+- Активний набір назв: `XPA-105`, `XPA-105 8x16`, `XPA-105 32x16`
 - Вихідний опублікований PDF: [XPA-105_Simulation_Report_ua.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Simulation_Report_ua.pdf)
 - Спільні керовані графіки: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-simulation-report/common)
 
@@ -30,7 +30,7 @@ historical_aliases:
 | Пункт | Значення |
 | --- | --- |
 | Сімейство продукту | XPA-105 |
-| Історичний заголовок | AERIS-10 X-діапазонний фазований радарний масив |
+| Назва продукту | XPA-105 X-діапазонний фазований радарний масив |
 | Обсяг звіту | Повноланцюгова симуляція обробки сигналів з аналізом кореляції з апаратною реалізацією |
 | Центральна частота | 10.5 GHz |
 | Смуга chirp-сигналу | 500 MHz |

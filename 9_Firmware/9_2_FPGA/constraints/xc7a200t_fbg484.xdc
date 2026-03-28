@@ -1,5 +1,5 @@
 # ============================================================================
-# AERIS-10 PHASED ARRAY RADAR — PRODUCTION FPGA CONSTRAINTS
+# XPA-105 PHASED ARRAY RADAR — PRODUCTION FPGA CONSTRAINTS
 # ============================================================================
 # Device:  XC7A200T-2FBG484I (FBG484 package)
 # Target:  Production PCB (NEW design — pin assignments are RECOMMENDED,

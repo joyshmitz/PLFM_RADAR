@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Bit-accurate Python model of the AERIS-10 FPGA signal processing chain.
+Bit-accurate Python model of the XPA-105 FPGA signal processing chain.
 
 Mirrors the RTL fixed-point arithmetic exactly:
   NCO -> Mixer -> CIC -> FIR -> Matched Filter -> Range Decimation -> Doppler
@@ -1193,7 +1193,7 @@ class DopplerProcessor:
 
 class SignalChain:
     """
-    Full AERIS-10 signal processing chain.
+    Full XPA-105 signal processing chain.
 
     For sample-by-sample co-simulation with RTL, use the step-based API
     (nco, mixer, cic, fir individually).

@@ -1,5 +1,5 @@
 # ila_capture.tcl
-# AERIS-10 Radar ILA Trigger Setup and Data Capture
+# XPA-105 Radar ILA Trigger Setup and Data Capture
 # Target FPGA: XC7A200T-2FBG484I (Artix-7)
 #
 # Captures data from 4 ILA checkpoints in the radar signal processing chain:
@@ -608,7 +608,7 @@ proc run_health_check {} {
     global use_immediate
 
     log_sep
-    log_info "AERIS-10 RADAR QUICK HEALTH CHECK"
+    log_info "XPA-105 RADAR QUICK HEALTH CHECK"
     log_info "Running all 4 ILA captures with immediate trigger..."
     log_sep
 
@@ -744,7 +744,7 @@ if {[catch {parse_args} err]} {
 }
 
 log_sep
-log_info "AERIS-10 Radar ILA Capture"
+log_info "XPA-105 Radar ILA Capture"
 log_info "Timestamp: [clock format [clock seconds] -format {%Y-%m-%d %H:%M:%S}]"
 log_sep
 log_kv "Scenario"      $capture_scenario

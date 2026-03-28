@@ -1,4 +1,4 @@
-# AERIS-10 Golden Reference Detections
+# XPA-105 Golden Reference Detections
 # Threshold: 10000
 # Format: range_bin doppler_bin magnitude
 0 0 44371

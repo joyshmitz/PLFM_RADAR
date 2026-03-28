@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Synthetic Radar Scene Generator for AERIS-10 FPGA Co-simulation.
+Synthetic Radar Scene Generator for XPA-105 FPGA Co-simulation.
 
 Generates test vectors (ADC samples + reference chirps) for multi-target
 radar scenes with configurable:
@@ -25,7 +25,7 @@ import struct
 
 
 # =============================================================================
-# AERIS-10 System Parameters
+# XPA-105 System Parameters
 # =============================================================================
 
 # RF parameters
@@ -598,7 +598,7 @@ def generate_all_test_vectors(output_dir=None):
         output_dir = os.path.dirname(os.path.abspath(__file__))
 
     print("=" * 60)
-    print("Generating AERIS-10 Test Vectors")
+    print("Generating XPA-105 Test Vectors")
     print(f"Output directory: {output_dir}")
     print("=" * 60)
 
@@ -648,7 +648,7 @@ def generate_all_test_vectors(output_dir=None):
     # --- Scenario info CSV ---
     print("\n--- Scenario Info ---")
     with open(os.path.join(output_dir, "scenario_info.txt"), 'w') as f:
-        f.write("AERIS-10 Test Vector Scenarios\n")
+        f.write("XPA-105 Test Vector Scenarios\n")
         f.write("=" * 60 + "\n\n")
 
         f.write("System Parameters:\n")

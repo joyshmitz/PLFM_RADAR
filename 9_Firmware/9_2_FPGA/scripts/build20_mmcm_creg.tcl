@@ -1,7 +1,7 @@
 ################################################################################
 # build20_mmcm_creg.tcl
 #
-# AERIS-10 Build 20: MMCM XDC Clock-Name Fix + CIC Comb CREG Pipeline
+# XPA-105 Build 20: MMCM XDC Clock-Name Fix + CIC Comb CREG Pipeline
 # Target: XC7A200T-2FBG484I
 # Design: radar_system_top
 # Tag:    v0.1.2-build18 + MMCM (Gap 7) + XDC fix + CIC CREG
@@ -56,7 +56,7 @@ set build_start [clock seconds]
 set build_timestamp [clock format $build_start -format {%Y-%m-%d %H:%M:%S}]
 
 puts "================================================================"
-puts "  AERIS-10 Build 20: MMCM XDC Fix + CIC CREG Pipeline"
+puts "  XPA-105 Build 20: MMCM XDC Fix + CIC CREG Pipeline"
 puts "  Target:    $fpga_part"
 puts "  Top:       $top_module"
 puts "  Reports:   $report_dir"
@@ -308,7 +308,7 @@ check_timing -verbose -file "${report_dir}/13_check_timing.rpt"
 # Compile configuration summary into a single text file
 set summary_fh [open "${report_dir}/00_build20_summary.txt" w]
 puts $summary_fh "================================================================"
-puts $summary_fh "  AERIS-10 Build 20 — MMCM XDC Fix + CIC CREG Pipeline"
+puts $summary_fh "  XPA-105 Build 20 — MMCM XDC Fix + CIC CREG Pipeline"
 puts $summary_fh "================================================================"
 puts $summary_fh ""
 puts $summary_fh "Build Tag:       $build_tag"

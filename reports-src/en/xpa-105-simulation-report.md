@@ -2,14 +2,14 @@
 report_id: xpa-105-simulation-report
 language: en
 status: normalized-markdown-v1
-source_pdf: docs/AERIS_Simulation_Report.pdf
+source_pdf: docs/XPA-105_Simulation_Report_en.pdf
 source_sha256: 66364c5530cfc7e05d5801a102d2454cd42df4bbaf3c8463526949df8eb69a0a
 assets_dir: reports-src/assets/xpa-105-simulation-report/en
 shared_assets_dir: reports-src/assets/xpa-105-simulation-report/common
-historical_aliases:
-  - AERIS-10
-  - AERIS-10N
-  - AERIS-10X
+product_variants:
+  - XPA-105
+  - XPA-105 8x16
+  - XPA-105 32x16
 ---
 
 # XPA-105 Simulation Report
@@ -19,8 +19,8 @@ historical_aliases:
 This is the normalized English Markdown source for the legacy full-chain simulation report.
 
 - Product family now carried by this source: `XPA-105`
-- Legacy names preserved for traceability: `AERIS-10`, `AERIS-10N`, `AERIS-10X`
-- Original PDF input: [AERIS_Simulation_Report.pdf](/Users/sd/projects/PLFM_RADAR/docs/AERIS_Simulation_Report.pdf)
+- Active naming set: `XPA-105`, `XPA-105 8x16`, `XPA-105 32x16`
+- Original PDF input: [XPA-105_Simulation_Report_en.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Simulation_Report_en.pdf)
 - Shared curated figures: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-simulation-report/common)
 
 The goal of this file is not byte-for-byte reproduction of the legacy PDF. The goal is to preserve the technical content in a searchable, reviewable, and editable source form.
@@ -30,7 +30,7 @@ The goal of this file is not byte-for-byte reproduction of the legacy PDF. The g
 | Item | Value |
 | --- | --- |
 | Product family | XPA-105 |
-| Legacy title | AERIS-10 X-Band Phased Array Radar |
+| Product title | XPA-105 X-Band Phased Array Radar |
 | Report scope | Full-chain signal processing simulation with hardware correlation analysis |
 | Center frequency | 10.5 GHz |
 | Chirp bandwidth | 500 MHz |
@@ -41,7 +41,7 @@ The goal of this file is not byte-for-byte reproduction of the legacy PDF. The g
 
 ## 1. Introduction And Simulation Overview
 
-This report presents the results of a full-chain signal processing simulation of the AERIS-10 X-band phased array radar. Every parameter used in the simulation, including center frequency, chirp bandwidth, ADC sample rate, array geometry, beamforming weights, and timing, was extracted directly from the PLFM_RADAR hardware design files.
+This report presents the results of a full-chain signal processing simulation of the XPA-105 X-band phased array radar. Every parameter used in the simulation, including center frequency, chirp bandwidth, ADC sample rate, array geometry, beamforming weights, and timing, was extracted directly from the PLFM_RADAR hardware design files.
 
 The simulation models the complete radar signal chain: FMCW chirp generation, target echo propagation with radar-equation amplitude, Doppler shift and spatial phase, dechirp mixing, ADC sampling, range FFT, Doppler FFT, conventional beamforming across 16 antenna elements, and CA-CFAR target detection.
 

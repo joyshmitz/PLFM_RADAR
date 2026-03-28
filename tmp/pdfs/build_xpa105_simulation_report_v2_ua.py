@@ -16,9 +16,9 @@ from PIL import Image as PILImage
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-INPUT_PDF = PROJECT_ROOT / "docs" / "AERIS_Simulation_Report_v2.pdf"
+INPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Simulation_Report_v2_en.pdf"
 OUTPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Simulation_Report_v2_ua.pdf"
-IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "aeris_sim_v2_ua_images"
+IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "xpa105_sim_v2_ua_images"
 PRODUCT_FAMILY = "XPA-105"
 PRODUCT_FAMILY_FOOTER = "XPA-105 family"
 PRODUCT_VARIANT_816 = "XPA-105 8x16"
@@ -155,10 +155,10 @@ def styles():
 
 def p(text: str, style: ParagraphStyle) -> Paragraph:
     replacements = [
-        ("AERIS Radar Systems", PRODUCT_FAMILY_FOOTER),
-        ("AERIS-10X", PRODUCT_VARIANT_3216),
-        ("AERIS-10N", PRODUCT_VARIANT_816),
-        ("AERIS-10", PRODUCT_FAMILY),
+        ("XPA-105 Radar Systems", PRODUCT_FAMILY_FOOTER),
+        ("XPA-105 32x16", PRODUCT_VARIANT_3216),
+        ("XPA-105 8x16", PRODUCT_VARIANT_816),
+        ("XPA-105", PRODUCT_FAMILY),
     ]
     for old, new in replacements:
         text = text.replace(old, new)
@@ -250,7 +250,7 @@ def build_story(style_map):
     # Cover
     story += [
         Spacer(1, 1.55 * inch),
-        p("Технічний звіт про моделювання AERIS-10", style_map["cover_title"]),
+        p("Технічний звіт про моделювання XPA-105", style_map["cover_title"]),
         p("Версія 2 - поточна FPGA та базова лінія пусконалагодження", style_map["cover_subtitle"]),
         Spacer(1, 0.2 * inch),
         p(
@@ -258,7 +258,7 @@ def build_story(style_map):
             style_map["cover_scope"],
         ),
         Spacer(1, 2.4 * inch),
-        p("AERIS Radar Systems | 2026-03-18 | Версія 2.0", style_map["cover_scope"]),
+        p("XPA-105 Radar Systems | 2026-03-18 | Версія 2.0", style_map["cover_scope"]),
         p("Вихідний репозиторій: PLFM_RADAR (fork/main)", style_map["cover_scope"]),
         PageBreak(),
     ]
@@ -298,7 +298,7 @@ def build_story(style_map):
     img = scaled_image(architecture_img, 5.0 * inch)
     story += [
         img,
-        p("Рисунок 2.1 - Опорна архітектура AERIS-10.", style_map["caption"]),
+        p("Рисунок 2.1 - Опорна архітектура XPA-105.", style_map["caption"]),
         make_table(
             style_map,
             ["Параметр", "Значення"],
@@ -404,7 +404,7 @@ def build_story(style_map):
         Spacer(1, 0.22 * inch),
         p("7. Висновок", style_map["h1"]),
         p(
-            "AERIS-10 перейшов від готовності, що спиралася лише на моделювання, до апаратно-орієнтованої базової лінії із замиканням таймінгу, надійним debug-інструментуванням і відтворюваними workflow пусконалагодження. Основний залишковий ризик тепер пов'язаний уже не з архітектурою або прогалинами у верифікації, а з реальною фізичною платою. Цей звіт слід вважати поточним опорним документом стану, який замінює старі simulation-only підсумки.",
+            "XPA-105 перейшов від готовності, що спиралася лише на моделювання, до апаратно-орієнтованої базової лінії із замиканням таймінгу, надійним debug-інструментуванням і відтворюваними workflow пусконалагодження. Основний залишковий ризик тепер пов'язаний уже не з архітектурою або прогалинами у верифікації, а з реальною фізичною платою. Цей звіт слід вважати поточним опорним документом стану, який замінює старі simulation-only підсумки.",
             style_map["body"],
         ),
         Spacer(1, 0.1 * inch),

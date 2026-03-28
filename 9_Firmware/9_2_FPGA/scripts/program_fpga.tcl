@@ -1,5 +1,5 @@
 # program_fpga.tcl
-# AERIS-10 Radar FPGA Bitstream Programming Flow
+# XPA-105 Radar FPGA Bitstream Programming Flow
 # Target FPGA: XC7A200T-2FBG484I (Artix-7)
 #
 # Programs the radar_system_top bitstream onto the target device via
@@ -93,15 +93,15 @@ proc parse_args {} {
 # ============================================================================
 
 proc log_info {msg} {
-    puts "INFO:  \[AERIS-10\] $msg"
+    puts "INFO:  \[XPA-105\] $msg"
 }
 
 proc log_warn {msg} {
-    puts "WARN:  \[AERIS-10\] $msg"
+    puts "WARN:  \[XPA-105\] $msg"
 }
 
 proc log_error {msg} {
-    puts "ERROR: \[AERIS-10\] $msg"
+    puts "ERROR: \[XPA-105\] $msg"
 }
 
 proc log_sep {} {
@@ -126,7 +126,7 @@ proc program_fpga {} {
     set device_name "unknown"
 
     log_sep
-    log_info "AERIS-10 Radar FPGA Programming Flow"
+    log_info "XPA-105 Radar FPGA Programming Flow"
     log_info "Timestamp: [clock format [clock seconds] -format {%Y-%m-%d %H:%M:%S}]"
     log_sep
 

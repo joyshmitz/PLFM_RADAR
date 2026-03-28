@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-validate_mem_files.py — Validate all .mem files against AERIS-10 radar parameters.
+validate_mem_files.py — Validate all .mem files against XPA-105 radar parameters.
 
 Checks:
   1. Structural: line counts, hex format, value ranges for all 12 .mem files
@@ -18,7 +18,7 @@ import os
 import sys
 
 # ============================================================================
-# AERIS-10 System Parameters (from radar_scene.py)
+# XPA-105 System Parameters (from radar_scene.py)
 # ============================================================================
 F_CARRIER = 10.5e9        # 10.5 GHz carrier
 C_LIGHT = 3.0e8
@@ -600,7 +600,7 @@ def test_seg3_padding():
 # ============================================================================
 def main():
     print("=" * 70)
-    print("AERIS-10 .mem File Validation")
+    print("XPA-105 .mem File Validation")
     print("=" * 70)
 
     test_structural()

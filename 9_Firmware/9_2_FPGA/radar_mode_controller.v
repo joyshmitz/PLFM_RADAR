@@ -3,7 +3,7 @@
 /**
  * radar_mode_controller.v
  *
- * Generates beam scanning and chirp mode control signals for the AERIS-10
+ * Generates beam scanning and chirp mode control signals for the XPA-105
  * receiver processing chain. This module drives:
  *   - use_long_chirp   : selects long (30us) or short (0.5us) chirp mode
  *   - mc_new_chirp     : toggle signal indicating new chirp start

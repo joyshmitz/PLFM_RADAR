@@ -1,7 +1,7 @@
 ################################################################################
 # debug_ila.xdc
 #
-# AERIS-10 Radar FPGA — mark_debug Constraints for ILA Probe Signals
+# XPA-105 Radar FPGA — mark_debug Constraints for ILA Probe Signals
 # Target: XC7A200T-2FBG484I
 #
 # ALTERNATIVE APPROACH: If the post-synthesis ILA insertion script

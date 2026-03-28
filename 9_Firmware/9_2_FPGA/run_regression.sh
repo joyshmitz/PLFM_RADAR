@@ -1,6 +1,6 @@
 #!/bin/bash
 # ===========================================================================
-# FPGA Regression Test Runner for AERIS-10 Radar
+# FPGA Regression Test Runner for XPA-105 Radar
 # Phase 0: Vivado-style lint (catches issues iverilog silently accepts)
 # Phase 1+: Compile and run all verified iverilog testbenches
 #
@@ -306,7 +306,7 @@ run_test() {
 
 # ===========================================================================
 echo "============================================"
-echo "  AERIS-10 FPGA Regression Test Suite"
+echo "  XPA-105 FPGA Regression Test Suite"
 echo "============================================"
 echo ""
 echo "Date: $(date)"

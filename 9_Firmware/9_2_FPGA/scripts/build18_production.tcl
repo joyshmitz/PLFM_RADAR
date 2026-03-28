@@ -1,7 +1,7 @@
 ################################################################################
 # build18_production.tcl
 #
-# AERIS-10 Build 18: Post-Optimization Production Build
+# XPA-105 Build 18: Post-Optimization Production Build
 # Target: XC7A200T-2FBG484I
 # Design: radar_system_top
 # Tag:    v0.1.1-build17 + FIR DSP48 pipelining + matched filter BRAM migration
@@ -62,7 +62,7 @@ set build_start [clock seconds]
 set build_timestamp [clock format $build_start -format {%Y-%m-%d %H:%M:%S}]
 
 puts "================================================================"
-puts "  AERIS-10 Build 18: Post-Optimization Production Build"
+puts "  XPA-105 Build 18: Post-Optimization Production Build"
 puts "  Target:    $fpga_part"
 puts "  Top:       $top_module"
 puts "  Reports:   $report_dir"
@@ -312,7 +312,7 @@ check_timing -verbose -file "${report_dir}/13_check_timing.rpt"
 # Compile configuration summary into a single text file
 set summary_fh [open "${report_dir}/00_build18_summary.txt" w]
 puts $summary_fh "================================================================"
-puts $summary_fh "  AERIS-10 Build 18 — Post-Optimization Production Build Summary"
+puts $summary_fh "  XPA-105 Build 18 — Post-Optimization Production Build Summary"
 puts $summary_fh "================================================================"
 puts $summary_fh ""
 puts $summary_fh "Build Tag:       $build_tag"

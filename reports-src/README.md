@@ -19,14 +19,14 @@ Rules for this layer:
 Current pilot:
 
 - `xpa-105-antenna-report`
-  - English variant normalized from `docs/AERIS_Antenna_Report.pdf`
-  - Ukrainian variant normalized from `docs/XPA-105_Antenna_Report_ua.pdf` and `tmp/pdfs/aeris_ua/svg/page_*.svg`
+  - English variant normalized from `docs/XPA-105_Antenna_Report_en.pdf`
+  - Ukrainian variant normalized from `docs/XPA-105_Antenna_Report_ua.pdf` and SVG extraction outputs from `tmp/pdfs/`
   - Shared curated figures live under `reports-src/assets/xpa-105-antenna-report/common/`
 - `xpa-105-simulation-report`
-  - English variant normalized from `docs/AERIS_Simulation_Report.pdf`
+  - English variant normalized from `docs/XPA-105_Simulation_Report_en.pdf`
   - Ukrainian variant normalized from `docs/XPA-105_Simulation_Report_ua.pdf`
   - Shared curated figures live under `reports-src/assets/xpa-105-simulation-report/common/`
 - `xpa-105-simulation-report-v2`
-  - English variant normalized from `docs/AERIS_Simulation_Report_v2.pdf`
+  - English variant normalized from `docs/XPA-105_Simulation_Report_v2_en.pdf`
   - Ukrainian variant normalized from `docs/XPA-105_Simulation_Report_v2_ua.pdf`
   - Shared curated figures live under `reports-src/assets/xpa-105-simulation-report-v2/common/`

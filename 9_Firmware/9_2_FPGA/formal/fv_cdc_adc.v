@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: cdc_adc_to_processing
-// AERIS-10 Radar FPGA — Multi-bit CDC with Gray Code
+// XPA-105 Radar FPGA — Multi-bit CDC with Gray Code
 // Target: SymbiYosys with smtbmc/z3
 // ============================================================================
 module fv_cdc_adc;

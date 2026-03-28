@@ -9,7 +9,7 @@ shared_assets_dir: reports-src/assets/xpa-105-simulation-report/common
 variants:
   en:
     markdown: reports-src/en/xpa-105-simulation-report.md
-    source_pdf: docs/AERIS_Simulation_Report.pdf
+    source_pdf: docs/XPA-105_Simulation_Report_en.pdf
     source_sha256: 66364c5530cfc7e05d5801a102d2454cd42df4bbaf3c8463526949df8eb69a0a
     published_role: legacy-original
     assets_dir: reports-src/assets/xpa-105-simulation-report/en
@@ -17,8 +17,8 @@ variants:
       - pdftotext
       - manual normalization
     figure_seed:
-      - tmp/pdfs/aeris_sim_full_images/img-*.png
-      - tmp/pdfs/build_aeris_simulation_report_ua.py
+      - "tmp/pdfs full simulation extraction outputs"
+      - tmp/pdfs/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1
   ua:
     markdown: reports-src/ua/xpa-105-simulation-report.md
@@ -28,9 +28,9 @@ variants:
     assets_dir: reports-src/assets/xpa-105-simulation-report/ua
     text_seed:
       - pdftotext
-      - tmp/pdfs/build_aeris_simulation_report_ua.py
+      - tmp/pdfs/build_xpa105_simulation_report_ua.py
       - manual normalization
     figure_seed:
-      - tmp/pdfs/aeris_sim_full_images/img-*.png
-      - tmp/pdfs/build_aeris_simulation_report_ua.py
+      - "tmp/pdfs full simulation extraction outputs"
+      - tmp/pdfs/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1

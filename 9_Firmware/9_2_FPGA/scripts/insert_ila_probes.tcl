@@ -1,7 +1,7 @@
 ################################################################################
 # insert_ila_probes.tcl
 #
-# AERIS-10 Radar FPGA — Post-Synthesis ILA Debug Core Insertion
+# XPA-105 Radar FPGA — Post-Synthesis ILA Debug Core Insertion
 # Target: XC7A200T-2FBG484I
 # Design: radar_system_top (Build 16 frozen netlist)
 #
@@ -246,7 +246,7 @@ proc create_ila_deferred {ila_name clk_net probe_list depth} {
 # ==============================================================================
 
 puts "======================================================================"
-puts " AERIS-10 ILA Insertion — Starting at [clock format [clock seconds]]"
+puts " XPA-105 ILA Insertion — Starting at [clock format [clock seconds]]"
 puts "======================================================================"
 
 # Create output directory
@@ -705,7 +705,7 @@ puts "INFO: SPI flash image: ${output_dir}/${top_module}.bin"
 # ==============================================================================
 
 puts "\n======================================================================"
-puts " AERIS-10 ILA Insertion Complete"
+puts " XPA-105 ILA Insertion Complete"
 puts "======================================================================"
 puts ""
 puts " Output directory:  $output_dir"

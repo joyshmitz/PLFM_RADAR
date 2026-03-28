@@ -1,7 +1,7 @@
 ################################################################################
 # build21_fft_e2e.tcl
 #
-# AERIS-10 Build 21: FFT Optimizations + E2E RTL Fixes
+# XPA-105 Build 21: FFT Optimizations + E2E RTL Fixes
 # Target: XC7A200T-2FBG484I
 # Design: radar_system_top
 # Base:   Build 20 (v0.1.3-build20, WNS +0.426 ns)
@@ -62,7 +62,7 @@ set build_start [clock seconds]
 set build_timestamp [clock format $build_start -format {%Y-%m-%d %H:%M:%S}]
 
 puts "================================================================"
-puts "  AERIS-10 Build 21: FFT Optimizations + E2E RTL Fixes"
+puts "  XPA-105 Build 21: FFT Optimizations + E2E RTL Fixes"
 puts "  Target:    $fpga_part"
 puts "  Top:       $top_module"
 puts "  Reports:   $report_dir"
@@ -317,7 +317,7 @@ if {[catch {check_timing -verbose -file "${report_dir}/13_check_timing.rpt"} err
 # Compile configuration summary into a single text file
 set summary_fh [open "${report_dir}/00_build21_summary.txt" w]
 puts $summary_fh "================================================================"
-puts $summary_fh "  AERIS-10 Build 21 — FFT Optimizations + E2E RTL Fixes"
+puts $summary_fh "  XPA-105 Build 21 — FFT Optimizations + E2E RTL Fixes"
 puts $summary_fh "================================================================"
 puts $summary_fh ""
 puts $summary_fh "Build Tag:       $build_tag"

@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //
-// AERIS-10 TE0713+TE0701 Dev Heartbeat
+// XPA-105 TE0713+TE0701 Dev Heartbeat
 //
 // Minimal design to verify FPGA configuration and clock.
 // Uses TE0713 FIFO0CLK (50 MHz, Bank 14, LVCMOS15) at pin U20.

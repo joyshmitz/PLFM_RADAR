@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: range_bin_decimator
-// AERIS-10 Radar FPGA — 5-state decimation FSM
+// XPA-105 Radar FPGA — 5-state decimation FSM
 // Target: SymbiYosys with smtbmc/z3
 //
 // Single-clock design: clk is an input wire, async2sync handles async reset.

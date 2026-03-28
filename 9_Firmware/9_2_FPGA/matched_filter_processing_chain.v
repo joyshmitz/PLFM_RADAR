@@ -3,7 +3,7 @@
 /**
  * matched_filter_processing_chain.v
  *
- * Pulse compression processing chain for AERIS-10 FMCW radar.
+ * Pulse compression processing chain for XPA-105 FMCW radar.
  * Implements: FFT(signal) → FFT(reference) → Conjugate multiply → IFFT
  *
  * This is a SIMULATION-COMPATIBLE implementation that replaces the Xilinx

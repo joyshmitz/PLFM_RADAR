@@ -3,7 +3,7 @@
 /**
  * tb_system_e2e.v
  *
- * Comprehensive End-to-End Integration Testbench for AERIS-10 Radar FPGA
+ * Comprehensive End-to-End Integration Testbench for XPA-105 Radar FPGA
  *
  * This testbench exercises the FULL system (radar_system_top) with strict
  * pass/fail scoring across 12 test groups covering every subsystem,
@@ -542,7 +542,7 @@ initial begin
 
     $display("");
     $display("============================================================");
-    $display("  AERIS-10 FPGA End-to-End Integration Testbench");
+    $display("  XPA-105 FPGA End-to-End Integration Testbench");
     $display("  12 test groups, strict PASS/FAIL scoring");
     $display("============================================================");
     $display("");
@@ -814,7 +814,7 @@ initial begin
           "G7.2: Last of 3 rapid USB commands applied (threshold=0xCCCC)");
 
     // G7.3: Verify CDC path for TX chirp counter (120MHz→100MHz)
-    // In the AERIS-10 architecture, STM32 toggles drive the TX chirp
+    // In the XPA-105 architecture, STM32 toggles drive the TX chirp
     // controller (120MHz domain). The chirp counter is CDC'd to 100MHz
     // via Gray-code synchronizer. Verify the CDC'd counter is non-zero.
     // Note: RX mode controller STM32 inputs are hardwired to 0 in
@@ -1132,7 +1132,7 @@ initial begin
     // FINAL SUMMARY
     // ================================================================
     $display("============================================================");
-    $display("  AERIS-10 End-to-End Integration Testbench");
+    $display("  XPA-105 End-to-End Integration Testbench");
     $display("============================================================");
     $display("  PASSED: %0d / %0d", pass_count, test_num);
     $display("  FAILED: %0d / %0d", fail_count, test_num);

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-gen_chirp_mem.py — Generate all chirp .mem files for AERIS-10 FPGA.
+gen_chirp_mem.py — Generate all chirp .mem files for XPA-105 FPGA.
 
 Generates the 10 chirp .mem files used by chirp_memory_loader_param.v:
   - long_chirp_seg{0,1,2,3}_{i,q}.mem  (8 files, 1024 lines each)
@@ -50,7 +50,7 @@ import os
 import sys
 
 # ============================================================================
-# AERIS-10 Parameters (matching radar_scene.py)
+# XPA-105 Parameters (matching radar_scene.py)
 # ============================================================================
 CHIRP_BW = 20e6           # 20 MHz sweep bandwidth
 FS_SYS = 100e6            # System clock (100 MHz, post-CIC)
@@ -131,7 +131,7 @@ def write_mem_file(filename, values):
 
 def main():
     print("=" * 60)
-    print("AERIS-10 Chirp .mem File Generator")
+    print("XPA-105 Chirp .mem File Generator")
     print("=" * 60)
     print()
     print(f"Parameters:")

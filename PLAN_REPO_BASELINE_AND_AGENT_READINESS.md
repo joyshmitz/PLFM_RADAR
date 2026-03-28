@@ -98,7 +98,7 @@ That is acceptable history. It is not acceptable as the steady-state operating m
 - The repo currently has two distinct host-facing protocol surfaces that should not be collapsed into one generic "interface" concept:
   - MCU USB CDC start/settings/GPS exchange
   - FPGA FT601 packet/status/command exchange
-- Product naming is split: public-facing docs prefer `XPA-105`, while many tests, scripts, comments, and generated artifacts still use `AERIS-10`.
+- Product naming is split: public-facing docs prefer `XPA-105`, while many tests, scripts, comments, and generated artifacts still use pre-rebrand product names.
 
 ### 3.2 What is currently broken at repo level
 
@@ -111,7 +111,7 @@ That is acceptable history. It is not acceptable as the steady-state operating m
 - Interface contracts between firmware, FPGA, GUI, and replay/capture tooling are implicit.
 - `.gitignore` does not fully contain current local workflow noise.
 - The repo has many binary files but no explicit binary-handling policy.
-- The `XPA-105` vs `AERIS-10` naming split is real but not yet governed, which makes current-vs-historical meaning ambiguous.
+- The current-family naming scheme versus retired legacy naming is real but not yet governed, which makes current-vs-historical meaning ambiguous.
 - The GUI validation path is incomplete at repo level: tests exist, but there is no root bootstrap for the Python dependencies they actually need.
 - Running the MCU test suite currently leaves at least some host-built test executables in `9_Firmware/9_1_Microcontroller/tests` outside the current ignore rules, so even a healthy validation pass can dirty `git status`.
 - At least one active test source still hardcodes a private absolute repo path (`9_Firmware/9_1_Microcontroller/tests/test_bug8_uart_commented_out.c`).
@@ -324,9 +324,9 @@ Create a top-level repo contract before any large structural changes.
   - `9_Firmware/9_3_GUI/smoke_test.py`
 - Declare `9_Firmware/tools/uart_capture.py` as the current UART diagnostic capture helper.
 - Declare `docs/*.html` as the current published docs surface and `docs/artifacts/` as a published evidence surface.
-- Add an explicit naming policy for `XPA-105` vs `AERIS-10`:
+- Add an explicit naming policy for `XPA-105` versus retired legacy product names:
   - use `XPA-105` in all new public-facing and current-baseline references
-  - retain `AERIS-10` only in historical filenames, frozen artifacts, and intentionally grandfathered internal references until they are migrated
+  - retain retired legacy names only in frozen historical artifacts or intentionally grandfathered references until they are migrated
 - Define artifact classes:
   - source
   - generated/local
@@ -447,7 +447,7 @@ Make setup reproducible from the repository root.
 - Add a dedicated repo-truth audit helper, for example `tools/repo_truth_audit.py`, to check:
   - broken local path references
   - private absolute paths in active source/docs
-  - naming drift (`AERIS-10` vs `XPA-105`) in current surfaces
+  - naming drift between current and retired product naming in current surfaces
   - orphan tracked evidence artifacts with no registry entry
   - generated local outputs not covered by ignore rules
 - Ensure each target prints explicit `PASS`, `FAIL`, or `SKIP`.
@@ -571,9 +571,9 @@ Turn branded and legacy report PDFs into diffable, searchable, reusable source d
 - Add `reports-src/manifests/` so each report can map one or more language variants to their legacy PDF inputs, normalized assets, and migration status.
 - Add `reports-src/assets/` for extracted or normalized embedded figure assets used by the report sources.
 - Convert tracked report PDFs such as:
-  - `docs/AERIS_Antenna_Report.pdf`
-  - `docs/AERIS_Simulation_Report.pdf`
-  - `docs/AERIS_Simulation_Report_v2.pdf`
+  - `docs/XPA-105_Antenna_Report_en.pdf`
+  - `docs/XPA-105_Simulation_Report_en.pdf`
+  - `docs/XPA-105_Simulation_Report_v2_en.pdf`
   - `docs/XPA-105_Antenna_Report_ua.pdf`
   - `docs/XPA-105_Simulation_Report_ua.pdf`
   - `docs/XPA-105_Simulation_Report_v2_ua.pdf`

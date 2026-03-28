@@ -2,7 +2,7 @@
 
 // ============================================================================
 // Formal Verification Wrapper: doppler_processor_optimized
-// AERIS-10 Radar FPGA — Doppler processing FSM with FFT
+// XPA-105 Radar FPGA — Doppler processing FSM with FFT
 // Target: SymbiYosys with smtbmc/z3
 //
 // Single-clock design: clk is an input wire, async2sync handles async reset.

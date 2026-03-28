@@ -4,7 +4,7 @@
  * cfar_ca.v
  *
  * Cell-Averaging CFAR (Constant False Alarm Rate) Detector
- * for the AERIS-10 phased-array radar.
+ * for the XPA-105 phased-array radar.
  *
  * Replaces the simple magnitude threshold detector in radar_system_top.v
  * (lines 474-514) with a proper adaptive-threshold CFAR algorithm.

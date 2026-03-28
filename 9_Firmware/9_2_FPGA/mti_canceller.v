@@ -6,7 +6,7 @@
  * Moving Target Indication (MTI) — 2-pulse canceller for ground clutter removal.
  *
  * Sits between the range bin decimator and the Doppler processor in the
- * AERIS-10 receiver chain. Subtracts the previous chirp's range profile
+ * XPA-105 receiver chain. Subtracts the previous chirp's range profile
  * from the current chirp's profile, implementing H(z) = 1 - z^{-1} in
  * slow-time. This places a null at zero Doppler (DC), removing stationary
  * ground clutter while passing moving targets through.

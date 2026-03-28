@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Co-simulation Comparison: RTL vs Python Model for AERIS-10 Matched Filter.
+Co-simulation Comparison: RTL vs Python Model for XPA-105 Matched Filter.
 
 Compares the RTL matched filter output (from tb_mf_cosim.v) against the
 Python model golden reference (from gen_mf_cosim_golden.py).

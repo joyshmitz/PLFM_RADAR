@@ -13,4 +13,4 @@ The current normalized report uses the shared figure set here:
 Current migration seeds already exist under `tmp/` and should be curated into the shared or language-specific directories rather than treated as durable source of truth:
 
 - `tmp/pdfs/extracted/img-*.png`
-- `tmp/pdfs/aeris_ua/svg/page_*.svg`
+- `tmp/pdfs/xpa105_ua/svg/page_*.svg`

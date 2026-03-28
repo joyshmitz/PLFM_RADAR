@@ -2,24 +2,24 @@
 report_id: xpa-105-antenna-report
 language: en
 status: normalized-markdown-v1
-source_pdf: docs/AERIS_Antenna_Report.pdf
+source_pdf: docs/XPA-105_Antenna_Report_en.pdf
 source_sha256: a23574276ef8b9f3c6c20f22c90002d0d576e949ebdf301cc4d28524b24300b1
 assets_dir: reports-src/assets/xpa-105-antenna-report/en
 shared_assets_dir: reports-src/assets/xpa-105-antenna-report/common
-historical_aliases:
-  - AERIS-10
-  - AERIS-10N
+product_variants:
+  - XPA-105
+  - XPA-105 8x16
 ---
 
 # XPA-105 Antenna Report
 
 ## Status And Lineage
 
-This is the normalized English Markdown source for the legacy antenna simulation report.
+This is the normalized English Markdown source for the antenna simulation report.
 
 - Product family now carried by this source: `XPA-105`
-- Legacy names preserved for traceability: `AERIS-10`, `AERIS-10N`
-- Original PDF input: [AERIS_Antenna_Report.pdf](/Users/sd/projects/PLFM_RADAR/docs/AERIS_Antenna_Report.pdf)
+- Active naming set: `XPA-105`, `XPA-105 8x16`
+- Original PDF input: [XPA-105_Antenna_Report_en.pdf](/Users/sd/projects/PLFM_RADAR/docs/XPA-105_Antenna_Report_en.pdf)
 - Shared curated figures: [common assets](/Users/sd/projects/PLFM_RADAR/reports-src/assets/xpa-105-antenna-report/common)
 
 The goal of this file is not byte-for-byte reproduction of the legacy PDF. The goal is to preserve the technical content in a searchable, reviewable, and editable source form.
@@ -29,7 +29,7 @@ The goal of this file is not byte-for-byte reproduction of the legacy PDF. The g
 | Item | Value |
 | --- | --- |
 | Product family | XPA-105 |
-| Legacy title | AERIS-10 X-Band Phased Array Radar |
+| Product title | XPA-105 X-Band Phased Array Radar |
 | Analysis scope | OpenEMS FDTD analysis of a single patch element at 10.5 GHz |
 | Solver | OpenEMS v0.0.36 (FDTD) |
 | Platform in legacy run | macOS ARM64 |
@@ -90,7 +90,7 @@ The design uses Rogers RO4350B, a high-frequency thermoset laminate commonly use
 | Feed type | Probe-fed (lumped port) | 50 Ohm match at `y = 1.49 mm` from center |
 | Ground plane | 38.1 x 36.0 mm | About `lambda/2` margin beyond patch edges |
 | Element spacing | 14.285 mm | `lambda/2` at 10.5 GHz |
-| Array configuration | 8x16 (128 elements) | Legacy AERIS-10N array context |
+| Array configuration | 8x16 (128 elements) | XPA-105 8x16 array context |
 
 ### 2.3 Bug Found In `patch_antenna.py`
 
