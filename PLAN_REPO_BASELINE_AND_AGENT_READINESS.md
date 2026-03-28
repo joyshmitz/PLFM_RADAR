@@ -172,6 +172,17 @@ This repo needs both canonical source surfaces and frozen engineering evidence.
 
 Tracked bitstreams, timing reports, and bring-up artifacts may remain in the repository when they are intentionally part of the published engineering record. But they must not be treated as the current source of truth for setup, validation, or architecture.
 
+### 4.7 Deliberate redefinition must be recorded
+
+When the current repo state is intentionally superseded, the new target state must be recorded explicitly rather than being left implicit in a commit series or scattered documentation edits.
+
+That record should live under `decisions/ADR-*.md` and state:
+
+- what current repo truth is being superseded
+- why the change is being made
+- what migration surface it affects
+- whether the change is immediate, staged, or only aspirational
+
 ## 5. Delta From The Previous Six-Step Outline
 
 The earlier six-step outline was directionally correct but too shallow. It needs to be upgraded from cleanup guidance into a full repository operating model.
@@ -219,6 +230,7 @@ The target state is a repository where a new human or agent can answer the follo
 - Which files are source, and which are generated?
 - Where do release artifacts go?
 - Which docs are published and which are engineering notes?
+- Where do I edit report source if I need to update a translated or branded report?
 - How do I validate changes from the root?
 - Which assumptions are machine-local and how are they configured?
 
@@ -228,7 +240,7 @@ The target state is a repository where a new human or agent can answer the follo
 
 Critical path:
 
-- `7.0 Repo Contract` -> `7.1 Truth Repair` and `7.2 Surface Separation` -> `7.3 Bootstrap`, `7.4 Path Parameterization`, and `7.5 Artifact Lifecycle` -> `7.6 Variant Manifests`, `7.7 Interface Contracts`, and `7.8 Licensing/Provenance` -> `7.10 Repo-Local Agent Instructions`
+- `7.0 Repo Contract` -> `7.1 Truth Repair` and `7.2 Surface Separation` -> `7.3 Bootstrap`, `7.4 Path Parameterization`, and `7.5 Artifact Lifecycle` -> `7.5A Docs-As-Source Report Canonicalization`, `7.6 Variant Manifests`, `7.7 Interface Contracts`, and `7.8 Licensing/Provenance` -> `7.10 Repo-Local Agent Instructions`
 - `7.9 Staged Path Normalization` is intentionally late and should not begin until the earlier workstreams have stabilized the current naming, entrypoints, and validation paths.
 
 Per-workstream prerequisites:
@@ -239,6 +251,7 @@ Per-workstream prerequisites:
 - `7.3 Reproducible Environment Bootstrap`: depends on `7.0`; should use the current surfaces from `7.2` and the path rules from `7.4`.
 - `7.4 Path Parameterization`: depends on `7.0` and is informed by `7.1`; otherwise bootstrap and docs cleanup risk baking private paths back in.
 - `7.5 Artifact Lifecycle`: depends on `7.0` and `7.2`; otherwise cleanup work can accidentally delete or demote published evidence.
+- `7.5A Docs-As-Source Report Canonicalization`: depends on `7.0`, `7.2`, and `7.5`; report-source migration needs canonical naming, explicit current docs surfaces, and an artifact policy before PDFs are demoted from primary-editable status.
 - `7.6 Variant Manifests`: depends on `7.0` and `7.2`; manifests need canonical naming and current surfaces first.
 - `7.7 Interface Contracts And Replay Data`: depends on `7.0` and `7.2`; benefits from `7.3` and `7.6` once validation and variant context exist.
 - `7.8 Licensing, Provenance, And Release Metadata`: depends on `7.0` and `7.5`; provenance work is much easier once artifact classes are explicit.
@@ -251,7 +264,43 @@ Primary execution risks:
 - If `7.2` is skipped before `7.7`, protocol documentation will mix current and legacy surfaces.
 - If `7.3` starts before `7.4` is understood, bootstrap scripts may hardcode machine-local paths into the new baseline.
 - If `7.5` is skipped, `docs/artifacts/` and other tracked evidence can be mistaken for disposable build debris.
+- If `7.5A` is skipped too long, report knowledge will remain trapped in binary deliverables that are expensive to diff, search, and reuse.
 - If `7.10` is done too early, tool-specific agent docs will fossilize current repo confusion.
+
+### 7.B Skill Application Matrix
+
+Use the minimum skill set that materially advances the current phase.
+
+Primary skills for this repo:
+
+- `planning-workflow`
+  - evolve the plan with explicit diffs and rationale
+- `codebase-report`
+  - produce repo contracts, current-surface maps, and architecture descriptions grounded in actual files
+- `codebase-pattern-extraction`
+  - identify repeated smells such as path leakage, artifact sprawl, naming drift, and duplicated current-vs-legacy patterns
+- `readme-writing`
+  - restructure `README.md` into a truthful root document
+- `de-slopify`
+  - remove generic or inflated wording after structural README changes
+- `pdf`
+  - handle PDF extraction, rendering, verification, and PDF-to-source workflows
+- `doc`
+  - handle `.docx` sources when migrating report or hardware-note content into canonical source form
+- `spreadsheet`
+  - handle BOM, XLSX, and CSV normalization when production data becomes part of the controlled baseline
+- `ubs`
+  - add quality-gate scanning after root validation exists
+
+Deferred skills:
+
+- `agent-mail`
+- `beads-workflow`
+- `agent-swarm-workflow`
+- `bv`
+- `ntm`
+
+These should stay deferred until Workstreams `7.0` through `7.5` have stabilized the repo contract, artifact policy, and validation surfaces. Multi-agent execution before that point would amplify repo ambiguity rather than reduce it.
 
 ## 7.0 Workstream 0: Repo Contract
 
@@ -262,6 +311,7 @@ Create a top-level repo contract before any large structural changes.
 ### Proposed changes
 
 - Add `REPO_CONTRACT.md` at repo root.
+- Add `decisions/ADR-0001-repo-contract.md` to anchor the first deliberate repo-level operating decision.
 - Define domain ownership and current entrypoints.
 - Declare the current MCU control-plane entrypoint:
   - `9_Firmware/9_1_Microcontroller/9_1_3_C_Cpp_Code/main.cpp`
@@ -294,11 +344,13 @@ This is the single highest-leverage change for agent readiness because it create
 ### Deliverables
 
 - `REPO_CONTRACT.md`
+- `decisions/ADR-0001-repo-contract.md`
 - optional per-domain `CURRENT.md` files where ambiguity is high
 
 ### Acceptance criteria
 
 - `REPO_CONTRACT.md` exists at repo root and explicitly names the current docs, GUI, MCU, and FPGA entrypoints.
+- `decisions/ADR-0001-repo-contract.md` exists and explains why the repo contract is the first authoritative codification layer above direct repo inspection.
 - `REPO_CONTRACT.md` contains explicit sections for naming policy, artifact classes, validation routes, and local git policy.
 - `REPO_CONTRACT.md` explicitly marks legacy GUI files, board-specific FPGA wrappers, and `docs/artifacts/` as scoped or non-canonical surfaces rather than generic "main" entrypoints.
 
@@ -392,6 +444,12 @@ Make setup reproducible from the repository root.
   - `make validate-fpga-quick` to run `9_Firmware/9_2_FPGA/run_regression.sh --quick`
   - `make validate-fpga` for the fuller FPGA regression path
   - `make validate-docs` for lightweight repo-truth and docs-path checks
+- Add a dedicated repo-truth audit helper, for example `tools/repo_truth_audit.py`, to check:
+  - broken local path references
+  - private absolute paths in active source/docs
+  - naming drift (`AERIS-10` vs `XPA-105`) in current surfaces
+  - orphan tracked evidence artifacts with no registry entry
+  - generated local outputs not covered by ignore rules
 - Ensure each target prints explicit `PASS`, `FAIL`, or `SKIP`.
 - Keep tool assumptions honest. Example: skip FPGA simulation if `iverilog` is missing.
 - Keep Python assumptions honest. Example: report `SKIP` or `FAIL` clearly if `numpy`, `matplotlib`, or `h5py` are missing, instead of pretending the GUI validation route is available.
@@ -406,12 +464,14 @@ Root orchestration makes the repo legible and stable.
 
 - root `Makefile`
 - small helper scripts if needed under `tools/`
+- `tools/repo_truth_audit.py` or equivalent lightweight repo-truth audit helper
 
 ### Acceptance criteria
 
 - `make validate` can run from repo root.
 - `make validate-gui` has one canonical underlying command and does not depend on `pytest` being present.
 - Missing tools or Python modules are reported as explicit `PASS`, `FAIL`, or `SKIP` outcomes with the missing executable or module name.
+- `make validate-docs` or `make validate` includes a machine-readable truth-audit step instead of relying only on manual review.
 
 ## 7.4 Workstream 4: Path Parameterization
 
@@ -467,6 +527,13 @@ Stop mixing source files, local-generated outputs, published docs, and release a
 - Add `.gitattributes` for binary assets and line-ending policy.
 - Keep `docs/` for published site and user-facing documents only.
 - Keep `docs/artifacts/` only for artifacts intentionally referenced by published docs pages; move all other release bundles elsewhere.
+- Add an evidence registry, such as `docs/artifacts/index.yaml` or `releases/index.json`, mapping each intentionally tracked evidence artifact to:
+  - artifact type
+  - canonical/non-canonical status
+  - related variant
+  - source workflow
+  - checksum
+  - published pages that reference it
 - Define dedicated locations for:
   - generated local outputs
   - release bundles
@@ -483,12 +550,53 @@ It also reduces the chance of accidental commits of noisy working files.
 - updated `.gitignore`
 - new `.gitattributes`
 - artifact directory policy documented in `REPO_CONTRACT.md`
+- evidence registry for intentionally tracked published evidence
 
 ### Acceptance criteria
 
 - Current local workflows stop polluting `git status`.
 - Published docs no longer share a directory with engineering release blobs unless explicitly intended.
 - Running the MCU validation route does not leave untracked executables or local debug bundles behind in normal workflows.
+- Every intentionally tracked evidence artifact is discoverable through a registry rather than only through filename archaeology.
+
+## 7.5A Workstream 5A: Docs-As-Source Report Canonicalization
+
+### Objective
+
+Turn translated and branded report PDFs into diffable, searchable, reusable source documents rather than treating the PDFs as the primary editable format.
+
+### Proposed changes
+
+- Add `reports-src/ua/` for canonical Markdown report sources.
+- Add `reports-src/assets/` for extracted or normalized embedded figure assets used by the report sources.
+- Convert tracked translated reports such as:
+  - `docs/XPA-105_Antenna_Report_ua.pdf`
+  - `docs/XPA-105_Simulation_Report_ua.pdf`
+  - `docs/XPA-105_Simulation_Report_v2_ua.pdf`
+  into Markdown source documents with embedded image references.
+- Treat PDFs as rendered or published outputs derived from Markdown sources.
+- Add a render path so canonical Markdown sources can regenerate the published PDFs when needed.
+- Reuse `pdf`, `doc`, and `spreadsheet` workflows where appropriate rather than editing rendered binaries directly.
+
+### Why this improves the project
+
+This makes report content diffable, searchable, linkable, and easier to revise during future rebranding, translation, and product-baseline work.
+
+It also creates a bridge between long-form report content and the HTML docs surface without forcing the repo to treat PDFs as the only editable truth.
+
+### Deliverables
+
+- `reports-src/ua/xpa-105-antenna-report.md`
+- `reports-src/ua/xpa-105-simulation-report.md`
+- `reports-src/ua/xpa-105-simulation-report-v2.md`
+- `reports-src/assets/`
+- documented render flow from Markdown source to published PDF
+
+### Acceptance criteria
+
+- The three current Ukrainian `XPA-105` reports exist as canonical Markdown source documents.
+- The Markdown sources reference managed assets instead of requiring manual PDF surgery for ordinary content changes.
+- Published PDFs are explicitly treated as generated or published outputs, not as the only editable source.
 
 ## 7.6 Workstream 6: Variant Manifests
 
@@ -552,6 +660,9 @@ Reduce implicit coupling between firmware, FPGA, GUI, and tooling.
   - `9_Firmware/9_1_Microcontroller/9_1_1_C_Cpp_Libraries/RadarSettings.h`
 - Reuse the existing replay/golden corpus under `9_Firmware/9_2_FPGA/tb/cosim/real_data/` before inventing a parallel dataset structure from scratch.
 - Ensure GUI tools and tests can run against replay data even without hardware.
+- Add a fixture manifest, for example `fixtures/manifest.yaml`, that describes the curated non-live replay/capture set.
+- Add at least one versioned golden-output path for a non-live replay scenario.
+- Add `make validate-replay` as the canonical non-live replay validation route once the first fixture and golden output exist.
 
 ### Why this improves the project
 
@@ -564,11 +675,14 @@ It makes cross-domain changes safer, improves regression testing, and makes the 
 - separate machine-readable protocol descriptions for FT601 and MCU USB CDC surfaces
 - small replay corpus
 - tests wired to it where possible
+- `fixtures/manifest.yaml`
+- at least one golden expected-output artifact for replay validation
 
 ### Acceptance criteria
 
 - The FT601 contract and the MCU USB CDC contract exist as separate versioned files under `interfaces/`.
 - GUI and host tools can validate at least one non-live FT601 replay scenario reproducibly without live hardware.
+- At least one curated replay fixture has a manifest entry and a versioned golden expected output checked by validation.
 
 ## 7.8 Workstream 8: Licensing, Provenance, And Release Metadata
 
@@ -685,18 +799,19 @@ Read and apply the dependency/prerequisite rules from Section 7.A before startin
 8. Separate current vs legacy GUI
 9. Clarify current FPGA flow
 10. Clarify docs publication vs engineering records
+11. Start docs-as-source conversion for high-value translated reports
 
 ### Phase D: Product Baseline Maturity
 
-11. Add `variants/`
-12. Add `interfaces/`
-13. Add replay/sample data corpus
-14. Add licensing/provenance bundle
+12. Add `variants/`
+13. Add `interfaces/`
+14. Add replay/sample data corpus, fixture manifests, and golden outputs
+15. Add licensing/provenance bundle
 
 ### Phase E: Final Codification
 
-15. Write repo-local agent instruction files
-16. Revisit staged path normalization only if still justified
+16. Write repo-local agent instruction files
+17. Revisit staged path normalization only if still justified
 
 ## 9. Immediate First Implementation Slice
 
@@ -706,6 +821,7 @@ The best first tranche is:
 2. root `Makefile` with at least `validate`, `validate-mcu`, and `validate-gui`
 3. `.gitignore` cleanup for current local noise, especially MCU test outputs and `tmp/` rendering debris
 4. `README.md` truth repair
+5. seed `tools/repo_truth_audit.py` in minimal form so truth repair becomes enforceable instead of aspirational
 
 This gives the repository a truthful top-level contract before any bigger churn.
 
