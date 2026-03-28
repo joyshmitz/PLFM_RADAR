@@ -18,6 +18,33 @@ The immediate goal is not to make the repository prettier. The goal is to make i
 - easier for humans and coding agents to modify without hallucinating structure
 - suitable for long-term hardening toward a more serious product baseline
 
+### 1.1 Epistemic Order
+
+This plan is not absolute truth. It is the current guiding artifact and an evolving operational hypothesis that must be continuously checked against the repository itself.
+
+The project will be governed by the following order of authority:
+
+1. **Repository reality**
+   - actual files
+   - runnable commands
+   - passing or failing tests
+   - actual artifact placement
+   - actual current entrypoints
+2. **Current plan and repo contract**
+   - the current best interpretation of repo reality
+   - the current execution sequence for improving the repo
+3. **Agent instruction layers**
+   - `.Codex/AGENTS.md`
+   - `.claude/CLAUDE.md`
+   - other tool-specific wrappers or instruction files
+
+Operational rules:
+
+- If observed repo reality conflicts with the plan, stop and correct the plan or explicitly record the divergence before continuing.
+- If the plan conflicts with agent instructions, agent instructions must be updated to match the repo contract and current plan, not the other way around.
+- No instruction layer may override directly observed repository state without explicit evidence and deliberate justification.
+- Every implementation slice should be treated as a test of the plan itself, not only as execution of the plan.
+
 ## 2. Strategic Position
 
 The repository is not starting from zero. It already contains real value:
