@@ -1,0 +1,62 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.2 Вхідний імпеданс</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-002.png' x='56.0' y='136.0' width='500' height='300.0'/>
+<text x='306.0' y='442.0' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='442.0'>Рисунок 4.2 - Дійсна та уявна частини вхідного імпедансу залежно від частоти. Дійсна частина проходить через</tspan>
+<tspan x='306.0' dy='10.88'>50 Ohm, а уявна - через нуль у точці резонансу.</tspan>
+</text>
+<text x='56' y='473.76' font-size='9.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='473.76'>Що це показує: комплексний вхідний імпеданс Z_in = R + jX як функцію частоти. У справжньому</tspan>
+<tspan x='56' dy='12.032'>резонансі уявна частина переходить через нуль, тобто антена є чисто активною, а дійсна частина</tspan>
+<tspan x='56' dy='12.032'>дорівнює 50 Ohm і збігається з опором тракту. Для патча XPA-105 отримано 47.1 + j0.2 Ohm на 10.495</tspan>
+<tspan x='56' dy='12.032'>GHz - це майже ідеальне узгодження із системою 50 Ohm.</tspan>
+</text>
+<rect x='56' y='533.888' width='210.0' height='22.560000000000002' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='548.688' font-size='8.8' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='548.688'>Параметр</tspan>
+</text>
+<rect x='266.0' y='533.888' width='290.0' height='22.560000000000002' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='411.0' y='548.688' font-size='8.8' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='411.0' y='548.688'>Значення</tspan>
+</text>
+<rect x='56' y='556.4480000000001' width='210.0' height='22.439999999999998' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='556.4480000000001' width='290.0' height='22.439999999999998' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='571.1480000000001' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='571.1480000000001'>Zin у резонансі</tspan>
+</text>
+<text x='411.0' y='571.1480000000001' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='571.1480000000001'>47.1 + j0.2 Ohm</tspan>
+</text>
+<rect x='56' y='578.8880000000001' width='210.0' height='22.439999999999998' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='578.8880000000001' width='290.0' height='22.439999999999998' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='593.5880000000002' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='593.5880000000002'>Пік дійсної частини (антирезонанс)</tspan>
+</text>
+<text x='411.0' y='593.5880000000002' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='593.5880000000002'>~150 Ohm</tspan>
+</text>
+<rect x='56' y='601.3280000000002' width='210.0' height='22.439999999999998' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='601.3280000000002' width='290.0' height='22.439999999999998' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='616.0280000000002' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='616.0280000000002'>Нульове перетинання уявної частини</tspan>
+</text>
+<text x='411.0' y='616.0280000000002' font-size='8.7' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='616.0280000000002'>10.495 GHz (підтверджує справжній резонанс)</tspan>
+</text>
+<text x='56' y='633.7680000000003' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='633.7680000000003'>Практичне значення для плати: вхідний імпеданс 47.1 Ohm дозволяє підключати антену безпосередньо до</tspan>
+<tspan x='56' dy='11.776'>50-омних ліній передачі та мікросхеми формувача променя ADAR1000 без окремої мережі узгодження. Це</tspan>
+<tspan x='56' dy='11.776'>спрощує топологію PCB і знижує втрати. Внутрішні підсилювачі ADAR1000 теж розраховані на джерело й</tspan>
+<tspan x='56' dy='11.776'>навантаження 50 Ohm.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>7</tspan>
+</text>
+</svg>

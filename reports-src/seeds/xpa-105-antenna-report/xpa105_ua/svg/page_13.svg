@@ -1,0 +1,144 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>5. ККД та оцінка характеристик масиву</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>5.1 ККД одиночного елемента</tspan>
+</text>
+<rect x='56' y='136.0' width='230.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='150.9' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='150.9'>Параметр</tspan>
+</text>
+<rect x='286.0' y='136.0' width='270.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='421.0' y='150.9' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='421.0' y='150.9'>Значення</tspan>
+</text>
+<rect x='56' y='158.68' width='230.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='158.68' width='270.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='173.48000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='173.48000000000002'>ККД випромінювання</tspan>
+</text>
+<text x='421.0' y='173.48000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='173.48000000000002'>56.7%</tspan>
+</text>
+<rect x='56' y='181.24' width='230.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='181.24' width='270.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='196.04000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='196.04000000000002'>Реалізоване підсилення</tspan>
+</text>
+<text x='421.0' y='196.04000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='196.04000000000002'>4.72 dBi</tspan>
+</text>
+<rect x='56' y='203.8' width='230.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='203.8' width='270.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='218.60000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='218.60000000000002'>Директивність</tspan>
+</text>
+<text x='421.0' y='218.60000000000002' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='218.60000000000002'>7.19 dBi</tspan>
+</text>
+<rect x='56' y='226.36' width='230.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='226.36' width='270.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='241.16000000000003' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='241.16000000000003'>Перевірка Gain = D x eta</tspan>
+</text>
+<text x='421.0' y='241.16000000000003' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='241.16000000000003'>7.19 - 2.47 = 4.72 dBi  OK</tspan>
+</text>
+<text x='56' y='258.92' font-size='9.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='258.92'>ККД 56.7% в основному обмежується діелектричними втратами: tan d = 0.0037 є помірним значенням для</tspan>
+<tspan x='56' dy='11.648'>RO4350B на 10 GHz. Втрати в провіднику з міді 1 oz є другорядними, а втрати на поверхневі хвилі для</tspan>
+<tspan x='56' dy='11.648'>такої товщини підкладки мінімальні. Підняти ККД до приблизно 75% можна за рахунок товстішої підкладки</tspan>
+<tspan x='56' dy='11.648'>0.254 mm (10 mil), але ціною збільшення висоти масиву.</tspan>
+</text>
+<text x='56' y='317.512' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='317.512'>5.2 Оцінка характеристик масиву</tspan>
+</text>
+<text x='56' y='341.512' font-size='9.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='341.512'>Для повного фазованого масиву сімейства XPA-105 8x16 з кроком елементів lambda/2:</tspan>
+</text>
+<rect x='56' y='361.544' width='165.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='376.24399999999997' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='376.24399999999997'>Параметр</tspan>
+</text>
+<rect x='221.0' y='361.544' width='195.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='318.5' y='376.24399999999997' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='318.5' y='376.24399999999997'>Розрахунок</tspan>
+</text>
+<rect x='416.0' y='361.544' width='140.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='486.0' y='376.24399999999997' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='486.0' y='376.24399999999997'>Результат</tspan>
+</text>
+<rect x='56' y='383.984' width='165.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='221.0' y='383.984' width='195.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='416.0' y='383.984' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='398.484' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='398.484'>Підсилення множника масиву</tspan>
+</text>
+<text x='318.5' y='398.484' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='318.5' y='398.484'>10 x log10(128)</tspan>
+</text>
+<text x='486.0' y='398.484' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='486.0' y='398.484'>21.1 dB</tspan>
+</text>
+<rect x='56' y='406.18399999999997' width='165.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='221.0' y='406.18399999999997' width='195.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='416.0' y='406.18399999999997' width='140.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='420.68399999999997' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='420.68399999999997'>Директивність масиву</tspan>
+</text>
+<text x='318.5' y='420.68399999999997' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='318.5' y='420.68399999999997'>7.19 + 21.1 dBi</tspan>
+</text>
+<text x='486.0' y='420.68399999999997' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='486.0' y='420.68399999999997'>28.3 dBi</tspan>
+</text>
+<rect x='56' y='428.38399999999996' width='165.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='221.0' y='428.38399999999996' width='195.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='416.0' y='428.38399999999996' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='442.88399999999996' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='442.88399999999996'>Підсилення масиву (по нормалі)</tspan>
+</text>
+<text x='318.5' y='442.88399999999996' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='318.5' y='442.88399999999996'>4.72 + 21.1 dBi</tspan>
+</text>
+<text x='486.0' y='442.88399999999996' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='486.0' y='442.88399999999996'>25.8 dBi</tspan>
+</text>
+<rect x='56' y='450.58399999999995' width='165.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='221.0' y='450.58399999999995' width='195.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='416.0' y='450.58399999999995' width='140.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='465.08399999999995' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='465.08399999999995'>Втрати сканування на максимумі</tspan>
+</text>
+<text x='318.5' y='465.08399999999995' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='318.5' y='465.08399999999995'>~2-3 dB при +/-45 deg</tspan>
+</text>
+<text x='486.0' y='465.08399999999995' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='486.0' y='465.08399999999995'>~23-24 dBi</tspan>
+</text>
+<rect x='56' y='472.78399999999993' width='165.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='221.0' y='472.78399999999993' width='195.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='416.0' y='472.78399999999993' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='487.28399999999993' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='487.28399999999993'>EIRP при 1 W Tx</tspan>
+</text>
+<text x='318.5' y='487.28399999999993' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='318.5' y='487.28399999999993'>25.8 + 30 dBm</tspan>
+</text>
+<text x='486.0' y='487.28399999999993' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='486.0' y='487.28399999999993'>55.8 dBm</tspan>
+</text>
+<text x='56' y='504.9839999999999' font-size='9.0' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='504.9839999999999'>Конкурентний контекст: комерційні X-діапазонні фазовані решітки Echodyne EchoGuard і Fortem TrueView</tspan>
+<tspan x='56' dy='11.52'>зазвичай лежать у діапазоні 25-30 dBi. Оцінене підсилення XPA-105 8x16 на рівні 25.8 dBi є цілком</tspan>
+<tspan x='56' dy='11.52'>конкурентним і підтверджує правильність вибраної антенної архітектури. Варіант XPA-105 32x16 із</tspan>
+<tspan x='56' dy='11.52'>підсилювачами потужності на GaN додає ще близько 10 dB по тракту передавання, частково компенсуючи</tspan>
+<tspan x='56' dy='11.52'>втрати ККД одиночного елемента.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>13</tspan>
+</text>
+</svg>

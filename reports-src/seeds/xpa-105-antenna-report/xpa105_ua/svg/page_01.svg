@@ -1,0 +1,55 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='165' y1='132' x2='447' y2='132' stroke='#2b3f67' stroke-width='3'/>
+<text x='306.0' y='195' font-size='28' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='middle'>
+<tspan x='306.0' y='195'>ЗВІТ ПРО МОДЕЛЮВАННЯ АНТЕНИ</tspan>
+</text>
+<text x='306.0' y='240' font-size='16' font-weight='400' font-family='sans-serif' fill='#405a8a' text-anchor='middle'>
+<tspan x='306.0' y='240'>XPA-105 X-діапазонна фазована радарна решітка</tspan>
+</text>
+<text x='306.0' y='272' font-size='12.5' font-weight='400' font-family='sans-serif' fill='#405a8a' text-anchor='middle'>
+<tspan x='306.0' y='272'>Аналіз OpenEMS FDTD - одиночний патч-елемент на 10.5 GHz</tspan>
+</text>
+<line x1='165' y1='318' x2='447' y2='318' stroke='#2b3f67' stroke-width='3'/>
+<rect x='72' y='362' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='129.0' y='383' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='129.0' y='383'>10.5 GHz</tspan>
+</text>
+<rect x='188' y='362' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='245.0' y='383' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='245.0' y='383'>S11: -30.6 dB</tspan>
+</text>
+<rect x='304' y='362' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='361.0' y='383' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='361.0' y='383'>7.19 dBi</tspan>
+</text>
+<rect x='420' y='362' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='477.0' y='383' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='477.0' y='383'>Узгодження 50 Ohm</tspan>
+</text>
+<rect x='72' y='406' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='129.0' y='427' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='129.0' y='427'>Підкладка RO4350B</tspan>
+</text>
+<rect x='188' y='406' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='245.0' y='427' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='245.0' y='427'>ККД 56.7%</tspan>
+</text>
+<rect x='304' y='406' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='361.0' y='427' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='361.0' y='427'>Смуга 50 MHz</tspan>
+</text>
+<rect x='420' y='406' width='114' height='34' fill='#2b3f67' stroke='#2b3f67' stroke-width='1' rx='0' ry='0'/>
+<text x='477.0' y='427' font-size='9' font-weight='400' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='477.0' y='427'>Масив 128 ел.</tspan>
+</text>
+<text x='306.0' y='548' font-size='11' font-weight='400' font-family='sans-serif' fill='#99a3b4' text-anchor='middle'>
+<tspan x='306.0' y='548'>XPA-105 family | Березень 2026 | Версія 1.0</tspan>
+</text>
+<text x='306.0' y='570' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#99a3b4' text-anchor='middle'>
+<tspan x='306.0' y='570'>Розв&apos;язувач: OpenEMS v0.0.36 (FDTD) | Платформа: macOS ARM64 | Час виконання: ~130 s (360k cells)</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>1</tspan>
+</text>
+</svg>

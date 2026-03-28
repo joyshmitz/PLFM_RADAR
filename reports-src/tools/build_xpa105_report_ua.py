@@ -851,7 +851,7 @@ def main() -> None:
     project_root = script_path.parents[2]
     input_pdf = project_root / "docs" / "XPA-105_Antenna_Report_en.pdf"
     output_pdf = project_root / "docs" / "XPA-105_Antenna_Report_ua.pdf"
-    work_dir = project_root / "tmp" / "pdfs" / "xpa105_ua"
+    work_dir = project_root / "reports-src" / "seeds" / "xpa-105-antenna-report" / "xpa105_ua"
     image_dir = project_root / "tmp" / "pdfs" / "extracted"
     svg_dir = work_dir / "svg"
     pdf_dir = work_dir / "pdf"

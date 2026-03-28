@@ -1,0 +1,61 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>7. Ключові висновки та рекомендації</tspan>
+</text>
+<text x='56' y='112' font-size='10.8' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>Висновок 1: підтверджено помилку в репозиторії</tspan>
+</text>
+<text x='56' y='131.824' font-size='9.15' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='131.824'>Калькулятор patch_antenna.py у PLFM_RADAR має помилку у формулі ефективної діелектричної проникності,</tspan>
+<tspan x='56' dy='11.712000000000002'>яка дає зсув частоти приблизно на 14%. Помилку варто передати в основний репозиторій і виправити. У</tspan>
+<tspan x='56' dy='11.712000000000002'>цьому моделюванні вже використано коректну формулу.</tspan>
+</text>
+<text x='56' y='180.96' font-size='10.8' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='180.96'>Висновок 2: компроміс тонкої підкладки</tspan>
+</text>
+<text x='56' y='200.78400000000002' font-size='9.15' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='200.78400000000002'>Підкладка RO4350B товщиною 0.102 mm дає дуже компактний профіль фазованої решітки - загальна товщина</tspan>
+<tspan x='56' dy='11.712000000000002'>масиву менша за 2 mm, але водночас обмежує смугу приблизно до 50 MHz і ККД до 57%. Для задач, де</tspan>
+<tspan x='56' dy='11.712000000000002'>потрібна ширша смуга, наприклад краща роздільна здатність за дальністю на коротких дистанціях, товстіша</tspan>
+<tspan x='56' dy='11.712000000000002'>підкладка 0.254 mm дасть близько 1.5% смуги, тобто приблизно 160 MHz, і ККД близько 75%, але зробить</tspan>
+<tspan x='56' dy='11.712000000000002'>масив товщим.</tspan>
+</text>
+<text x='56' y='273.34400000000005' font-size='10.8' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='273.34400000000005'>Висновок 3: характеристики масиву конкурентні</tspan>
+</text>
+<text x='56' y='293.16800000000006' font-size='9.15' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='293.16800000000006'>Підсилення одиночного елемента 4.72 dBi у поєднанні з множником масиву для 128 елементів на рівні 21.1</tspan>
+<tspan x='56' dy='11.712000000000002'>dB повинно дати приблизно 25-26 dBi підсилення масиву по нормалі. Це відповідає рівню комерційних</tspan>
+<tspan x='56' dy='11.712000000000002'>X-діапазонних фазованих решіток Echodyne, Fortem та інших, тобто архітектура антени XPA-105 виглядає</tspan>
+<tspan x='56' dy='11.712000000000002'>ринково життєздатною для систем контр-UAS і радарів спостереження.</tspan>
+</text>
+<text x='56' y='354.0160000000001' font-size='10.8' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='354.0160000000001'>Висновок 4: висока чутливість до виробництва</tspan>
+</text>
+<text x='56' y='373.8400000000001' font-size='9.15' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='373.8400000000001'>Смуга 50 MHz означає, що антена дуже чутлива до допуску за довжиною патча. Помилка виготовлення 0.1 mm</tspan>
+<tspan x='56' dy='11.712000000000002'>зсуває резонанс приблизно на 140 MHz і виводить антену за межі смуги -10 dB. Виробництво PCB має</tspan>
+<tspan x='56' dy='11.712000000000002'>тримати розмір патча в межах +/-0.025 mm (+/-1 mil). Сучасні RF-виробники на кшталт TTM Technologies</tspan>
+<tspan x='56' dy='11.712000000000002'>або Rogers-certified фабрик це забезпечують, але собівартість буде вищою, ніж у стандартного FR-4.</tspan>
+</text>
+<text x='56' y='434.6880000000001' font-size='10.8' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='434.6880000000001'>Висновок 5: шлях валідації на етапі 1</tspan>
+</text>
+<text x='56' y='454.5120000000001' font-size='9.15' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='454.5120000000001'>Коли буде доступне апаратне забезпечення для етапів 1-3 демо-плану, змодельований S11 можна напряму</tspan>
+<tspan x='56' dy='11.712000000000002'>звірити з вимірюваннями на VNA. Вузька смуга робить цю антену дуже показовим тест-кейсом: добре</tspan>
+<tspan x='56' dy='11.712000000000002'>узгоджений виміряний S11 на 10.5 GHz одночасно підтвердить коректність симуляції та якість виготовлення</tspan>
+<tspan x='56' dy='11.712000000000002'>PCB.</tspan>
+</text>
+<line x1='56' y1='740' x2='556' y2='740' stroke='#2b3f67' stroke-width='2'/>
+<text x='306.0' y='758' font-size='7.4' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='758'>Звіт сформовано в межах XPA-105 Phase 0 - програмне моделювання та валідація</tspan>
+<tspan x='306.0' dy='9.472000000000001'>Моделювання OpenEMS FDTD на Apple Silicon M-series, macOS 15.x | Скрипт: aeris10_antenna_sim.py</tspan>
+<tspan x='306.0' dy='9.472000000000001'>Джерело даних: https://github.com/NawfalMotii79/PLFM_RADAR | Поточний репозиторій: https://github.com/joyshmitz/PLFM_RADAR</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>15</tspan>
+</text>
+</svg>

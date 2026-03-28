@@ -1,0 +1,71 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.1 S-параметри (втрати на відбиття)</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-000.png' x='56.0' y='136.0' width='500' height='300.0'/>
+<text x='306.0' y='442.0' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='442.0'>Рисунок 4.1 - Втрати на відбиття S11 залежно від частоти. Глибокий мінімум на 10.495 GHz підтверджує резонанс</tspan>
+<tspan x='306.0' dy='10.88'>із рівнем -30.6 dB.</tspan>
+</text>
+<text x='56' y='473.76' font-size='9.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='473.76'>Що це показує: параметр S11 описує, яка частка потужності відбивається назад від точки живлення</tspan>
+<tspan x='56' dy='12.16'>антени. Значення нижче -10 dB означає, що понад 90% потужності випромінюється або поглинається,</tspan>
+<tspan x='56' dy='12.16'>тобто узгодження є прийнятним. Патч XPA-105 досягає -30.6 dB на 10.495 GHz, отже антена приймає</tspan>
+<tspan x='56' dy='12.16'>приблизно 99.9% падаючої потужності.</tspan>
+</text>
+<rect x='56' y='534.4' width='200.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='549.3' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='549.3'>Параметр</tspan>
+</text>
+<rect x='256.0' y='534.4' width='300.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='406.0' y='549.3' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='406.0' y='549.3'>Значення</tspan>
+</text>
+<rect x='56' y='557.0799999999999' width='200.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='256.0' y='557.0799999999999' width='300.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='571.8799999999999' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='571.8799999999999'>Резонансна частота</tspan>
+</text>
+<text x='406.0' y='571.8799999999999' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='406.0' y='571.8799999999999'>10.495 GHz (ціль: 10.5 GHz)</tspan>
+</text>
+<rect x='56' y='579.6399999999999' width='200.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='256.0' y='579.6399999999999' width='300.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='594.4399999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='594.4399999999998'>S11 у резонансі</tspan>
+</text>
+<text x='406.0' y='594.4399999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='406.0' y='594.4399999999998'>-30.63 dB</tspan>
+</text>
+<rect x='56' y='602.1999999999998' width='200.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='256.0' y='602.1999999999998' width='300.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='616.9999999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='616.9999999999998'>Смуга за рівнем -10 dB</tspan>
+</text>
+<text x='406.0' y='616.9999999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='406.0' y='616.9999999999998'>50 MHz (10.470 - 10.520 GHz)</tspan>
+</text>
+<rect x='56' y='624.7599999999998' width='200.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='256.0' y='624.7599999999998' width='300.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='639.5599999999997' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='639.5599999999997'>Відносна смуга</tspan>
+</text>
+<text x='406.0' y='639.5599999999997' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='406.0' y='639.5599999999997'>0.48%</tspan>
+</text>
+<rect x='56' y='657.3199999999997' width='500' height='61.056000000000004' fill='#f4fbf6' stroke='#43b96d' stroke-width='1.5' rx='4' ry='4'/>
+<text x='64' y='671.3199999999997' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='64' y='671.3199999999997'>Примітка щодо конструкції: вузька смуга 0.48% є фізично коректною для підкладки товщиною 0.102 mm</tspan>
+<tspan x='64' dy='11.264000000000001'>(h/lambda = 0.0036). Типові X-діапазонні патчі на 4-mil Rogers дають близько 0.3-0.8% смуги. Це означає</tspan>
+<tspan x='64' dy='11.264000000000001'>високу чутливість до виробничих допусків: зміна довжини патча на 0.1 mm зсуває резонанс приблизно на</tspan>
+<tspan x='64' dy='11.264000000000001'>140 MHz. Для виготовлення PCB потрібен допуск не гірше +/-0.025 mm (+/-1 mil).</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>6</tspan>
+</text>
+</svg>

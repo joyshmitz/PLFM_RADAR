@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.5 Полярна діаграма спрямованості</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-008.png' x='46.0' y='136.0' width='520' height='266.93333333333334'/>
+<text x='306.0' y='408.93333333333334' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='408.93333333333334'>Рисунок 4.5 - Полярні діаграми випромінювання для E-площини та H-площини на 10.5 GHz.</tspan>
+</text>
+<text x='56' y='429.81333333333333' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='429.81333333333333'>Що це показує: ті самі дані випромінювання, що й на рисунку 4.4, але в полярних координатах - це</tspan>
+<tspan x='56' dy='11.776'>традиційний формат для антенних діаграм. Головний пелюсток спрямований на theta = 0 deg, тобто</tspan>
+<tspan x='56' dy='11.776'>перпендикулярно до поверхні патча, а до горизонту рівень плавно спадає приблизно за косинусоподібним</tspan>
+<tspan x='56' dy='11.776'>законом. Зворотне випромінювання в районі theta = 180 deg пригнічується земною площиною.</tspan>
+</text>
+<text x='56' y='488.9173333333333' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='488.9173333333333'>E-площина трохи вужча за H-площину - це типовий результат для прямокутних патчів. E-площина пов&apos;язана</tspan>
+<tspan x='56' dy='11.776'>з резонансним розміром L = 7.401 mm, тоді як H-площина визначається ширшим нерезонансним розміром W =</tspan>
+<tspan x='56' dy='11.776'>9.545 mm.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>10</tspan>
+</text>
+</svg>

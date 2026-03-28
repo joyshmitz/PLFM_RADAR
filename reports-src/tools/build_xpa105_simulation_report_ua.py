@@ -18,7 +18,7 @@ from reportlab.platypus import Image, PageBreak, Paragraph, SimpleDocTemplate, S
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Simulation_Report_en.pdf"
 OUTPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Simulation_Report_ua.pdf"
-IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "xpa105_sim_full_images"
+IMAGE_DIR = PROJECT_ROOT / "reports-src" / "seeds" / "xpa-105-simulation-report" / "xpa105_sim_full_images"
 PRODUCT_FAMILY = "XPA-105"
 PRODUCT_FAMILY_FOOTER = "XPA-105 family"
 PRODUCT_VARIANT_816 = "XPA-105 8x16"

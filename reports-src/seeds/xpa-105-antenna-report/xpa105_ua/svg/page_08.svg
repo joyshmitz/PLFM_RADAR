@@ -1,0 +1,28 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.3 VSWR</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-004.png' x='56.0' y='136.0' width='500' height='300.0'/>
+<text x='306.0' y='444.0' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='444.0'>Рисунок 4.3 - Коефіцієнт стоячої хвилі за напругою (VSWR) залежно від частоти. Межа VSWR &lt; 2:1 задає корисну</tspan>
+<tspan x='306.0' dy='10.88'>робочу смугу.</tspan>
+</text>
+<text x='56' y='475.76' font-size='9.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='475.76'>Що це показує: VSWR є альтернативним способом описати якість узгодження імпедансу. VSWR = 1.0</tspan>
+<tspan x='56' dy='12.288'>означає ідеальне узгодження, а VSWR &lt; 2.0, що відповідає S11 &lt; -10 dB, є стандартним порогом</tspan>
+<tspan x='56' dy='12.288'>прийнятної роботи. Патч XPA-105 має мінімум VSWR близько 1.06 на 10.495 GHz, тобто узгодження є</tspan>
+<tspan x='56' dy='12.288'>відмінним.</tspan>
+</text>
+<text x='56' y='536.912' font-size='9.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='536.912'>Смуга VSWR &lt; 2:1 відповідає тим самим 50 MHz, які було визначено в розділі 4.1 за критерієм S11 =</tspan>
+<tspan x='56' dy='12.288'>-10 dB. Поза цією смугою розузгодження швидко зростає через резонансну природу патч-антени.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>8</tspan>
+</text>
+</svg>

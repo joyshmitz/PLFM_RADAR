@@ -15,17 +15,17 @@ except ModuleNotFoundError as exc:
     raise SystemExit(
         "build_xpa105_report_ua_vector.py requires reportlab. "
         "Install it with `uv pip install reportlab` or use the canonical "
-        "generator tmp/pdfs/build_xpa105_report_ua.py instead."
+        "generator reports-src/tools/build_xpa105_report_ua.py instead."
     ) from exc
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 # Experimental preview renderer only. The canonical published report generator is
-# tmp/pdfs/build_xpa105_report_ua.py, which owns docs/XPA-105_Antenna_Report_ua.pdf.
-LEGACY_PATH = PROJECT_ROOT / "tmp" / "pdfs" / "build_xpa105_report_ua.py"
+# reports-src/tools/build_xpa105_report_ua.py, which owns docs/XPA-105_Antenna_Report_ua.pdf.
+LEGACY_PATH = PROJECT_ROOT / "reports-src" / "tools" / "build_xpa105_report_ua.py"
 INPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Antenna_Report_en.pdf"
-OUTPUT_PDF = PROJECT_ROOT / "tmp" / "pdfs" / "previews" / "XPA-105_Antenna_Report_ua_vector_preview.pdf"
-IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "extracted"
+OUTPUT_PDF = PROJECT_ROOT / "reports-src" / "previews" / "XPA-105_Antenna_Report_ua_vector_preview.pdf"
+IMAGE_DIR = PROJECT_ROOT / "reports-src" / "seeds" / "xpa-105-antenna-report" / "extracted"
 PRODUCT_FAMILY = "XPA-105"
 PRODUCT_FAMILY_FOOTER = "XPA-105 family"
 PRODUCT_VARIANT_816 = "XPA-105 8x16"

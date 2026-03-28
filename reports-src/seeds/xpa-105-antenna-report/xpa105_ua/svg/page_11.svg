@@ -1,0 +1,30 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.6 Тривимірна діаграма спрямованості</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-010.png' x='71.0' y='136.0' width='470' height='400.87238644556595'/>
+<text x='306.0' y='544.872386445566' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='544.872386445566'>Рисунок 4.6 - Тривимірна поверхня діаграми спрямованості. Колір показує рівень директивності в dBi.</tspan>
+</text>
+<text x='56' y='565.752386445566' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='565.752386445566'>Що це показує: повну тривимірну візуалізацію діаграми випромінювання, де і відстань від початку</tspan>
+<tspan x='56' dy='11.776'>координат, і колір відповідають директивності в dBi. Форма має характерний вигляд широкоспрямованого</tspan>
+<tspan x='56' dy='11.776'>патча - максимум на theta = 0 deg, тобто в напрямку від земної площини, і мінімальне випромінювання в</tspan>
+<tspan x='56' dy='11.776'>задню півсферу.</tspan>
+</text>
+<text x='56' y='624.856386445566' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='624.856386445566'>Виробнича примітка: тривимірна діаграма не показує неочікуваних бічних пелюстків або спотворень від</tspan>
+<tspan x='56' dy='11.392000000000001'>скінченної земної площини чи щупа живлення. У реальному масиві взаємний зв&apos;язок між сусідніми елементами</tspan>
+<tspan x='56' dy='11.392000000000001'>з кроком 14.285 mm = lambda/2 змінить вбудовану діаграму елемента, зазвичай зменшуючи ширину H-площини на</tspan>
+<tspan x='56' dy='11.392000000000001'>5-10 deg і додаючи невеликі асиметрії. Повна симуляція масиву на 128 елементів врахує ці ефекти, але</tspan>
+<tspan x='56' dy='11.392000000000001'>вимагатиме приблизно в 1000 разів більше обчислень.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>11</tspan>
+</text>
+</svg>

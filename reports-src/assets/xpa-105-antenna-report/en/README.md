@@ -12,4 +12,4 @@ The current normalized report uses the shared figure set here:
 
 Original migration seeds live in temporary space and should be curated into the shared or language-specific directories rather than referenced from `tmp/` long-term:
 
-- `tmp/pdfs/extracted/img-*.png`
+- `reports-src/seeds/xpa-105-antenna-report/extracted/img-*.png`

@@ -1,0 +1,68 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.4 Діаграма спрямованості</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-006.png' x='56.0' y='136.0' width='500' height='300.0'/>
+<text x='306.0' y='444.0' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='444.0'>Рисунок 4.4 - Зрізи директивності в E-площині (phi = 0 deg) та H-площині (phi = 90 deg) на частоті 10.5 GHz.</tspan>
+</text>
+<text x='56' y='464.88' font-size='9.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='464.88'>Що це показує: далеку зону випромінювання одиночного патч-елемента у вигляді залежності</tspan>
+<tspan x='56' dy='12.032'>директивності (dBi) від кута піднесення theta. Подано два головні зрізи: E-площина, яка містить</tspan>
+<tspan x='56' dy='12.032'>вектор електричного поля, та H-площина, яка містить вектор магнітного поля.</tspan>
+</text>
+<rect x='56' y='512.976' width='230.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='527.876' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='527.876'>Параметр</tspan>
+</text>
+<rect x='286.0' y='512.976' width='270.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='421.0' y='527.876' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='421.0' y='527.876'>Значення</tspan>
+</text>
+<rect x='56' y='535.656' width='230.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='535.656' width='270.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='550.4559999999999' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='550.4559999999999'>Пікова директивність</tspan>
+</text>
+<text x='421.0' y='550.4559999999999' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='550.4559999999999'>7.19 dBi</tspan>
+</text>
+<rect x='56' y='558.2159999999999' width='230.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='558.2159999999999' width='270.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='573.0159999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='573.0159999999998'>HPBW в E-площині</tspan>
+</text>
+<text x='421.0' y='573.0159999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='573.0159999999998'>~75 deg</tspan>
+</text>
+<rect x='56' y='580.7759999999998' width='230.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='580.7759999999998' width='270.0' height='22.560000000000002' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='595.5759999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='595.5759999999998'>HPBW в H-площині</tspan>
+</text>
+<text x='421.0' y='595.5759999999998' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='595.5759999999998'>~85 deg</tspan>
+</text>
+<rect x='56' y='603.3359999999998' width='230.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='603.3359999999998' width='270.0' height='22.560000000000002' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='618.1359999999997' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='618.1359999999997'>Відношення вперед/назад</tspan>
+</text>
+<text x='421.0' y='618.1359999999997' font-size='8.8' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='421.0' y='618.1359999999997'>&gt; 15 dB</tspan>
+</text>
+<text x='56' y='635.8959999999997' font-size='9.0' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='635.8959999999997'>Наслідок для масиву: діаграма одиночного елемента задає оболонку, всередині якої можна електронно</tspan>
+<tspan x='56' dy='11.52'>сканувати промінь. Ширина пелюстка близько 75-85 deg дозволяє масиву з 128 елементів відхиляти промінь</tspan>
+<tspan x='56' dy='11.52'>до +/-45 deg без суттєвого падіння підсилення. Після +/-60 deg підсилення елемента швидко зменшується,</tspan>
+<tspan x='56' dy='11.52'>тому XPA-105 використовує механічний обертач для повного азимутального покриття.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>9</tspan>
+</text>
+</svg>

@@ -1,0 +1,121 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>1. Підсумок для керівництва</tspan>
+</text>
+<text x='56' y='112' font-size='10.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='112'>Було змодельовано та проаналізовано один прямокутний мікросмужковий патч-елемент для</tspan>
+<tspan x='56' dy='12.927999999999999'>фазованої решітки радара XPA-105 8x16 за допомогою розв&apos;язувача OpenEMS FDTD. Моделювання</tspan>
+<tspan x='56' dy='12.927999999999999'>підтверджує роботу антени на 10.5 GHz на підкладці Rogers RO4350B і показує, що одиночний</tspan>
+<tspan x='56' dy='12.927999999999999'>елемент виконує всі цільові вимоги перед інтеграцією у повний масив 8 x 16 (128 елементів).</tspan>
+</text>
+<rect x='56' y='175.712' width='120.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='190.612' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='190.612'>Метрика</tspan>
+</text>
+<rect x='176.0' y='175.712' width='120.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='236.0' y='190.612' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='236.0' y='190.612'>Значення</tspan>
+</text>
+<rect x='296.0' y='175.712' width='260.0' height='22.68' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='426.0' y='190.612' font-size='8.9' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='426.0' y='190.612'>Оцінка</tspan>
+</text>
+<rect x='56' y='198.392' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='198.392' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='198.392' width='260.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='213.292' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='213.292'>Резонансна частота</tspan>
+</text>
+<text x='236.0' y='213.292' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='213.292'>10.495 GHz</tspan>
+</text>
+<text x='426.0' y='213.292' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='213.292'>Точно в ціль (0.05% від 10.5 GHz)</tspan>
+</text>
+<rect x='56' y='221.072' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='221.072' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='221.072' width='260.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='235.972' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='235.972'>Втрати на відбиття</tspan>
+<tspan x='62' dy='10.68'>(S11)</tspan>
+</text>
+<text x='236.0' y='235.972' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='235.972'>-30.6 dB</tspan>
+</text>
+<text x='426.0' y='235.972' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='235.972'>Відмінне узгодження</tspan>
+</text>
+<rect x='56' y='243.752' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='243.752' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='243.752' width='260.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='258.652' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='258.652'>Вхідний імпеданс</tspan>
+</text>
+<text x='236.0' y='258.652' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='258.652'>47.1 + j0.2 Ohm</tspan>
+</text>
+<text x='426.0' y='258.652' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='258.652'>Майже ідеальне узгодження з 50 Ohm</tspan>
+</text>
+<rect x='56' y='266.432' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='266.432' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='266.432' width='260.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='281.332' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='281.332'>Смуга за рівнем -10 dB</tspan>
+</text>
+<text x='236.0' y='281.332' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='281.332'>50 MHz (0.48%)</tspan>
+</text>
+<text x='426.0' y='281.332' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='281.332'>Вузька, що очікувано для тонкої підкладки</tspan>
+</text>
+<rect x='56' y='289.112' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='289.112' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='289.112' width='260.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='304.012' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='304.012'>Пікова директивність</tspan>
+</text>
+<text x='236.0' y='304.012' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='304.012'>7.19 dBi</tspan>
+</text>
+<text x='426.0' y='304.012' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='304.012'>Класичне значення для одиночного патча</tspan>
+</text>
+<rect x='56' y='311.79200000000003' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='311.79200000000003' width='120.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='311.79200000000003' width='260.0' height='22.68' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='326.692' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='326.692'>ККД випромінювання</tspan>
+</text>
+<text x='236.0' y='326.692' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='326.692'>56.7%</tspan>
+</text>
+<text x='426.0' y='326.692' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='326.692'>Адекватно для підкладки 0.102 mm</tspan>
+</text>
+<rect x='56' y='334.47200000000004' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='176.0' y='334.47200000000004' width='120.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='334.47200000000004' width='260.0' height='22.68' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='349.372' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='349.372'>Реалізоване підсилення</tspan>
+</text>
+<text x='236.0' y='349.372' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='236.0' y='349.372'>4.72 dBi</tspan>
+</text>
+<text x='426.0' y='349.372' font-size='8.9' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='426.0' y='349.372'>Узгоджується з D x eta</tspan>
+</text>
+<rect x='56' y='369.15200000000004' width='500' height='74.88' fill='#f4fbf6' stroke='#43b96d' stroke-width='1.5' rx='4' ry='4'/>
+<text x='64' y='383.15200000000004' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='64' y='383.15200000000004'>Ключовий висновок: моделювання підтверджує, що патч-елемент XPA-105 коректно спроєктований для</tspan>
+<tspan x='64' dy='11.776'>роботи на 10.5 GHz. Дуже добре узгодження імпедансу (S11 = -30.6 dB, Zin = 47.1 Ohm) означає</tspan>
+<tspan x='64' dy='11.776'>мінімальне відбиття потужності в точці живлення, а директивність 7.19 dBi узгоджується з</tspan>
+<tspan x='64' dy='11.776'>опублікованими даними для прямокутних мікросмужкових патчів. Для повного масиву з 128 елементів</tspan>
+<tspan x='64' dy='11.776'>очікуване підсилення близько 25.8 dBi є конкурентним для X-діапазонних фазованих решіток.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>3</tspan>
+</text>
+</svg>

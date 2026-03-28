@@ -17,7 +17,7 @@ variants:
       - pdftotext
       - manual normalization
     figure_seed:
-      - tmp/pdfs/extracted/img-*.png
+      - reports-src/seeds/xpa-105-antenna-report/extracted/img-*.png
     normalized_assets:
       - reports-src/assets/xpa-105-antenna-report/common/s11-return-loss.png
       - reports-src/assets/xpa-105-antenna-report/common/input-impedance.png
@@ -34,13 +34,13 @@ variants:
     published_role: branded-translation
     assets_dir: reports-src/assets/xpa-105-antenna-report/ua
     text_seed:
-      - tmp/pdfs/xpa105_ua/svg/page_02.svg
-      - tmp/pdfs/xpa105_ua/svg/page_03.svg
-      - tmp/pdfs/xpa105_ua/svg/page_04.svg
-      - manual normalization from tmp/pdfs/build_xpa105_report_ua.py
+      - reports-src/seeds/xpa-105-antenna-report/xpa105_ua/svg/page_02.svg
+      - reports-src/seeds/xpa-105-antenna-report/xpa105_ua/svg/page_03.svg
+      - reports-src/seeds/xpa-105-antenna-report/xpa105_ua/svg/page_04.svg
+      - manual normalization from reports-src/tools/build_xpa105_report_ua.py
     figure_seed:
-      - tmp/pdfs/extracted/img-*.png
-      - tmp/pdfs/xpa105_ua/svg/page_*.svg
+      - reports-src/seeds/xpa-105-antenna-report/extracted/img-*.png
+      - reports-src/seeds/xpa-105-antenna-report/xpa105_ua/svg/page_*.svg
     normalized_assets:
       - reports-src/assets/xpa-105-antenna-report/common/s11-return-loss.png
       - reports-src/assets/xpa-105-antenna-report/common/input-impedance.png

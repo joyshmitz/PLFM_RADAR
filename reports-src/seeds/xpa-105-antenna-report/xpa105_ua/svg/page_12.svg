@@ -1,0 +1,22 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>4. Результати</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>4.7 Зведена панель</tspan>
+</text>
+<image href='/Users/sd/projects/PLFM_RADAR/reports-src/seeds/xpa-105-antenna-report/extracted/img-012.png' x='46.0' y='136.0' width='520' height='335.09655751469353'/>
+<text x='306.0' y='479.09655751469353' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='middle'>
+<tspan x='306.0' y='479.09655751469353'>Рисунок 4.7 - Зведена панель із чотирма графіками: S11, імпеданс, VSWR та діаграма спрямованості.</tspan>
+</text>
+<text x='56' y='499.9765575146935' font-size='9.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='499.9765575146935'>Що це показує: зібраний на одній сторінці набір основних метрик антени. Такий огляд дає швидку</tspan>
+<tspan x='56' dy='12.16'>оцінку для технічних рев&apos;ю та презентацій інвесторам. Усі чотири графіки підтверджують, що антена</tspan>
+<tspan x='56' dy='12.16'>коректно працює на проєктній частоті 10.5 GHz.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>12</tspan>
+</text>
+</svg>

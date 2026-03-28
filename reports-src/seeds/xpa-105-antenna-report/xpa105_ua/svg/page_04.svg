@@ -1,0 +1,251 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>2. Параметри конструкції</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>2.1 Підкладка: Rogers RO4350B</tspan>
+</text>
+<text x='56' y='136.0' font-size='9.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='136.0'>XPA-105 використовує Rogers RO4350B - високочастотний термореактивний ламінат, який широко</tspan>
+<tspan x='56' dy='12.032'>застосовується в X-діапазонних радарах і 5G-вузлах. Основні параметри підкладки було взято зі схем</tspan>
+<tspan x='56' dy='12.032'>Qucs у репозиторії PLFM_RADAR, калькулятора патч-антени та документації зі стеку плати.</tspan>
+</text>
+<rect x='56' y='182.096' width='140.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='196.796' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='196.796'>Параметр</tspan>
+</text>
+<rect x='196.0' y='182.096' width='90.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='241.0' y='196.796' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='241.0' y='196.796'>Значення</tspan>
+</text>
+<rect x='286.0' y='182.096' width='270.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='292.0' y='196.796' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='292.0' y='196.796'>Джерело</tspan>
+</text>
+<rect x='56' y='204.536' width='140.0' height='32.64' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='204.536' width='90.0' height='32.64' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='204.536' width='270.0' height='32.64' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='219.136' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='219.136'>Діелектрична проникність</tspan>
+<tspan x='62' dy='10.319999999999999'>(eps_r)</tspan>
+</text>
+<text x='241.0' y='219.136' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='219.136'>3.48</tspan>
+</text>
+<text x='292.0' y='219.136' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='292.0' y='219.136'>patch_antenna.py, Qucs, datasheet</tspan>
+</text>
+<rect x='56' y='237.176' width='140.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='237.176' width='90.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='237.176' width='270.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='251.77599999999998' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='251.77599999999998'>Кут втрат (tan d)</tspan>
+</text>
+<text x='241.0' y='251.77599999999998' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='251.77599999999998'>0.0037</tspan>
+</text>
+<text x='292.0' y='251.77599999999998' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='292.0' y='251.77599999999998'>Даташит RO4350B при 10 GHz</tspan>
+</text>
+<rect x='56' y='259.496' width='140.0' height='22.32' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='259.496' width='90.0' height='22.32' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='259.496' width='270.0' height='22.32' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='274.096' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='274.096'>Товщина підкладки</tspan>
+</text>
+<text x='241.0' y='274.096' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='274.096'>0.102 mm</tspan>
+</text>
+<text x='292.0' y='274.096' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='292.0' y='274.096'>Зображення стеку плати (L1-L2 core)</tspan>
+</text>
+<rect x='56' y='281.816' width='140.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='281.816' width='90.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='286.0' y='281.816' width='270.0' height='22.32' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='296.416' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='296.416'>Товщина міді</tspan>
+</text>
+<text x='241.0' y='296.416' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='296.416'>0.035 mm (1 oz)</tspan>
+</text>
+<text x='292.0' y='296.416' font-size='8.6' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='292.0' y='296.416'>Стек плати, визначення SUBST у Qucs</tspan>
+</text>
+<text x='56' y='314.13599999999997' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='314.13599999999997'>2.2 Геометрія патч-елемента</tspan>
+</text>
+<rect x='56' y='338.13599999999997' width='130.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='352.83599999999996' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='352.83599999999996'>Параметр</tspan>
+</text>
+<rect x='186.0' y='338.13599999999997' width='110.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='241.0' y='352.83599999999996' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='241.0' y='352.83599999999996'>Значення</tspan>
+</text>
+<rect x='296.0' y='338.13599999999997' width='260.0' height='22.439999999999998' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='302.0' y='352.83599999999996' font-size='8.7' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='302.0' y='352.83599999999996'>Примітки</tspan>
+</text>
+<rect x='56' y='360.57599999999996' width='130.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='360.57599999999996' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='360.57599999999996' width='260.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='374.97599999999994' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='374.97599999999994'>Ширина патча (W)</tspan>
+</text>
+<text x='241.0' y='374.97599999999994' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='374.97599999999994'>9.545 mm</tspan>
+</text>
+<text x='302.0' y='374.97599999999994' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='374.97599999999994'>Формула Balanis: c/(2f) x sqrt(2/(eps_r+1))</tspan>
+</text>
+<rect x='56' y='382.65599999999995' width='130.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='382.65599999999995' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='382.65599999999995' width='260.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='397.0559999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='397.0559999999999'>Довжина патча (L)</tspan>
+</text>
+<text x='241.0' y='397.0559999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='397.0559999999999'>7.401 mm</tspan>
+</text>
+<text x='302.0' y='397.0559999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='397.0559999999999'>Підігнано FDTD під резонанс 10.5 GHz</tspan>
+</text>
+<rect x='56' y='404.73599999999993' width='130.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='404.73599999999993' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='404.73599999999993' width='260.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='419.1359999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='419.1359999999999'>Тип живлення</tspan>
+</text>
+<text x='241.0' y='419.1359999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='419.1359999999999'>Щупове (lumped port)</tspan>
+</text>
+<text x='302.0' y='419.1359999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='419.1359999999999'>Узгодження 50 Ohm при y = 1.49 mm від центру</tspan>
+</text>
+<rect x='56' y='426.8159999999999' width='130.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='426.8159999999999' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='426.8159999999999' width='260.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='441.2159999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='441.2159999999999'>Земляна площина</tspan>
+</text>
+<text x='241.0' y='441.2159999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='441.2159999999999'>38.1 x 36.0 mm</tspan>
+</text>
+<text x='302.0' y='441.2159999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='441.2159999999999'>Запас близько lambda/2 за межами патча</tspan>
+</text>
+<rect x='56' y='448.8959999999999' width='130.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='448.8959999999999' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='448.8959999999999' width='260.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='463.2959999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='463.2959999999999'>Крок елементів</tspan>
+</text>
+<text x='241.0' y='463.2959999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='463.2959999999999'>14.285 mm</tspan>
+</text>
+<text x='302.0' y='463.2959999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='463.2959999999999'>lambda/2 на 10.5 GHz</tspan>
+</text>
+<rect x='56' y='470.9759999999999' width='130.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='186.0' y='470.9759999999999' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='296.0' y='470.9759999999999' width='260.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='485.37599999999986' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='485.37599999999986'>Конфігурація масиву</tspan>
+</text>
+<text x='241.0' y='485.37599999999986' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='241.0' y='485.37599999999986'>8 x 16 (128 елементів)</tspan>
+</text>
+<text x='302.0' y='485.37599999999986' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='302.0' y='485.37599999999986'>Повна специфікація XPA-105 8x16</tspan>
+</text>
+<text x='56' y='503.05599999999987' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='503.05599999999987'>2.3 Помилка у patch_antenna.py в репозиторії</tspan>
+</text>
+<text x='56' y='527.0559999999998' font-size='9.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='527.0559999999998'>Калькулятор розмірів патча в PLFM_RADAR/8_Utils/Python/patch_antenna.py містить помилку у формулі</tspan>
+<tspan x='56' dy='11.648'>ефективної діелектричної проникності. У рівнянні Hammerstad у знаменнику має бути ширина патча W, але</tspan>
+<tspan x='56' dy='11.648'>код репозиторію помилково підставляє array[1] x h_cu.</tspan>
+</text>
+<rect x='56' y='569.9999999999998' width='140.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='584.5999999999998' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='584.5999999999998'>Параметр</tspan>
+</text>
+<rect x='196.0' y='569.9999999999998' width='180.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='286.0' y='584.5999999999998' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='286.0' y='584.5999999999998'>Помилково (репозиторій)</tspan>
+</text>
+<rect x='376.0' y='569.9999999999998' width='180.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='466.0' y='584.5999999999998' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='466.0' y='584.5999999999998'>Правильно (Hammerstad)</tspan>
+</text>
+<rect x='56' y='592.3199999999998' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='592.3199999999998' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='376.0' y='592.3199999999998' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='606.8199999999998' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='606.8199999999998'>Знаменник формули</tspan>
+</text>
+<text x='286.0' y='606.8199999999998' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='286.0' y='606.8199999999998'>array[1] x h_cu</tspan>
+</text>
+<text x='466.0' y='606.8199999999998' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='466.0' y='606.8199999999998'>W (ширина патча)</tspan>
+</text>
+<rect x='56' y='614.5199999999999' width='140.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='614.5199999999999' width='180.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='376.0' y='614.5199999999999' width='180.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='629.0199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='629.0199999999999'>eps_r_eff</tspan>
+</text>
+<text x='286.0' y='629.0199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='286.0' y='629.0199999999999'>2.637</tspan>
+</text>
+<text x='466.0' y='629.0199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='466.0' y='629.0199999999999'>3.407</tspan>
+</text>
+<rect x='56' y='636.7199999999999' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='636.7199999999999' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='376.0' y='636.7199999999999' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='651.2199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='651.2199999999999'>Довжина патча</tspan>
+</text>
+<text x='286.0' y='651.2199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='286.0' y='651.2199999999999'>8.694 mm</tspan>
+</text>
+<text x='466.0' y='651.2199999999999' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='466.0' y='651.2199999999999'>7.641 mm</tspan>
+</text>
+<rect x='56' y='658.92' width='140.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='658.92' width='180.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='376.0' y='658.92' width='180.0' height='22.2' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='673.42' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='673.42'>Резонансна частота</tspan>
+</text>
+<text x='286.0' y='673.42' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='286.0' y='673.42'>~9.0 GHz</tspan>
+</text>
+<text x='466.0' y='673.42' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='466.0' y='673.42'>~10.5 GHz</tspan>
+</text>
+<rect x='56' y='681.12' width='140.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='196.0' y='681.12' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='376.0' y='681.12' width='180.0' height='22.2' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='695.62' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='695.62'>Похибка частоти</tspan>
+</text>
+<text x='286.0' y='695.62' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='286.0' y='695.62'>14%</tspan>
+</text>
+<text x='466.0' y='695.62' font-size='8.5' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='466.0' y='695.62'>&lt; 1%</tspan>
+</text>
+<text x='56' y='711.32' font-size='9.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='711.32'>Наслідок: помилкова формула дає патч, який резонує приблизно на 9.0 GHz замість цільових 10.5 GHz,</tspan>
+<tspan x='56' dy='11.648'>тобто помилка становить близько 14% і робить антену непридатною. У цьому звіті використано виправлену</tspan>
+<tspan x='56' dy='11.648'>формулу Hammerstad, що дало точність 0.05% за частотою.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>4</tspan>
+</text>
+</svg>

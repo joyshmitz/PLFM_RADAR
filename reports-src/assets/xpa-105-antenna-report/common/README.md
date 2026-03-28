@@ -12,4 +12,4 @@ Current figure mapping:
 - `radiation-pattern-3d.png`
 - `summary-dashboard.png`
 
-The source material for these files came from temporary extraction outputs under `tmp/pdfs/extracted/`. Once a figure is copied here and referenced by the Markdown sources, this directory becomes the canonical report asset location.
+The source material for these files came from preserved extraction outputs under `reports-src/seeds/xpa-105-antenna-report/extracted/`. Once a figure is copied here and referenced by the Markdown sources, this directory becomes the canonical report asset location.

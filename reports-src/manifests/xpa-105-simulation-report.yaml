@@ -17,8 +17,8 @@ variants:
       - pdftotext
       - manual normalization
     figure_seed:
-      - tmp/pdfs/xpa105_sim_full_images/img-*.png
-      - tmp/pdfs/build_xpa105_simulation_report_ua.py
+      - reports-src/seeds/xpa-105-simulation-report/xpa105_sim_full_images/img-*.png
+      - reports-src/tools/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1
   ua:
     markdown: reports-src/ua/xpa-105-simulation-report.md
@@ -28,9 +28,9 @@ variants:
     assets_dir: reports-src/assets/xpa-105-simulation-report/ua
     text_seed:
       - pdftotext
-      - tmp/pdfs/build_xpa105_simulation_report_ua.py
+      - reports-src/tools/build_xpa105_simulation_report_ua.py
       - manual normalization
     figure_seed:
-      - tmp/pdfs/xpa105_sim_full_images/img-*.png
-      - tmp/pdfs/build_xpa105_simulation_report_ua.py
+      - reports-src/seeds/xpa-105-simulation-report/xpa105_sim_full_images/img-*.png
+      - reports-src/tools/build_xpa105_simulation_report_ua.py
     normalization_status: normalized-markdown-v1

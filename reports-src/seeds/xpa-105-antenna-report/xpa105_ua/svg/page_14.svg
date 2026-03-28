@@ -1,0 +1,214 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='612' height='792' viewBox='0 0 612 792'>
+<rect x='0' y='0' width='612' height='792' fill='white'/>
+<line x1='56' y1='58' x2='556' y2='58' stroke='#2b3f67' stroke-width='3'/>
+<text x='56' y='82' font-size='18' font-weight='700' font-family='sans-serif' fill='#2b3f67' text-anchor='start'>
+<tspan x='56' y='82'>6. Перевірка проти теорії</tspan>
+</text>
+<text x='56' y='112' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='112'>6.1 Швидкі sanity-check перевірки</tspan>
+</text>
+<rect x='56' y='136.0' width='210.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='150.6' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='150.6'>Перевірка</tspan>
+</text>
+<rect x='266.0' y='136.0' width='90.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='311.0' y='150.6' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='311.0' y='150.6'>Очікування</tspan>
+</text>
+<rect x='356.0' y='136.0' width='110.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='411.0' y='150.6' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='411.0' y='150.6'>Виміряно</tspan>
+</text>
+<rect x='466.0' y='136.0' width='90.0' height='22.32' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='511.0' y='150.6' font-size='8.6' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='511.0' y='150.6'>Статус</tspan>
+</text>
+<rect x='56' y='158.32' width='210.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='158.32' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='158.32' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='158.32' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='172.72' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='172.72'>Резонанс біля 10.5 GHz</tspan>
+</text>
+<text x='311.0' y='172.72' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='172.72'>10.5 GHz</tspan>
+</text>
+<text x='411.0' y='172.72' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='172.72'>10.495 GHz</tspan>
+</text>
+<text x='511.0' y='172.72' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='172.72'>PASS</tspan>
+</text>
+<rect x='56' y='180.39999999999998' width='210.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='180.39999999999998' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='180.39999999999998' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='180.39999999999998' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='194.79999999999998' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='194.79999999999998'>S11 &lt; -10 dB</tspan>
+</text>
+<text x='311.0' y='194.79999999999998' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='194.79999999999998'>&lt; -10 dB</tspan>
+</text>
+<text x='411.0' y='194.79999999999998' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='194.79999999999998'>-30.6 dB</tspan>
+</text>
+<text x='511.0' y='194.79999999999998' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='194.79999999999998'>PASS</tspan>
+</text>
+<rect x='56' y='202.47999999999996' width='210.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='202.47999999999996' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='202.47999999999996' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='202.47999999999996' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='216.87999999999997' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='216.87999999999997'>Директивність 6-8 dBi</tspan>
+</text>
+<text x='311.0' y='216.87999999999997' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='216.87999999999997'>6-8 dBi</tspan>
+</text>
+<text x='411.0' y='216.87999999999997' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='216.87999999999997'>7.19 dBi</tspan>
+</text>
+<text x='511.0' y='216.87999999999997' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='216.87999999999997'>PASS</tspan>
+</text>
+<rect x='56' y='224.55999999999995' width='210.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='224.55999999999995' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='224.55999999999995' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='224.55999999999995' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='238.95999999999995' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='238.95999999999995'>Смуга &lt; 1% для тонкої підкладки</tspan>
+</text>
+<text x='311.0' y='238.95999999999995' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='238.95999999999995'>&lt; 1%</tspan>
+</text>
+<text x='411.0' y='238.95999999999995' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='238.95999999999995'>0.48%</tspan>
+</text>
+<text x='511.0' y='238.95999999999995' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='238.95999999999995'>PASS</tspan>
+</text>
+<rect x='56' y='246.63999999999993' width='210.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='246.63999999999993' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='246.63999999999993' width='110.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='246.63999999999993' width='90.0' height='22.08' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='261.0399999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='261.0399999999999'>Zin близько 50 Ohm</tspan>
+</text>
+<text x='311.0' y='261.0399999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='261.0399999999999'>50 Ohm</tspan>
+</text>
+<text x='411.0' y='261.0399999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='261.0399999999999'>47.1 Ohm</tspan>
+</text>
+<text x='511.0' y='261.0399999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='261.0399999999999'>PASS</tspan>
+</text>
+<rect x='56' y='268.7199999999999' width='210.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='266.0' y='268.7199999999999' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='356.0' y='268.7199999999999' width='110.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='466.0' y='268.7199999999999' width='90.0' height='22.08' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='283.1199999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='283.1199999999999'>ККД &gt; 30%</tspan>
+</text>
+<text x='311.0' y='283.1199999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='311.0' y='283.1199999999999'>&gt; 30%</tspan>
+</text>
+<text x='411.0' y='283.1199999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='411.0' y='283.1199999999999'>56.7%</tspan>
+</text>
+<text x='511.0' y='283.1199999999999' font-size='8.4' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='511.0' y='283.1199999999999'>PASS</tspan>
+</text>
+<text x='56' y='302.7999999999999' font-size='12.5' font-weight='700' font-family='sans-serif' fill='#405a8a' text-anchor='start'>
+<tspan x='56' y='302.7999999999999'>6.2 Порівняння з аналітичною теорією (Balanis)</tspan>
+</text>
+<rect x='56' y='326.7999999999999' width='110.0' height='21.96' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='341.0999999999999' font-size='8.3' font-weight='700' font-family='sans-serif' fill='white' text-anchor='start'>
+<tspan x='62' y='341.0999999999999'>Параметр</tspan>
+</text>
+<rect x='166.0' y='326.7999999999999' width='135.0' height='21.96' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='233.5' y='341.0999999999999' font-size='8.3' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='233.5' y='341.0999999999999'>Теорія (Balanis)</tspan>
+</text>
+<rect x='301.0' y='326.7999999999999' width='155.0' height='21.96' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='378.5' y='341.0999999999999' font-size='8.3' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='378.5' y='341.0999999999999'>Результат FDTD</tspan>
+</text>
+<rect x='456.0' y='326.7999999999999' width='100.0' height='21.96' fill='#2b3f67' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='506.0' y='341.0999999999999' font-size='8.3' font-weight='700' font-family='sans-serif' fill='white' text-anchor='middle'>
+<tspan x='506.0' y='341.0999999999999'>Похибка</tspan>
+</text>
+<rect x='56' y='348.7599999999999' width='110.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='166.0' y='348.7599999999999' width='135.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='301.0' y='348.7599999999999' width='155.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='456.0' y='348.7599999999999' width='100.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='362.8599999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='362.8599999999999'>f_res</tspan>
+</text>
+<text x='233.5' y='362.8599999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='233.5' y='362.8599999999999'>10.5 GHz (ціль)</tspan>
+</text>
+<text x='378.5' y='362.8599999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='378.5' y='362.8599999999999'>10.495 GHz</tspan>
+</text>
+<text x='506.0' y='362.8599999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='506.0' y='362.8599999999999'>0.05%</tspan>
+</text>
+<rect x='56' y='370.4799999999999' width='110.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='166.0' y='370.4799999999999' width='135.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='301.0' y='370.4799999999999' width='155.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='456.0' y='370.4799999999999' width='100.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='384.5799999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='384.5799999999999'>Директивність</tspan>
+</text>
+<text x='233.5' y='384.5799999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='233.5' y='384.5799999999999'>6.6-7.5 dBi</tspan>
+</text>
+<text x='378.5' y='384.5799999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='378.5' y='384.5799999999999'>7.19 dBi</tspan>
+</text>
+<text x='506.0' y='384.5799999999999' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='506.0' y='384.5799999999999'>У межах очікуваного</tspan>
+</text>
+<rect x='56' y='392.19999999999993' width='110.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='166.0' y='392.19999999999993' width='135.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='301.0' y='392.19999999999993' width='155.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='456.0' y='392.19999999999993' width='100.0' height='21.72' fill='#f9fbff' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='406.29999999999995' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='406.29999999999995'>Ширина патча</tspan>
+</text>
+<text x='233.5' y='406.29999999999995' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='233.5' y='406.29999999999995'>9.545 mm</tspan>
+</text>
+<text x='378.5' y='406.29999999999995' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='378.5' y='406.29999999999995'>9.545 mm (вхідні дані)</tspan>
+</text>
+<text x='506.0' y='406.29999999999995' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='506.0' y='406.29999999999995'>Точно</tspan>
+</text>
+<rect x='56' y='413.91999999999996' width='110.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='166.0' y='413.91999999999996' width='135.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='301.0' y='413.91999999999996' width='155.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<rect x='456.0' y='413.91999999999996' width='100.0' height='21.72' fill='white' stroke='#cfd7e5' stroke-width='1' rx='0' ry='0'/>
+<text x='62' y='428.02' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='62' y='428.02'>Довжина патча</tspan>
+</text>
+<text x='233.5' y='428.02' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='233.5' y='428.02'>7.641 mm (аналітика)</tspan>
+</text>
+<text x='378.5' y='428.02' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='378.5' y='428.02'>7.401 mm (після FDTD-підстройки)</tspan>
+</text>
+<text x='506.0' y='428.02' font-size='8.1' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='middle'>
+<tspan x='506.0' y='428.02'>3.1% коротше</tspan>
+</text>
+<text x='56' y='445.64' font-size='9.2' font-weight='400' font-family='sans-serif' fill='#29364b' text-anchor='start'>
+<tspan x='56' y='445.64'>Різниця 3.1% між аналітичною довжиною патча та значенням, яке підібрано у FDTD, є типовою та</tspan>
+<tspan x='56' dy='11.776'>очікуваною. Формули Balanis і Hammerstad не враховують паразитну індуктивність щупа, дифракцію на</tspan>
+<tspan x='56' dy='11.776'>краях скінченної земної площини та близькість поглинальних меж MUR. Для виробництва PCB слід</tspan>
+<tspan x='56' dy='11.776'>використовувати саме FDTD-підігнану довжину 7.401 mm.</tspan>
+</text>
+<text x='556' y='774' font-size='8' font-weight='400' font-family='sans-serif' fill='#6b778c' text-anchor='end'>
+<tspan x='556' y='774'>14</tspan>
+</text>
+</svg>
