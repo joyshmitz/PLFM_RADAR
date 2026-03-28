@@ -2,22 +2,29 @@
 from __future__ import annotations
 
 import importlib.util
-import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from reportlab.lib.colors import HexColor, white
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfgen import canvas
+try:
+    from reportlab.lib.colors import HexColor, white
+    from reportlab.lib.pagesizes import letter
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfgen import canvas
+except ModuleNotFoundError as exc:
+    raise SystemExit(
+        "build_aeris_report_ua_vector.py requires reportlab. "
+        "Install it with `uv pip install reportlab` or use the canonical "
+        "generator tmp/pdfs/build_aeris_report_ua.py instead."
+    ) from exc
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# Experimental preview renderer only. The canonical published report generator is
+# tmp/pdfs/build_aeris_report_ua.py, which owns docs/XPA-105_Antenna_Report_ua.pdf.
 LEGACY_PATH = PROJECT_ROOT / "tmp" / "pdfs" / "build_aeris_report_ua.py"
 INPUT_PDF = PROJECT_ROOT / "docs" / "AERIS_Antenna_Report.pdf"
-OUTPUT_PDF = PROJECT_ROOT / "docs" / "XPA-105_Antenna_Report_ua.pdf"
+OUTPUT_PDF = PROJECT_ROOT / "tmp" / "pdfs" / "previews" / "XPA-105_Antenna_Report_ua_vector_preview.pdf"
 IMAGE_DIR = PROJECT_ROOT / "tmp" / "pdfs" / "extracted"
 PRODUCT_FAMILY = "XPA-105"
 PRODUCT_FAMILY_FOOTER = "XPA-105 family"
@@ -34,11 +41,6 @@ MID_BLUE = HexColor("#405a8a")
 GRID = HexColor("#cfd7e5")
 TEXT = HexColor("#29364b")
 MUTED = HexColor("#6b778c")
-
-
-def run(cmd: list[str]) -> None:
-    subprocess.run(cmd, check=True)
-
 
 def to_color(value: str):
     if value == "white":
@@ -68,26 +70,14 @@ def load_legacy_module():
     return module
 
 
-def register_fonts() -> None:
-    fonts = [
-        ("PTSerif", "/System/Library/Fonts/Supplemental/PTSerif.ttc", 0),
-        ("PTSerifBold", "/System/Library/Fonts/Supplemental/PTSerif.ttc", 1),
-        ("Arial", "/System/Library/Fonts/Supplemental/Arial.ttf", 0),
-        ("ArialBold", "/System/Library/Fonts/Supplemental/Arial Bold.ttf", 0),
-    ]
-    for name, path, index in fonts:
-        if name not in pdfmetrics.getRegisteredFontNames():
-            pdfmetrics.registerFont(TTFont(name, path, subfontIndex=index))
-
-
 def font_for(size: float, weight: str) -> str:
     if weight == "700":
-        return "ArialBold"
+        return "Helvetica-Bold"
     if size >= 12:
-        return "Arial"
+        return "Helvetica"
     if size <= 9.3:
-        return "Arial"
-    return "PTSerif"
+        return "Helvetica"
+    return "Times-Roman"
 
 
 def split_long_word(word: str, width: float, font_name: str, font_size: float) -> list[str]:
@@ -341,14 +331,12 @@ def draw_pages(pages: list[VectorPage], output_path: Path) -> None:
 
 
 def main() -> None:
-    register_fonts()
     if not INPUT_PDF.exists():
         raise FileNotFoundError(INPUT_PDF)
+    OUTPUT_PDF.parent.mkdir(parents=True, exist_ok=True)
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
-    if not (IMAGE_DIR / "img-000.png").exists():
-        run(["pdfimages", "-all", str(INPUT_PDF), str(IMAGE_DIR / "img")])
-
     legacy = load_legacy_module()
+    legacy.ensure_extracted_images(INPUT_PDF, IMAGE_DIR)
     legacy.Page = VectorPage
     pages = legacy.build_pages(PROJECT_ROOT, IMAGE_DIR)
     draw_pages(pages, OUTPUT_PDF)

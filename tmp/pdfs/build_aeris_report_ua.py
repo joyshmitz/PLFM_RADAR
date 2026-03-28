@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import hashlib
 import math
+import os
 import subprocess
 import textwrap
 from dataclasses import dataclass
@@ -25,7 +27,13 @@ MUTED = "#6b778c"
 BOX_FILL = "#f4fbf6"
 BOX_STROKE = "#43b96d"
 
-FONT_PATH = "/System/Library/Fonts/Supplemental/PTSans.ttc"
+FONT_PATH_CANDIDATES = (
+    "/System/Library/Fonts/Supplemental/PTSans.ttc",
+    "/System/Library/Fonts/Supplemental/Arial.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
+)
+EXTRACTED_SOURCE_HASH = ".source_sha256"
 PRODUCT_FAMILY = "XPA-105"
 PRODUCT_FAMILY_FOOTER = "XPA-105 family"
 PRODUCT_VARIANT_816 = "XPA-105 8x16"
@@ -38,6 +46,86 @@ def run(cmd: list[str]) -> None:
 
 def xml(text: str) -> str:
     return escape(text, {"'": "&apos;", '"': "&quot;"})
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def read_cached_source_hash(image_dir: Path) -> str | None:
+    hash_path = image_dir / EXTRACTED_SOURCE_HASH
+    if not hash_path.exists():
+        return None
+    return hash_path.read_text(encoding="utf-8").strip() or None
+
+
+def clear_extracted_images(image_dir: Path) -> None:
+    for path in image_dir.glob("img-*"):
+        if path.is_file() or path.is_symlink():
+            path.unlink()
+
+
+def ensure_extracted_images(input_pdf: Path, image_dir: Path) -> None:
+    current_hash = sha256_file(input_pdf)
+    cached_hash = read_cached_source_hash(image_dir)
+    has_extracted_images = any(image_dir.glob("img-*"))
+    if cached_hash == current_hash and has_extracted_images:
+        return
+    clear_extracted_images(image_dir)
+    run(["pdfimages", "-all", str(input_pdf), str(image_dir / "img")])
+    (image_dir / EXTRACTED_SOURCE_HASH).write_text(f"{current_hash}\n", encoding="utf-8")
+
+
+def normalize_remote_url(url: str) -> str:
+    url = url.strip()
+    if not url:
+        return ""
+    if url.startswith("git@github.com:"):
+        path = url.removeprefix("git@github.com:")
+        if path.endswith(".git"):
+            path = path[:-4]
+        return f"https://github.com/{path}"
+    if url.startswith("https://github.com/") and url.endswith(".git"):
+        return url[:-4]
+    return url
+
+
+def git_remote_url(project_root: Path, remote_name: str) -> str | None:
+    result = subprocess.run(
+        ["git", "-C", str(project_root), "remote", "get-url", remote_name],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    normalized = normalize_remote_url(result.stdout)
+    return normalized or None
+
+
+def repo_provenance_text(project_root: Path) -> str:
+    upstream_url = git_remote_url(project_root, "upstream")
+    origin_url = git_remote_url(project_root, "origin")
+    if upstream_url and origin_url and upstream_url != origin_url:
+        return f"Джерело даних: {upstream_url} | Поточний репозиторій: {origin_url}"
+    repo_url = origin_url or upstream_url
+    if repo_url:
+        return f"Репозиторій: {repo_url}"
+    return "Репозиторій: локальна робоча копія"
+
+
+def resolve_magick_font() -> str | None:
+    explicit_font = os.environ.get("XPA105_REPORT_FONT")
+    if explicit_font:
+        return explicit_font
+    for candidate in FONT_PATH_CANDIDATES:
+        if Path(candidate).exists():
+            return candidate
+    return None
 
 
 def brand_text(text: str) -> str:
@@ -753,7 +841,7 @@ def build_pages(project_root: Path, image_dir: Path) -> list[Page]:
     footer_text = (
         "Звіт сформовано в межах AERIS-10 Phase 0 - програмне моделювання та валідація\n"
         "Моделювання OpenEMS FDTD на Apple Silicon M-series, macOS 15.x | Скрипт: aeris10_antenna_sim.py\n"
-        "Джерело даних: github.com/NawfalMotii79/PLFM_RADAR | Форк: github.com/JJassonn69/PLFM_RADAR"
+        f"{repo_provenance_text(project_root)}"
     )
     page.footer(footer_text)
     pages.append(page)
@@ -779,16 +867,20 @@ def main() -> None:
     if not input_pdf.exists():
         raise FileNotFoundError(f"Input PDF not found: {input_pdf}")
 
-    if not (image_dir / "img-000.png").exists():
-        run(["pdfimages", "-all", str(input_pdf), str(image_dir / "img")])
+    ensure_extracted_images(input_pdf, image_dir)
 
     pages = build_pages(project_root, image_dir)
+    magick_font = resolve_magick_font()
     pdf_parts: list[str] = []
     for idx, page in enumerate(pages, start=1):
         svg_path = svg_dir / f"page_{idx:02d}.svg"
         pdf_path = pdf_dir / f"page_{idx:02d}.pdf"
         svg_path.write_text(page.render(), encoding="utf-8")
-        run(["magick", "-font", FONT_PATH, str(svg_path), str(pdf_path)])
+        magick_cmd = ["magick"]
+        if magick_font:
+            magick_cmd.extend(["-font", magick_font])
+        magick_cmd.extend([str(svg_path), str(pdf_path)])
+        run(magick_cmd)
         pdf_parts.append(str(pdf_path))
 
     run(["pdfunite", *pdf_parts, str(output_pdf)])
