@@ -2,7 +2,7 @@
 
 **Status:** Draft v1  
 **Date:** 2026-03-28  
-**Current branch:** `codex/xpa105-rebrand-docs-gui`  
+**Current branch:** `codex/xpa-105-rbrand-docs-gui`  
 **Git policy:** local-only work, local commits allowed, never push to `origin`, never push to `upstream`
 
 ## 1. Purpose
