@@ -19,5 +19,6 @@ Rules for this layer:
 Current pilot:
 
 - `xpa-105-antenna-report`
-  - English variant seeded from `docs/AERIS_Antenna_Report.pdf` via `pdftotext`
-  - Ukrainian variant seeded from `docs/XPA-105_Antenna_Report_ua.pdf` plus `tmp/pdfs/aeris_ua/svg/page_*.svg`, because the current published Ukrainian PDF does not expose a useful text layer through `pdftotext`
+  - English variant normalized from `docs/AERIS_Antenna_Report.pdf`
+  - Ukrainian variant normalized from `docs/XPA-105_Antenna_Report_ua.pdf` and `tmp/pdfs/aeris_ua/svg/page_*.svg`
+  - Shared curated figures live under `reports-src/assets/xpa-105-antenna-report/common/`

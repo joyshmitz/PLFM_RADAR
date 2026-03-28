@@ -1,10 +1,11 @@
 report_id: xpa-105-antenna-report
-status: pilot
+status: normalized-markdown-v1
 scope: antenna-report-source-migration
 notes:
   - English and Ukrainian are both first-class collaboration surfaces.
-  - Language variants may temporarily diverge while migration is in progress.
+  - Language variants may still diverge slightly while source normalization continues.
   - The manifest is the place that records that divergence explicitly.
+shared_assets_dir: reports-src/assets/xpa-105-antenna-report/common
 variants:
   en:
     markdown: reports-src/en/xpa-105-antenna-report.md
@@ -12,10 +13,20 @@ variants:
     source_sha256: a23574276ef8b9f3c6c20f22c90002d0d576e949ebdf301cc4d28524b24300b1
     published_role: legacy-original
     assets_dir: reports-src/assets/xpa-105-antenna-report/en
-    text_seed: pdftotext
+    text_seed:
+      - pdftotext
+      - manual normalization
     figure_seed:
       - tmp/pdfs/extracted/img-*.png
-    normalization_status: partial-text-seed
+    normalized_assets:
+      - reports-src/assets/xpa-105-antenna-report/common/s11-return-loss.png
+      - reports-src/assets/xpa-105-antenna-report/common/input-impedance.png
+      - reports-src/assets/xpa-105-antenna-report/common/vswr.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-cartesian.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-polar.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-3d.png
+      - reports-src/assets/xpa-105-antenna-report/common/summary-dashboard.png
+    normalization_status: normalized-markdown-v1
   ua:
     markdown: reports-src/ua/xpa-105-antenna-report.md
     source_pdf: docs/XPA-105_Antenna_Report_ua.pdf
@@ -26,7 +37,16 @@ variants:
       - tmp/pdfs/aeris_ua/svg/page_02.svg
       - tmp/pdfs/aeris_ua/svg/page_03.svg
       - tmp/pdfs/aeris_ua/svg/page_04.svg
+      - manual normalization from build_aeris_report_ua.py
     figure_seed:
       - tmp/pdfs/extracted/img-*.png
       - tmp/pdfs/aeris_ua/svg/page_*.svg
-    normalization_status: structural-seed-from-svg
+    normalized_assets:
+      - reports-src/assets/xpa-105-antenna-report/common/s11-return-loss.png
+      - reports-src/assets/xpa-105-antenna-report/common/input-impedance.png
+      - reports-src/assets/xpa-105-antenna-report/common/vswr.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-cartesian.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-polar.png
+      - reports-src/assets/xpa-105-antenna-report/common/radiation-pattern-3d.png
+      - reports-src/assets/xpa-105-antenna-report/common/summary-dashboard.png
+    normalization_status: normalized-markdown-v1
