@@ -1,0 +1,35 @@
+report_id: xpa-105-simulation-report-v2
+status: normalized-markdown-v1
+scope: simulation-report-v2-source-migration
+notes:
+  - English and Ukrainian are both first-class collaboration surfaces.
+  - This report is current-state engineering baseline material rather than a pure simulation study.
+  - The architecture figure is shared between both language variants.
+shared_assets_dir: reports-src/assets/xpa-105-simulation-report-v2/common
+variants:
+  en:
+    markdown: reports-src/en/xpa-105-simulation-report-v2.md
+    source_pdf: docs/AERIS_Simulation_Report_v2.pdf
+    source_sha256: ae8ce4b16360ea5c627e2c3798e9c6d591ac27cfd3c2c5a04ca64f0c979fa63e
+    published_role: legacy-original
+    assets_dir: reports-src/assets/xpa-105-simulation-report-v2/en
+    text_seed:
+      - pdftotext
+      - manual normalization
+    figure_seed:
+      - tmp/pdfs/aeris_sim_v2_ua_images/img-000.jpg
+      - tmp/pdfs/build_aeris_simulation_report_v2_ua.py
+    normalization_status: normalized-markdown-v1
+  ua:
+    markdown: reports-src/ua/xpa-105-simulation-report-v2.md
+    source_pdf: docs/XPA-105_Simulation_Report_v2_ua.pdf
+    source_sha256: 25cdb1a74ab32940e640bcc1cdd6896468a5abab8c2c06272804f552e01738dd
+    published_role: branded-translation
+    assets_dir: reports-src/assets/xpa-105-simulation-report-v2/ua
+    text_seed:
+      - pdftotext
+      - tmp/pdfs/build_aeris_simulation_report_v2_ua.py
+      - manual normalization
+    figure_seed:
+      - tmp/pdfs/aeris_sim_v2_ua_images/img-000.jpg
+    normalization_status: normalized-markdown-v1

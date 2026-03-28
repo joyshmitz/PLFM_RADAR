@@ -1,0 +1,36 @@
+report_id: xpa-105-simulation-report
+status: normalized-markdown-v1
+scope: simulation-report-source-migration
+notes:
+  - English and Ukrainian are both first-class collaboration surfaces.
+  - The full simulation report remains the longest legacy report in this repo and may still receive targeted safe-pass cleanup later.
+  - Shared figure assets were curated out of tmp-based extraction outputs and renamed for stable long-term references.
+shared_assets_dir: reports-src/assets/xpa-105-simulation-report/common
+variants:
+  en:
+    markdown: reports-src/en/xpa-105-simulation-report.md
+    source_pdf: docs/AERIS_Simulation_Report.pdf
+    source_sha256: 66364c5530cfc7e05d5801a102d2454cd42df4bbaf3c8463526949df8eb69a0a
+    published_role: legacy-original
+    assets_dir: reports-src/assets/xpa-105-simulation-report/en
+    text_seed:
+      - pdftotext
+      - manual normalization
+    figure_seed:
+      - tmp/pdfs/aeris_sim_full_images/img-*.png
+      - tmp/pdfs/build_aeris_simulation_report_ua.py
+    normalization_status: normalized-markdown-v1
+  ua:
+    markdown: reports-src/ua/xpa-105-simulation-report.md
+    source_pdf: docs/XPA-105_Simulation_Report_ua.pdf
+    source_sha256: 931a1685ef6cbd2daa86da5dc2408f6591e74edd89b576cf47c5d3f5d7f3d0f1
+    published_role: branded-translation
+    assets_dir: reports-src/assets/xpa-105-simulation-report/ua
+    text_seed:
+      - pdftotext
+      - tmp/pdfs/build_aeris_simulation_report_ua.py
+      - manual normalization
+    figure_seed:
+      - tmp/pdfs/aeris_sim_full_images/img-*.png
+      - tmp/pdfs/build_aeris_simulation_report_ua.py
+    normalization_status: normalized-markdown-v1
