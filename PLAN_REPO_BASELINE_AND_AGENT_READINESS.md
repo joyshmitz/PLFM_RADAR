@@ -22,6 +22,8 @@ The immediate goal is not to make the repository prettier. The goal is to make i
 
 This plan is not absolute truth. It is the current guiding artifact and an evolving operational hypothesis that must be continuously checked against the repository itself.
 
+Until explicitly superseded by a deliberate project decision, the current repository state is treated as the operative truth for pursuing product goals.
+
 The project will be governed by the following order of authority:
 
 1. **Repository reality**
@@ -41,6 +43,7 @@ The project will be governed by the following order of authority:
 Operational rules:
 
 - If observed repo reality conflicts with the plan, stop and correct the plan or explicitly record the divergence before continuing.
+- Until we explicitly redefine a target architecture, target layout, or target workflow, the current repo state is the default truth baseline for decisions and implementation.
 - If the plan conflicts with agent instructions, agent instructions must be updated to match the repo contract and current plan, not the other way around.
 - No instruction layer may override directly observed repository state without explicit evidence and deliberate justification.
 - Every implementation slice should be treated as a test of the plan itself, not only as execution of the plan.
