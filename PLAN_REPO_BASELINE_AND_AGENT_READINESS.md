@@ -563,17 +563,22 @@ It also reduces the chance of accidental commits of noisy working files.
 
 ### Objective
 
-Turn translated and branded report PDFs into diffable, searchable, reusable source documents rather than treating the PDFs as the primary editable format.
+Turn branded and legacy report PDFs into diffable, searchable, reusable source documents rather than treating the PDFs as the primary editable format. The source layer must support both English and Ukrainian because the working team is bilingual and the report set will remain mixed-language for some time.
 
 ### Proposed changes
 
-- Add `reports-src/ua/` for canonical Markdown report sources.
+- Add parallel `reports-src/en/` and `reports-src/ua/` directories for canonical Markdown report sources.
+- Add `reports-src/manifests/` so each report can map one or more language variants to their legacy PDF inputs, normalized assets, and migration status.
 - Add `reports-src/assets/` for extracted or normalized embedded figure assets used by the report sources.
-- Convert tracked translated reports such as:
+- Convert tracked report PDFs such as:
+  - `docs/AERIS_Antenna_Report.pdf`
+  - `docs/AERIS_Simulation_Report.pdf`
+  - `docs/AERIS_Simulation_Report_v2.pdf`
   - `docs/XPA-105_Antenna_Report_ua.pdf`
   - `docs/XPA-105_Simulation_Report_ua.pdf`
   - `docs/XPA-105_Simulation_Report_v2_ua.pdf`
   into Markdown source documents with embedded image references.
+- Allow migration progress to differ by language variant, but require that manifests make the gap explicit instead of leaving it implicit in filenames.
 - Treat PDFs as rendered or published outputs derived from Markdown sources.
 - Add a render path so canonical Markdown sources can regenerate the published PDFs when needed.
 - Reuse `pdf`, `doc`, and `spreadsheet` workflows where appropriate rather than editing rendered binaries directly.
@@ -586,15 +591,17 @@ It also creates a bridge between long-form report content and the HTML docs surf
 
 ### Deliverables
 
-- `reports-src/ua/xpa-105-antenna-report.md`
-- `reports-src/ua/xpa-105-simulation-report.md`
-- `reports-src/ua/xpa-105-simulation-report-v2.md`
+- `reports-src/en/`
+- `reports-src/ua/`
+- `reports-src/manifests/`
 - `reports-src/assets/`
-- documented render flow from Markdown source to published PDF
+- at least one pilot report with both `en` and `ua` Markdown source variants
+- documented render or migration flow from Markdown source to published PDF
 
 ### Acceptance criteria
 
-- The three current Ukrainian `XPA-105` reports exist as canonical Markdown source documents.
+- The source-report layout explicitly supports both English and Ukrainian report variants.
+- At least one report exists in `reports-src/` with a manifest that maps both language variants to their PDF inputs and asset locations.
 - The Markdown sources reference managed assets instead of requiring manual PDF surgery for ordinary content changes.
 - Published PDFs are explicitly treated as generated or published outputs, not as the only editable source.
 
