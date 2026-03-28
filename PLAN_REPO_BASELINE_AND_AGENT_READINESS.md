@@ -1,6 +1,6 @@
 # PLFM_RADAR Repo Baseline And Agent Readiness Plan
 
-**Status:** Draft v1  
+**Status:** Draft v3  
 **Date:** 2026-03-28  
 **Current branch:** `codex/xpa-105-repo-baseline`  
 **Git policy:** local-only work, local commits allowed, never push to `origin`, never push to `upstream`
@@ -43,6 +43,33 @@ That is acceptable history. It is not acceptable as the steady-state operating m
 - The FPGA side has runnable regression/build scripts under `9_Firmware/9_2_FPGA/`.
 - Product-facing rebrand work to `XPA-105` has already started.
 
+### 3.1.1 Concrete findings from direct repo inspection
+
+- The current MCU control-plane entrypoint is `9_Firmware/9_1_Microcontroller/9_1_3_C_Cpp_Code/main.cpp`.
+- The current FPGA split is one canonical core top, `9_Firmware/9_2_FPGA/radar_system_top.v`, plus board-specific wrapper tops such as:
+  - `radar_system_top_te0712_dev.v`
+  - `radar_system_top_te0713_dev.v`
+  - `radar_system_top_te0713_umft601x_dev.v`
+- The current host-side bring-up stack is not the legacy `GUI_V*` files. It is:
+  - `9_Firmware/9_3_GUI/radar_dashboard.py`
+  - `9_Firmware/9_3_GUI/radar_protocol.py`
+  - `9_Firmware/9_3_GUI/smoke_test.py`
+- Multiple legacy GUI generations are still present and materially increase ambiguity until they are explicitly marked historical, including:
+  - `9_Firmware/9_3_GUI/GUI_V1.py`
+  - `9_Firmware/9_3_GUI/GUI_V2.py`
+  - `9_Firmware/9_3_GUI/GUI_V3.py`
+  - `9_Firmware/9_3_GUI/GUI_V4.py`
+  - `9_Firmware/9_3_GUI/GUI_V4_2_CSV.py`
+  - `9_Firmware/9_3_GUI/GUI_V5.py`
+  - `9_Firmware/9_3_GUI/GUI_V5_Demo.py`
+  - `9_Firmware/9_3_GUI/GUI_V6.py`
+  - `9_Firmware/9_3_GUI/GUI_V6_Demo.py`
+- `docs/` is not random clutter. The HTML pages are the current published documentation surface, and `docs/artifacts/` is actively referenced by published bring-up and release-notes pages.
+- The repo currently has two distinct host-facing protocol surfaces that should not be collapsed into one generic "interface" concept:
+  - MCU USB CDC start/settings/GPS exchange
+  - FPGA FT601 packet/status/command exchange
+- Product naming is split: public-facing docs prefer `XPA-105`, while many tests, scripts, comments, and generated artifacts still use `AERIS-10`.
+
 ### 3.2 What is currently broken at repo level
 
 - `README.md` and docs contain stale or false paths.
@@ -54,6 +81,12 @@ That is acceptable history. It is not acceptable as the steady-state operating m
 - Interface contracts between firmware, FPGA, GUI, and replay/capture tooling are implicit.
 - `.gitignore` does not fully contain current local workflow noise.
 - The repo has many binary files but no explicit binary-handling policy.
+- The `XPA-105` vs `AERIS-10` naming split is real but not yet governed, which makes current-vs-historical meaning ambiguous.
+- The GUI validation path is incomplete at repo level: tests exist, but there is no root bootstrap for the Python dependencies they actually need.
+- Running the MCU test suite currently leaves at least some host-built test executables in `9_Firmware/9_1_Microcontroller/tests` outside the current ignore rules, so even a healthy validation pass can dirty `git status`.
+- At least one active test source still hardcodes a private absolute repo path (`9_Firmware/9_1_Microcontroller/tests/test_bug8_uart_commented_out.c`).
+- Some tracked generated reports embed absolute build-host paths. Those are acceptable only as frozen evidence, not as canonical instructions.
+- `docs/artifacts/` cannot be treated as generic clutter without first accounting for published pages that already link to it.
 
 ### 3.3 Why this matters specifically for agents
 
@@ -103,31 +136,39 @@ The repository needs a root-level operational contract that answers:
 
 The `XPA-105` family cannot live only in `README.md`. Product variants need machine-readable manifests.
 
+### 4.6 Preserve evidence without promoting it to canon
+
+This repo needs both canonical source surfaces and frozen engineering evidence.
+
+Tracked bitstreams, timing reports, and bring-up artifacts may remain in the repository when they are intentionally part of the published engineering record. But they must not be treated as the current source of truth for setup, validation, or architecture.
+
 ## 5. Delta From The Previous Six-Step Outline
 
 The earlier six-step outline was directionally correct but too shallow. It needs to be upgraded from cleanup guidance into a full repository operating model.
 
-```diff
-- 1. Fix README/docs/license/path truth.
-- 2. Establish canonical entrypoints.
-- 3. Add root-level validate command.
-- 4. Normalize local artifacts and ignore rules.
-- 5. Split active baseline from fossils.
-- 6. Only then write repo-local AGENTS.md.
+Previous outline:
 
-+ 0. Introduce a repo contract before any structural churn.
-+ 1. Repair repo truth in README/docs/license naming/path references.
-+ 2. Separate active and legacy surfaces across all domains, not just GUI.
-+ 3. Add reproducible environment bootstrap per domain.
-+ 4. Add root-level orchestration for validate/bootstrap tasks.
-+ 5. Parameterize host-specific paths instead of replacing them ad hoc.
-+ 6. Formalize artifact lifecycle: source, generated, published, release.
-+ 7. Add machine-readable variant manifests for XPA-105 family members.
-+ 8. Add protocol and sample-data contracts between domains.
-+ 9. Add licensing, provenance, and release metadata bundles.
-+ 10. Perform staged path normalization only after the repo contract exists.
-+ 11. Add repo-local AGENTS.md only after the repository actually behaves consistently.
-```
+1. Fix README/docs/license/path truth.
+2. Establish canonical entrypoints.
+3. Add root-level validate command.
+4. Normalize local artifacts and ignore rules.
+5. Split active baseline from fossils.
+6. Only then write repo-local AGENTS.md.
+
+Revised operating model:
+
+0. Introduce a repo contract before any structural churn.
+1. Repair repo truth in README/docs/license naming/path references.
+2. Separate active and legacy surfaces across all domains, not just GUI.
+3. Add reproducible environment bootstrap per domain.
+4. Add root-level orchestration for validate/bootstrap tasks.
+5. Parameterize host-specific paths instead of replacing them ad hoc.
+6. Formalize artifact lifecycle: source, generated, published, release.
+7. Add machine-readable variant manifests for XPA-105 family members.
+8. Add protocol and sample-data contracts between domains.
+9. Add licensing, provenance, and release metadata bundles.
+10. Perform staged path normalization only after the repo contract exists.
+11. Add repo-local AGENTS.md only after the repository actually behaves consistently.
 
 ### Why the revised plan is better
 
@@ -153,6 +194,35 @@ The target state is a repository where a new human or agent can answer the follo
 
 ## 7. Workstreams
 
+### 7.A Dependency Map And Execution Risks
+
+Critical path:
+
+- `7.0 Repo Contract` -> `7.1 Truth Repair` and `7.2 Surface Separation` -> `7.3 Bootstrap`, `7.4 Path Parameterization`, and `7.5 Artifact Lifecycle` -> `7.6 Variant Manifests`, `7.7 Interface Contracts`, and `7.8 Licensing/Provenance` -> `7.10 Repo-Local Agent Instructions`
+- `7.9 Staged Path Normalization` is intentionally late and should not begin until the earlier workstreams have stabilized the current naming, entrypoints, and validation paths.
+
+Per-workstream prerequisites:
+
+- `7.0 Repo Contract`: no prerequisites; establishes the canonical truth all later workstreams depend on.
+- `7.1 Truth Repair`: depends on `7.0`; should apply the repo contract naming and artifact rules rather than inventing its own.
+- `7.2 Surface Separation`: depends on `7.0`; should inform `7.3`, `7.6`, and `7.7` by declaring what is current versus historical.
+- `7.3 Reproducible Environment Bootstrap`: depends on `7.0`; should use the current surfaces from `7.2` and the path rules from `7.4`.
+- `7.4 Path Parameterization`: depends on `7.0` and is informed by `7.1`; otherwise bootstrap and docs cleanup risk baking private paths back in.
+- `7.5 Artifact Lifecycle`: depends on `7.0` and `7.2`; otherwise cleanup work can accidentally delete or demote published evidence.
+- `7.6 Variant Manifests`: depends on `7.0` and `7.2`; manifests need canonical naming and current surfaces first.
+- `7.7 Interface Contracts And Replay Data`: depends on `7.0` and `7.2`; benefits from `7.3` and `7.6` once validation and variant context exist.
+- `7.8 Licensing, Provenance, And Release Metadata`: depends on `7.0` and `7.5`; provenance work is much easier once artifact classes are explicit.
+- `7.9 Staged Path Normalization`: depends on `7.0` and `7.2`; defer until the repo can already be navigated without renames.
+- `7.10 Repo-Local Agent Instructions`: depends on `7.0`, `7.1`, `7.3`, and `7.5`; agent guidance should point to already-stable contracts, not replace them.
+
+Primary execution risks:
+
+- If `7.0` is skipped or weakened, every later cleanup becomes subjective again.
+- If `7.2` is skipped before `7.7`, protocol documentation will mix current and legacy surfaces.
+- If `7.3` starts before `7.4` is understood, bootstrap scripts may hardcode machine-local paths into the new baseline.
+- If `7.5` is skipped, `docs/artifacts/` and other tracked evidence can be mistaken for disposable build debris.
+- If `7.10` is done too early, tool-specific agent docs will fossilize current repo confusion.
+
 ## 7.0 Workstream 0: Repo Contract
 
 ### Objective
@@ -163,6 +233,20 @@ Create a top-level repo contract before any large structural changes.
 
 - Add `REPO_CONTRACT.md` at repo root.
 - Define domain ownership and current entrypoints.
+- Declare the current MCU control-plane entrypoint:
+  - `9_Firmware/9_1_Microcontroller/9_1_3_C_Cpp_Code/main.cpp`
+- Declare the current FPGA structure:
+  - `9_Firmware/9_2_FPGA/radar_system_top.v` as canonical core top
+  - board-specific wrapper tops as separate bring-up targets, not competing canonical cores
+- Declare the current host-side bring-up surface:
+  - `9_Firmware/9_3_GUI/radar_dashboard.py`
+  - `9_Firmware/9_3_GUI/radar_protocol.py`
+  - `9_Firmware/9_3_GUI/smoke_test.py`
+- Declare `9_Firmware/tools/uart_capture.py` as the current UART diagnostic capture helper.
+- Declare `docs/*.html` as the current published docs surface and `docs/artifacts/` as a published evidence surface.
+- Add an explicit naming policy for `XPA-105` vs `AERIS-10`:
+  - use `XPA-105` in all new public-facing and current-baseline references
+  - retain `AERIS-10` only in historical filenames, frozen artifacts, and intentionally grandfathered internal references until they are migrated
 - Define artifact classes:
   - source
   - generated/local
@@ -184,8 +268,9 @@ This is the single highest-leverage change for agent readiness because it create
 
 ### Acceptance criteria
 
-- A new contributor can identify the current path for docs, GUI, MCU, and FPGA without asking.
-- The contract explicitly states what is and is not canonical.
+- `REPO_CONTRACT.md` exists at repo root and explicitly names the current docs, GUI, MCU, and FPGA entrypoints.
+- `REPO_CONTRACT.md` contains explicit sections for naming policy, artifact classes, validation routes, and local git policy.
+- `REPO_CONTRACT.md` explicitly marks legacy GUI files, board-specific FPGA wrappers, and `docs/artifacts/` as scoped or non-canonical surfaces rather than generic "main" entrypoints.
 
 ## 7.1 Workstream 1: Truth Repair
 
@@ -199,6 +284,11 @@ Remove false guidance from `README.md` and docs.
 - Fix license filename references so docs match the actual file layout.
 - Remove or rewrite stale build instructions that depend on private paths unless explicitly marked as examples.
 - Add a short "repository status" note explaining that this is a working engineering baseline in transition.
+- Reconcile current public docs with the actual FPGA target/baseline story:
+  - avoid presenting `XC7A100T` as the current tracked bring-up baseline if current tracked docs and build scripts are centered on `XC7A200T`/TE071x work
+  - if both matter, explain the distinction explicitly instead of letting them silently conflict
+- Apply the Workstream 0 naming policy consistently in `README.md` and current docs instead of restating ad hoc naming exceptions in multiple places.
+- Apply the Workstream 0 artifact classes consistently: tracked artifact reports with embedded absolute build-host paths are provenance records, not setup instructions.
 
 ### Why this improves the project
 
@@ -215,6 +305,8 @@ Repairing repo truth reduces false navigation and avoids destructive edits based
 
 - No broken path references remain in the current public-facing docs.
 - No license text reference points to the wrong filename.
+- Current public-facing docs do not silently present stale FPGA target state as canonical.
+- `README.md` and current docs use `XPA-105` as the public/current product-family name unless a historical reference is explicitly called out.
 
 ## 7.2 Workstream 2: Active vs Legacy Surface Separation
 
@@ -225,9 +317,17 @@ Make the current baseline obvious and reduce ambiguity from historical files.
 ### Proposed changes
 
 - In `9_Firmware/9_3_GUI`, explicitly mark `radar_dashboard.py` and `radar_protocol.py` as current.
-- Move older GUI generations into a `legacy/` subfolder or mark them as historical with a manifest.
+- Move older GUI generations into a `legacy/` subfolder or mark them as historical with a manifest, including the `GUI_V4_2_CSV.py`, `GUI_V5_Demo.py`, and `GUI_V6_Demo.py` variants.
 - Apply the same pattern to FPGA build scripts if multiple build flows compete.
 - Apply the same pattern to docs that are historical snapshots vs current docs.
+- In `9_Firmware/9_2_FPGA`, explicitly distinguish:
+  - canonical DSP core top (`radar_system_top.v`)
+  - board-specific bring-up wrappers
+  - regression/formal infrastructure
+- In `docs/`, explicitly distinguish:
+  - current published narrative pages
+  - published evidence and artifact snapshots under `docs/artifacts/`
+- In `9_Firmware/tools`, mark `uart_capture.py` as current bring-up tooling rather than leaving it as an unexplained helper script.
 
 ### Why this improves the project
 
@@ -242,6 +342,8 @@ This prevents agents from editing the wrong implementation just because it looks
 
 - There is exactly one declared current GUI entrypoint.
 - There is exactly one declared canonical validation route per domain.
+- The canonical FPGA core and the board-specific wrapper entrypoints are explicitly differentiated.
+- Legacy GUI files are either moved under an explicitly historical location or listed in a manifest that marks them non-current.
 
 ## 7.3 Workstream 3: Reproducible Environment Bootstrap
 
@@ -253,14 +355,16 @@ Make setup reproducible from the repository root.
 
 - Add root-level `Makefile`.
 - Add targets such as:
-  - `make bootstrap-gui`
+  - `make bootstrap-gui` to install or sync the Python dependencies needed by `9_Firmware/9_3_GUI/requirements_dashboard.txt`
   - `make validate`
-  - `make validate-mcu`
-  - `make validate-gui`
-  - `make validate-fpga`
-  - `make validate-docs`
+  - `make validate-mcu` to run `make test` in `9_Firmware/9_1_Microcontroller/tests`
+  - `make validate-gui` as the canonical GUI validation route, implemented by running `python3 test_radar_dashboard.py` from `9_Firmware/9_3_GUI/` after `make bootstrap-gui`
+  - `make validate-fpga-quick` to run `9_Firmware/9_2_FPGA/run_regression.sh --quick`
+  - `make validate-fpga` for the fuller FPGA regression path
+  - `make validate-docs` for lightweight repo-truth and docs-path checks
 - Ensure each target prints explicit `PASS`, `FAIL`, or `SKIP`.
 - Keep tool assumptions honest. Example: skip FPGA simulation if `iverilog` is missing.
+- Keep Python assumptions honest. Example: report `SKIP` or `FAIL` clearly if `numpy`, `matplotlib`, or `h5py` are missing, instead of pretending the GUI validation route is available.
 
 ### Why this improves the project
 
@@ -276,7 +380,8 @@ Root orchestration makes the repo legible and stable.
 ### Acceptance criteria
 
 - `make validate` can run from repo root.
-- It clearly reports missing tools instead of failing ambiguously.
+- `make validate-gui` has one canonical underlying command and does not depend on `pytest` being present.
+- Missing tools or Python modules are reported as explicit `PASS`, `FAIL`, or `SKIP` outcomes with the missing executable or module name.
 
 ## 7.4 Workstream 4: Path Parameterization
 
@@ -293,6 +398,10 @@ Remove host-specific assumptions from tracked scripts and docs.
   - capture output directory
   - replay/sample data directories
 - Keep an example config checked in and personal configs ignored.
+- Treat active source files and frozen artifact reports differently:
+  - active scripts, tests, helper tools, and canonical docs must not require private absolute paths
+  - frozen timing or build reports may legitimately contain historical host paths if clearly treated as evidence, not instructions
+- Do not confuse intentional ephemeral use of `/tmp` in local validation scripts with the private absolute-path problem. Those are different issues.
 
 ### Why this improves the project
 
@@ -309,6 +418,7 @@ It also prevents agents from copying private path assumptions into new code.
 
 - Current scripts no longer require editing tracked files to run on a new machine.
 - Private host paths are absent from canonical docs and active scripts.
+- If private host paths remain inside frozen tracked artifacts, those artifacts are explicitly non-canonical and not presented as setup guidance.
 
 ## 7.5 Workstream 5: Artifact Lifecycle Formalization
 
@@ -323,9 +433,10 @@ Stop mixing source files, local-generated outputs, published docs, and release a
   - generated captures
   - local reports
   - local environment directories
+- Add ignore rules for host-built MCU test binaries and debug bundles produced by `9_Firmware/9_1_Microcontroller/tests`.
 - Add `.gitattributes` for binary assets and line-ending policy.
 - Keep `docs/` for published site and user-facing documents only.
-- Move engineering release artifacts out of `docs/artifacts/` if they are not intended as site content.
+- Keep `docs/artifacts/` only for artifacts intentionally referenced by published docs pages; move all other release bundles elsewhere.
 - Define dedicated locations for:
   - generated local outputs
   - release bundles
@@ -347,6 +458,7 @@ It also reduces the chance of accidental commits of noisy working files.
 
 - Current local workflows stop polluting `git status`.
 - Published docs no longer share a directory with engineering release blobs unless explicitly intended.
+- Running the MCU validation route does not leave untracked executables or local debug bundles behind in normal workflows.
 
 ## 7.6 Workstream 6: Variant Manifests
 
@@ -357,16 +469,22 @@ Make `XPA-105` variants machine-readable.
 ### Proposed changes
 
 - Add a `variants/` directory.
+- Add `variants/schema.json` as the canonical manifest schema for the product-family YAML files.
 - Create manifests for at least:
   - `xpa105-816`
   - `xpa105-3216`
 - Include data such as:
+  - manifest id and schema version
+  - public product name
+  - historical aliases
   - antenna type
   - intended range class
   - PA usage
   - expected board dependencies
   - current docs/report mappings
   - firmware/FPGA assumptions where stable
+  - lifecycle/status classification
+- Explicitly distinguish product-family variants from temporary FPGA bring-up targets such as TE0712/TE0713/UMFT601X-based validation stacks.
 
 ### Why this improves the project
 
@@ -378,10 +496,13 @@ Once variants are data, the docs, release process, and future validation logic c
 
 - `variants/xpa105-816.yaml`
 - `variants/xpa105-3216.yaml`
+- `variants/schema.json`
 
 ### Acceptance criteria
 
-- Variant-specific docs and artifacts can be mapped from manifests rather than README prose alone.
+- `variants/xpa105-816.yaml` and `variants/xpa105-3216.yaml` validate against `variants/schema.json`.
+- Each variant manifest can answer, without falling back to README prose, the public name, historical aliases, board dependencies, and current docs/artifact mappings.
+- TE0712/TE0713/UMFT601X bring-up stacks are not modeled as product variants inside the manifest set.
 
 ## 7.7 Workstream 7: Interface Contracts And Replay Data
 
@@ -392,8 +513,14 @@ Reduce implicit coupling between firmware, FPGA, GUI, and tooling.
 ### Proposed changes
 
 - Add `interfaces/` for protocol/data contracts.
-- Define current radar frame and status/command structures in a stable format.
-- Add `sample_data/` or `replay/` corpus for host-side validation.
+- Define the current FPGA FT601 radar frame and status/command structures in a stable format.
+- Define the current MCU USB CDC control/settings/GPS structures separately instead of folding them into the FT601 contract.
+- Seed the first protocol descriptions from the implementations that already exist:
+  - `9_Firmware/9_3_GUI/radar_protocol.py`
+  - `9_Firmware/9_2_FPGA/radar_system_top.v`
+  - `9_Firmware/9_1_Microcontroller/9_1_1_C_Cpp_Libraries/USBHandler.h`
+  - `9_Firmware/9_1_Microcontroller/9_1_1_C_Cpp_Libraries/RadarSettings.h`
+- Reuse the existing replay/golden corpus under `9_Firmware/9_2_FPGA/tb/cosim/real_data/` before inventing a parallel dataset structure from scratch.
 - Ensure GUI tools and tests can run against replay data even without hardware.
 
 ### Why this improves the project
@@ -404,13 +531,14 @@ It makes cross-domain changes safer, improves regression testing, and makes the 
 
 ### Deliverables
 
-- machine-readable protocol description
+- separate machine-readable protocol descriptions for FT601 and MCU USB CDC surfaces
 - small replay corpus
 - tests wired to it where possible
 
 ### Acceptance criteria
 
-- GUI and host tools can validate at least one non-live scenario reproducibly.
+- The FT601 contract and the MCU USB CDC contract exist as separate versioned files under `interfaces/`.
+- GUI and host tools can validate at least one non-live FT601 replay scenario reproducibly without live hardware.
 
 ## 7.8 Workstream 8: Licensing, Provenance, And Release Metadata
 
@@ -424,6 +552,11 @@ Turn legal and release state from inference into explicit assets.
 - Add `THIRD_PARTY_NOTICES.md`.
 - Add release manifests and checksums for tracked release artifacts.
 - Distinguish raw source assets from released/generated outputs.
+- Capture at least the obvious third-party provenance buckets already visible in the repo:
+  - STM32 HAL / Cube-generated firmware scaffolding
+  - Analog Devices no-OS and device-support code
+  - FTDI FT601 host dependency expectations
+  - TinyGPS++ and other bundled host/firmware support code
 
 ### Why this improves the project
 
@@ -439,7 +572,8 @@ This improves trust, release discipline, and later packaging.
 
 ### Acceptance criteria
 
-- A reviewer can understand licensing and artifact provenance without digging through source headers manually.
+- `THIRD_PARTY_NOTICES.md` names at least the currently visible STM32 HAL, Analog Devices support code, FTDI dependency expectations, and TinyGPS++ provenance buckets.
+- Every intentionally tracked release bundle has an accompanying manifest or checksum record under the chosen release-metadata location.
 
 ## 7.9 Workstream 9: Staged Path Normalization
 
@@ -464,35 +598,44 @@ Immediate path renaming would create high churn across hardware, docs, scripts, 
 
 ### Acceptance criteria
 
-- The repo becomes easier to navigate before any high-churn path migration starts.
+- A canonical path map exists in the repo contract before any high-churn rename proposal is approved.
+- Any deferred rename plan explicitly references the already-declared canonical surfaces rather than redefining them.
 
-## 7.10 Workstream 10: Repo-Local AGENTS.md
+## 7.10 Workstream 10: Repo-Local Agent Instructions
 
 ### Objective
 
-Add repo-local agent instructions only after the repo itself becomes truthful and stable.
+Add repo-local agent instructions only after the repo itself becomes truthful and stable, and keep tool-specific wrappers thin.
 
 ### Proposed changes
 
+- Keep the repo contract, validation commands, and naming policy as the primary truth source.
 - Create `.Codex/AGENTS.md` only after:
   - repo contract exists
   - root validation exists
   - current entrypoints are explicit
   - artifact policy is explicit
+- If Claude Code is part of the supported workflow for this repo, add `.claude/CLAUDE.md` as a thin companion file that points to the same canonical repo contracts and validation routes.
+- Do not allow `.Codex/AGENTS.md` and `.claude/CLAUDE.md` to diverge on entrypoints, validation commands, naming policy, or artifact policy.
 
 ### Why this improves the project
 
-`AGENTS.md` should codify stable practice, not compensate for missing structure.
+Agent instruction files should codify stable practice, not compensate for missing structure.
 
 ### Deliverables
 
 - repo-local `.Codex/AGENTS.md`
+- repo-local `.claude/CLAUDE.md` if Claude Code is in the supported workflow
 
 ### Acceptance criteria
 
-- The file can remain short because the repository itself already expresses most of the truth.
+- Every supported agent instruction file points back to the same canonical repo contract and validation commands.
+- If only one agent instruction format is intentionally supported, that scope is stated explicitly instead of being left implicit.
+- The file set can remain short because the repository itself already expresses most of the truth.
 
 ## 8. Recommended Execution Order
+
+Read and apply the dependency/prerequisite rules from Section 7.A before starting Phase A. If the phase list and a per-workstream prerequisite ever appear to conflict, Section 7.A wins.
 
 ### Phase A: Truth And Control
 
@@ -522,7 +665,7 @@ Add repo-local agent instructions only after the repo itself becomes truthful an
 
 ### Phase E: Final Codification
 
-15. Write repo-local `.Codex/AGENTS.md`
+15. Write repo-local agent instruction files
 16. Revisit staged path normalization only if still justified
 
 ## 9. Immediate First Implementation Slice
@@ -531,7 +674,7 @@ The best first tranche is:
 
 1. `REPO_CONTRACT.md`
 2. root `Makefile` with at least `validate`, `validate-mcu`, and `validate-gui`
-3. `.gitignore` cleanup for current local noise
+3. `.gitignore` cleanup for current local noise, especially MCU test outputs and `tmp/` rendering debris
 4. `README.md` truth repair
 
 This gives the repository a truthful top-level contract before any bigger churn.
@@ -556,6 +699,7 @@ The first serious milestone is reached when all of the following are true:
 - current docs stop lying
 - private path assumptions are no longer canonical
 - `XPA-105` variants start existing as data
+- supported agent instruction files, if present, do not diverge from the repo contract
 - agents can enter the repo and reason from explicit contracts instead of archaeology
 
 ## 12. Final Recommendation
