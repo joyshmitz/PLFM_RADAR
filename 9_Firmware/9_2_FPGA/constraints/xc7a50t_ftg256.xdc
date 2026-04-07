@@ -23,7 +23,9 @@
 #   - BIVC-1: Root cause was IBUFDS primitives in ad9484_interface_400m.v
 #     hardcoded to LVDS_25 (VCCO=2.5V), conflicting with adc_pwdn LVCMOS33
 #     (VCCO=3.3V) in Bank 14. Fixed by changing RTL to IOSTANDARD("DEFAULT")
-#     so each target's XDC controls the standard (LVDS_33 here, LVDS_25 on 200T).
+#     so each target's XDC controls the standard (LVDS here, LVDS_25 on 200T).
+#     Note: LVDS (not LVDS_25 or LVDS_33) is the correct standard for IBUFDS
+#     inputs in HR banks with VCCO != 2.5V. LVDS_33 does not exist on 7-series.
 # ============================================================================
 
 # ============================================================================
@@ -53,8 +55,8 @@ set_input_jitter [get_clocks clk_120m_dac] 0.1
 # ADC DCO Clock (400MHz LVDS — AD9523 OUT5 → AD9484 → FPGA, Bank 14 MRCC)
 set_property PACKAGE_PIN N14 [get_ports {adc_dco_p}]
 set_property PACKAGE_PIN P14 [get_ports {adc_dco_n}]
-set_property IOSTANDARD LVDS_33 [get_ports {adc_dco_p}]
-set_property IOSTANDARD LVDS_33 [get_ports {adc_dco_n}]
+set_property IOSTANDARD LVDS [get_ports {adc_dco_p}]
+set_property IOSTANDARD LVDS [get_ports {adc_dco_n}]
 set_property DIFF_TERM TRUE [get_ports {adc_dco_p}]
 create_clock -name adc_dco_p -period 2.5 [get_ports {adc_dco_p}]
 set_input_jitter [get_clocks adc_dco_p] 0.05
@@ -210,11 +212,13 @@ set_property PACKAGE_PIN R7  [get_ports {adc_d_n[7]}]
 set_property PACKAGE_PIN T5 [get_ports {adc_pwdn}]
 set_property IOSTANDARD LVCMOS33 [get_ports {adc_pwdn}]
 
-# LVDS I/O Standard — Bank 14 VCCO = 3.3V → use LVDS_33 (not LVDS_25)
-set_property IOSTANDARD LVDS_33 [get_ports {adc_d_p[*]}]
-set_property IOSTANDARD LVDS_33 [get_ports {adc_d_n[*]}]
+# LVDS I/O Standard — Bank 14 VCCO = 3.3V. Use LVDS (not LVDS_25, which
+# requires VCCO=2.5V). LVDS_33 does not exist on 7-series; LVDS works with
+# any VCCO for input-only buffers (IBUFDS) in HR banks.
+set_property IOSTANDARD LVDS [get_ports {adc_d_p[*]}]
+set_property IOSTANDARD LVDS [get_ports {adc_d_n[*]}]
 
-# Differential termination — Bank 14 VCCO = 3.3V, compatible with LVDS_33.
+# Differential termination — Bank 14 VCCO = 3.3V, compatible with LVDS.
 # RTL IBUFDS uses DIFF_TERM("FALSE") so this XDC property takes precedence.
 set_property DIFF_TERM TRUE [get_ports {adc_d_p[*]}]
 
