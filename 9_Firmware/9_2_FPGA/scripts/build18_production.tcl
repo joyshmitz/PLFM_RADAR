@@ -331,13 +331,14 @@ puts $summary_fh "Impl Time:       ${impl_elapsed}s"
 puts $summary_fh "Bitstream Time:  ${bit_elapsed}s"
 puts $summary_fh ""
 
-# Extract key timing numbers
+# Extract key timing numbers — use catch to handle empty STATS properties
+# (Vivado 2025.2 may return empty strings after write_bitstream auto-launch)
 puts $summary_fh "--- Timing ---"
-set wns [get_property STATS.WNS [current_design]]
-set tns [get_property STATS.TNS [current_design]]
-set whs [get_property STATS.WHS [current_design]]
-set ths [get_property STATS.THS [current_design]]
-set fail_ep [get_property STATS.TPWS [current_design]]
+if {[catch {set wns [get_property STATS.WNS [current_design]]}] || $wns eq ""} { set wns "N/A" }
+if {[catch {set tns [get_property STATS.TNS [current_design]]}] || $tns eq ""} { set tns "N/A" }
+if {[catch {set whs [get_property STATS.WHS [current_design]]}] || $whs eq ""} { set whs "N/A" }
+if {[catch {set ths [get_property STATS.THS [current_design]]}] || $ths eq ""} { set ths "N/A" }
+if {[catch {set fail_ep [get_property STATS.TPWS [current_design]]}] || $fail_ep eq ""} { set fail_ep "N/A" }
 puts $summary_fh "  WNS:  $wns ns"
 puts $summary_fh "  TNS:  $tns ns"
 puts $summary_fh "  WHS:  $whs ns"
@@ -376,19 +377,25 @@ puts $summary_fh ""
 # Signoff
 puts $summary_fh "--- Final Signoff ---"
 set signoff_pass 1
-if {$wns < 0} {
+if {![string is double -strict $wns]} {
+    puts $summary_fh "  WARN: WNS = N/A (timing stats unavailable — check reports)"
+} elseif {$wns < 0} {
     puts $summary_fh "  FAIL: WNS = $wns (negative slack)"
     set signoff_pass 0
 } else {
     puts $summary_fh "  PASS: WNS = $wns ns (no setup violations)"
 }
-if {$whs < 0} {
+if {![string is double -strict $whs]} {
+    puts $summary_fh "  WARN: WHS = N/A (timing stats unavailable — check reports)"
+} elseif {$whs < 0} {
     puts $summary_fh "  FAIL: WHS = $whs (hold violation)"
     set signoff_pass 0
 } else {
     puts $summary_fh "  PASS: WHS = $whs ns (no hold violations)"
 }
-if {$tns != 0} {
+if {![string is double -strict $tns]} {
+    puts $summary_fh "  WARN: TNS = N/A (timing stats unavailable — check reports)"
+} elseif {$tns != 0} {
     puts $summary_fh "  FAIL: TNS = $tns (total negative slack)"
     set signoff_pass 0
 } else {

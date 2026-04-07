@@ -12,10 +12,17 @@
 #
 # I/O Bank Voltage Summary:
 #   Bank 0:  VCCO = 3.3V (JTAG, flash CS)
-#   Bank 14: VCCO = 3.3V (ADC LVDS data, SPI flash)
+#   Bank 14: VCCO = 3.3V (ADC LVDS data, SPI flash, adc_pwdn)
 #   Bank 15: VCCO = 3.3V (DAC, clocks, STM32 SPI 3.3V side, DIG bus, mixer)
 #   Bank 34: VCCO = 1.8V (ADAR1000 beamformer control, SPI 1.8V side)
 #   Bank 35: VCCO = 3.3V (unused — no signal connections)
+#
+# DRC Fix History:
+#   - PLIO-9: Moved clk_120m_dac from C13 (N-type) to D13 (P-type MRCC).
+#     Clock inputs must use the P-type pin of a Multi-Region Clock-Capable pair.
+#   - BIVC-1: Disabled DIFF_TERM on Bank 14 LVDS pairs (adc_dco, adc_d) to
+#     resolve VCCO conflict with single-ended adc_pwdn (LVCMOS33) on T5.
+#     External 100-ohm differential termination required on board.
 # ============================================================================
 
 # ============================================================================
@@ -28,14 +35,16 @@ set_property IOSTANDARD LVCMOS33 [get_ports {clk_100m}]
 create_clock -name clk_100m -period 10.0 [get_ports {clk_100m}]
 set_input_jitter [get_clocks clk_100m] 0.1
 
-# 120MHz DAC Clock (AD9523 OUT11 → FPGA_DAC_CLOCK → Bank 15 MRCC pin C13)
+# 120MHz DAC Clock (AD9523 OUT11 → FPGA_DAC_CLOCK → Bank 15 MRCC pin D13)
 # NOTE: The physical DAC (U3, AD9708) receives its clock directly from the
 #       AD9523 via a separate net (DAC_CLOCK), NOT from the FPGA. The FPGA
 #       uses this clock input for internal DAC data timing only. The RTL port
 #       `dac_clk` is an output that assigns clk_120m directly — it has no
 #       separate physical pin on this board and should be removed from the
 #       RTL or left unconnected.
-set_property PACKAGE_PIN C13 [get_ports {clk_120m_dac}]
+# FIX: Moved from C13 (IO_L12N = N-type) to D13 (IO_L12P = P-type MRCC).
+#      Clock inputs must use the P-type pin of an MRCC pair (PLIO-9 DRC).
+set_property PACKAGE_PIN D13 [get_ports {clk_120m_dac}]
 set_property IOSTANDARD LVCMOS33 [get_ports {clk_120m_dac}]
 create_clock -name clk_120m_dac -period 8.333 [get_ports {clk_120m_dac}]
 set_input_jitter [get_clocks clk_120m_dac] 0.1
@@ -45,7 +54,11 @@ set_property PACKAGE_PIN N14 [get_ports {adc_dco_p}]
 set_property PACKAGE_PIN P14 [get_ports {adc_dco_n}]
 set_property IOSTANDARD LVDS_33 [get_ports {adc_dco_p}]
 set_property IOSTANDARD LVDS_33 [get_ports {adc_dco_n}]
-set_property DIFF_TERM TRUE [get_ports {adc_dco_p}]
+# NOTE: DIFF_TERM disabled to avoid BIVC-1 DRC conflict with single-ended
+# adc_pwdn (LVCMOS33) on T5 in the same bank. The board should have external
+# 100-ohm differential termination on the ADC LVDS pairs. If signal integrity
+# issues arise, the board may need adc_pwdn relocated to a non-Bank-14 pin.
+# set_property DIFF_TERM TRUE [get_ports {adc_dco_p}]
 create_clock -name adc_dco_p -period 2.5 [get_ports {adc_dco_p}]
 set_input_jitter [get_clocks adc_dco_p] 0.05
 
@@ -204,8 +217,10 @@ set_property IOSTANDARD LVCMOS33 [get_ports {adc_pwdn}]
 set_property IOSTANDARD LVDS_33 [get_ports {adc_d_p[*]}]
 set_property IOSTANDARD LVDS_33 [get_ports {adc_d_n[*]}]
 
-# Differential termination
-set_property DIFF_TERM TRUE [get_ports {adc_d_p[*]}]
+# Differential termination — disabled to avoid BIVC-1 DRC conflict with
+# single-ended adc_pwdn (LVCMOS33) on T5 in the same bank. Requires external
+# 100-ohm differential termination on the board for proper LVDS signal integrity.
+# set_property DIFF_TERM TRUE [get_ports {adc_d_p[*]}]
 
 # Input delay for ADC data relative to DCO (adjust based on PCB trace length)
 set_input_delay -clock [get_clocks adc_dco_p] -max 1.0 [get_ports {adc_d_p[*]}]

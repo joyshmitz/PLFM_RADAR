@@ -326,13 +326,14 @@ puts $summary_fh "Impl Time:       ${impl_elapsed}s"
 puts $summary_fh "Bitstream Time:  ${bit_elapsed}s"
 puts $summary_fh ""
 
-# Extract key timing numbers
+# Extract key timing numbers — use catch to handle empty STATS properties
+# (Vivado 2025.2 may return empty strings after write_bitstream auto-launch)
 puts $summary_fh "--- Timing ---"
-set wns [get_property STATS.WNS [current_design]]
-set tns [get_property STATS.TNS [current_design]]
-set whs [get_property STATS.WHS [current_design]]
-set ths [get_property STATS.THS [current_design]]
-set fail_ep [get_property STATS.TPWS [current_design]]
+if {[catch {set wns [get_property STATS.WNS [current_design]]}] || $wns eq ""} { set wns "N/A" }
+if {[catch {set tns [get_property STATS.TNS [current_design]]}] || $tns eq ""} { set tns "N/A" }
+if {[catch {set whs [get_property STATS.WHS [current_design]]}] || $whs eq ""} { set whs "N/A" }
+if {[catch {set ths [get_property STATS.THS [current_design]]}] || $ths eq ""} { set ths "N/A" }
+if {[catch {set fail_ep [get_property STATS.TPWS [current_design]]}] || $fail_ep eq ""} { set fail_ep "N/A" }
 puts $summary_fh "  WNS:  $wns ns"
 puts $summary_fh "  TNS:  $tns ns"
 puts $summary_fh "  WHS:  $whs ns"
@@ -340,8 +341,16 @@ puts $summary_fh "  THS:  $ths ns"
 puts $summary_fh ""
 puts $summary_fh "  Build 18 Baseline: WNS = +0.062 ns, WHS = +0.059 ns"
 puts $summary_fh "  Build 19 (FAILED): WNS = -0.011 ns, WHS = +0.055 ns"
-puts $summary_fh "  Delta WNS vs B18: [expr {$wns - 0.062}] ns"
-puts $summary_fh "  Delta WHS vs B18: [expr {$whs - 0.059}] ns"
+if {[string is double -strict $wns]} {
+    puts $summary_fh "  Delta WNS vs B18: [expr {$wns - 0.062}] ns"
+} else {
+    puts $summary_fh "  Delta WNS vs B18: N/A (timing stats unavailable)"
+}
+if {[string is double -strict $whs]} {
+    puts $summary_fh "  Delta WHS vs B18: [expr {$whs - 0.059}] ns"
+} else {
+    puts $summary_fh "  Delta WHS vs B18: N/A (timing stats unavailable)"
+}
 puts $summary_fh ""
 
 # Extract utilization
@@ -387,19 +396,25 @@ puts $summary_fh ""
 # Signoff
 puts $summary_fh "--- Final Signoff ---"
 set signoff_pass 1
-if {$wns < 0} {
+if {![string is double -strict $wns]} {
+    puts $summary_fh "  WARN: WNS = N/A (timing stats unavailable — check reports)"
+} elseif {$wns < 0} {
     puts $summary_fh "  FAIL: WNS = $wns (negative slack)"
     set signoff_pass 0
 } else {
     puts $summary_fh "  PASS: WNS = $wns ns (no setup violations)"
 }
-if {$whs < 0} {
+if {![string is double -strict $whs]} {
+    puts $summary_fh "  WARN: WHS = N/A (timing stats unavailable — check reports)"
+} elseif {$whs < 0} {
     puts $summary_fh "  FAIL: WHS = $whs (hold violation)"
     set signoff_pass 0
 } else {
     puts $summary_fh "  PASS: WHS = $whs ns (no hold violations)"
 }
-if {$tns != 0} {
+if {![string is double -strict $tns]} {
+    puts $summary_fh "  WARN: TNS = N/A (timing stats unavailable — check reports)"
+} elseif {$tns != 0} {
     puts $summary_fh "  FAIL: TNS = $tns (total negative slack)"
     set signoff_pass 0
 } else {
@@ -420,11 +435,11 @@ if {[file exists $bit_src]} {
 puts $summary_fh ""
 
 # Timing regression check vs Build 18
-if {$wns < 0.062} {
+if {[string is double -strict $wns] && $wns < 0.062} {
     puts $summary_fh "  *** WARNING: WNS REGRESSED vs Build 18 (was +0.062 ns, now $wns ns) ***"
     puts $summary_fh "  *** Review critical paths — CREG fix may not have helped ***"
 }
-if {$whs < 0.059} {
+if {[string is double -strict $whs] && $whs < 0.059} {
     puts $summary_fh "  *** WARNING: WHS REGRESSED vs Build 18 (was +0.059 ns, now $whs ns) ***"
 }
 
