@@ -3,10 +3,10 @@
 AERIS-10 Radar Dashboard — Board Bring-Up Edition
 ===================================================
 Real-time visualization and control for the AERIS-10 phased-array radar
-via FT601 USB 3.0 interface.
+via FT2232H USB 2.0 interface.
 
 Features:
-  - FT601 USB reader with packet parsing (matches usb_data_interface.v)
+  - FT2232H USB reader with packet parsing (matches usb_data_interface_ft2232h.v)
   - Real-time range-Doppler magnitude heatmap (64x32)
   - CFAR detection overlay (flagged cells highlighted)
   - Range profile waterfall plot (range vs. time)
@@ -17,7 +17,7 @@ Features:
 
 Usage:
   python radar_dashboard.py              # Launch with mock data
-  python radar_dashboard.py --live       # Launch with FT601 hardware
+  python radar_dashboard.py --live       # Launch with FT2232H hardware
   python radar_dashboard.py --record     # Launch with HDF5 recording
 """
 
@@ -43,7 +43,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # Import protocol layer (no GUI deps)
 from radar_protocol import (
-    RadarProtocol, FT601Connection, ReplayConnection,
+    RadarProtocol, FT2232HConnection, ReplayConnection,
     DataRecorder, RadarAcquisition,
     RadarFrame, StatusResponse, Opcode,
     NUM_RANGE_BINS, NUM_DOPPLER_BINS, WATERFALL_DEPTH,
@@ -82,7 +82,7 @@ class RadarDashboard:
     BANDWIDTH = 500e6        # Hz — chirp bandwidth
     C = 3e8                  # m/s — speed of light
 
-    def __init__(self, root: tk.Tk, connection: FT601Connection,
+    def __init__(self, root: tk.Tk, connection: FT2232HConnection,
                  recorder: DataRecorder):
         self.root = root
         self.conn = connection
@@ -552,7 +552,7 @@ class _TextHandler(logging.Handler):
 def main():
     parser = argparse.ArgumentParser(description="AERIS-10 Radar Dashboard")
     parser.add_argument("--live", action="store_true",
-                        help="Use real FT601 hardware (default: mock mode)")
+                        help="Use real FT2232H hardware (default: mock mode)")
     parser.add_argument("--replay", type=str, metavar="NPY_DIR",
                         help="Replay real data from .npy directory "
                              "(e.g. tb/cosim/real_data/hex/)")
@@ -561,7 +561,7 @@ def main():
     parser.add_argument("--record", action="store_true",
                         help="Start HDF5 recording immediately")
     parser.add_argument("--device", type=int, default=0,
-                        help="FT601 device index (default: 0)")
+                        help="FT2232H device index (default: 0)")
     args = parser.parse_args()
 
     if args.replay:
@@ -569,10 +569,10 @@ def main():
         conn = ReplayConnection(npy_dir, use_mti=not args.no_mti)
         mode_str = f"REPLAY ({npy_dir}, MTI={'OFF' if args.no_mti else 'ON'})"
     elif args.live:
-        conn = FT601Connection(mock=False)
+        conn = FT2232HConnection(mock=False)
         mode_str = "LIVE"
     else:
-        conn = FT601Connection(mock=True)
+        conn = FT2232HConnection(mock=True)
         mode_str = "MOCK"
 
     recorder = DataRecorder()
