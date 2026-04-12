@@ -225,12 +225,8 @@ class TestTier1BitWidths:
 
 
 class TestTier1StatusWordTruncation:
-    """Catch the status_words[0] 37->32 bit truncation bug."""
+    """Verify each status_words[] concatenation is exactly 32 bits."""
 
-    @pytest.mark.xfail(
-        reason="BUG: status_words[0] is 37 bits, truncated to 32 (FT2232H)",
-        strict=True,
-    )
     def test_status_words_concat_widths_ft2232h(self):
         """Each status_words[] concat must be EXACTLY 32 bits."""
         port_widths = cp.get_usb_interface_port_widths(
@@ -250,10 +246,6 @@ class TestTier1StatusWordTruncation:
                 f"Fragments: {result.fragments}"
             )
 
-    @pytest.mark.xfail(
-        reason="BUG: status_words[0] is 37 bits, truncated to 32 (FT601)",
-        strict=True,
-    )
     def test_status_words_concat_widths_ft601(self):
         """Same check for the FT601 interface (same bug expected)."""
         ft601_path = cp.FPGA_DIR / "usb_data_interface.v"
@@ -277,39 +269,24 @@ class TestTier1StatusWordTruncation:
 class TestTier1StatusFieldPositions:
     """Verify Python status parser bit positions match Verilog layout."""
 
-    @pytest.mark.xfail(
-        reason="BUG: Python reads radar_mode at bit 21, actual is bit 24",
-        strict=True,
-    )
     def test_python_status_mode_position(self):
         """
-        The known status_words[0] bug: Python reads mode at bits [22:21]
-        but after 37→32 truncation, mode is at [25:24]. This test should
-        FAIL, proving the bug exists.
+        Verify Python reads radar_mode at the correct bit position matching
+        the Verilog status_words[0] layout:
+        {0xFF[31:24], mode[23:22], stream[21:19], 3'b000[18:16], threshold[15:0]}
         """
         # Get what Python thinks
         py_fields = cp.parse_python_status_fields()
         mode_field = next((f for f in py_fields if f.name == "radar_mode"), None)
         assert mode_field is not None, "radar_mode not found in parse_status_packet"
 
-        # The Verilog INTENDED layout (from the code comment) says:
-        #   {0xFF, 3'b000, mode[1:0], 5'b00000, stream[2:0], threshold[15:0]}
-        # But after 37→32 truncation, the actual bits are:
-        #   [31:29]=111, [28:26]=000, [25:24]=mode, [23:19]=00000, [18:16]=stream, [15:0]=threshold
-        # Python extracts at shift=21, which is bits [22:21] — WRONG position.
-
-        # Ground truth: after truncation, mode is at [25:24]
-        expected_shift = 24
+        # Ground truth: mode is at bits [23:22], so LSB = 22
+        expected_shift = 22
         actual_shift = mode_field.lsb
 
-        # This assertion documents the bug. If someone fixes status_words[0]
-        # to be exactly 32 bits, the intended layout becomes:
-        #   {0xFF, mode[1:0], stream[2:0], threshold[15:0]} = 8+2+3+16 = 29 bits → pad 3 bits
-        # The Python shift would need updating too.
         assert actual_shift == expected_shift, (
-            f"KNOWN BUG: Python reads radar_mode at bit {actual_shift} "
-            f"but after status_words[0] truncation, mode is at bit {expected_shift}. "
-            f"Both Verilog AND Python need fixing."
+            f"Python reads radar_mode at bit {actual_shift} "
+            f"but Verilog status_words[0] has mode at bit {expected_shift}."
         )
 
 
@@ -442,10 +419,6 @@ class TestTier1STM32SettingsPacket:
             assert f.size == esize, f"{f.name}: size {f.size} != {esize}"
             assert f.c_type == etype, f"{f.name}: type {f.c_type} != {etype}"
 
-    @pytest.mark.xfail(
-        reason="BUG: RadarSettings.cpp min check is 74, should be 82",
-        strict=True,
-    )
     def test_minimum_packet_size(self):
         """
         RadarSettings.cpp says minimum is 74 bytes but actual payload is:
@@ -593,10 +566,6 @@ class TestTier2VerilogCosim:
             f"detection: {parsed['detection']} != 1"
         )
 
-    @pytest.mark.xfail(
-        reason="BUG: radar_mode reads 0 due to truncation + wrong bit pos",
-        strict=True,
-    )
     def test_status_packet_python_round_trip(self, tb_results):
         """
         Take the 26 bytes captured by the Verilog TB, run Python's
@@ -649,19 +618,16 @@ class TestTier2VerilogCosim:
         assert sr.self_test_detail == 0xA5, f"self_test_detail: 0x{sr.self_test_detail:02X}"
         assert sr.self_test_busy == 1, f"self_test_busy: {sr.self_test_busy}"
 
-        # Word 0: This tests the truncation bug.
-        # stream_ctrl should be 5 (3'b101)
+        # Word 0: stream_ctrl should be 5 (3'b101)
         assert sr.stream_ctrl == 5, (
             f"stream_ctrl: {sr.stream_ctrl} != 5. "
             f"Check status_words[0] bit positions."
         )
 
-        # radar_mode should be 3 (2'b11) — THIS WILL FAIL due to
-        # the known 37→32 truncation bug + Python wrong shift.
+        # radar_mode should be 3 (2'b11)
         assert sr.radar_mode == 3, (
-            f"KNOWN BUG: radar_mode={sr.radar_mode} != 3. "
-            f"status_words[0] is 37 bits (truncated to 32) and "
-            f"Python reads mode at wrong bit position."
+            f"radar_mode={sr.radar_mode} != 3. "
+            f"Check status_words[0] bit positions."
         )
 
 

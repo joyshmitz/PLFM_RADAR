@@ -275,9 +275,9 @@ always @(posedge ft_clk or negedge ft_reset_n) begin
 
         // Status snapshot on request
         if (status_req_ft) begin
-            status_words[0] <= {8'hFF, 3'b000, status_radar_mode,
-                                5'b00000, status_stream_ctrl,
-                                status_cfar_threshold};
+            // Word 0: {0xFF[31:24], mode[23:22], stream[21:19], 3'b000[18:16], threshold[15:0]}
+            status_words[0] <= {8'hFF, status_radar_mode, status_stream_ctrl,
+                                3'b000, status_cfar_threshold};
             status_words[1] <= {status_long_chirp, status_long_listen};
             status_words[2] <= {status_guard, status_short_chirp};
             status_words[3] <= {status_short_listen, 10'd0, status_chirps_per_elev};

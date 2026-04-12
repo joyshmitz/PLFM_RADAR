@@ -130,8 +130,8 @@ class TestRadarProtocol(unittest.TestCase):
         pkt = bytearray()
         pkt.append(STATUS_HEADER_BYTE)
 
-        # Word 0: {0xFF, 3'b0, mode[1:0], 5'b0, stream[2:0], threshold[15:0]}
-        w0 = (0xFF << 24) | ((mode & 0x03) << 21) | ((stream & 0x07) << 16) | (threshold & 0xFFFF)
+        # Word 0: {0xFF[31:24], mode[23:22], stream[21:19], 3'b000[18:16], threshold[15:0]}
+        w0 = (0xFF << 24) | ((mode & 0x03) << 22) | ((stream & 0x07) << 19) | (threshold & 0xFFFF)
         pkt += struct.pack(">I", w0)
 
         # Word 1: {long_chirp, long_listen}

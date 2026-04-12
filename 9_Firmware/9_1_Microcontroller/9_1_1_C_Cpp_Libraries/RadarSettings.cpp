@@ -7,8 +7,8 @@ RadarSettings::RadarSettings() {
 
 void RadarSettings::resetToDefaults() {
     system_frequency = 10.0e9;    // 10 GHz
-    chirp_duration_1 = 30.0e-6;   // 30 µs
-    chirp_duration_2 = 0.5e-6;    // 0.5 µs
+    chirp_duration_1 = 30.0e-6;   // 30 ï¿½s
+    chirp_duration_2 = 0.5e-6;    // 0.5 ï¿½s
     chirps_per_position = 32;
     freq_min = 10.0e6;           // 10 MHz
     freq_max = 30.0e6;           // 30 MHz
@@ -21,8 +21,8 @@ void RadarSettings::resetToDefaults() {
 }
 
 bool RadarSettings::parseFromUSB(const uint8_t* data, uint32_t length) {
-    // Minimum packet size: "SET" + 8 doubles + 1 uint32_t + "END" = 3 + 8*8 + 4 + 3 = 74 bytes
-    if (data == nullptr || length < 74) {
+    // Minimum packet size: "SET" + 9 doubles + 1 uint32_t + "END" = 3 + 9*8 + 4 + 3 = 82 bytes
+    if (data == nullptr || length < 82) {
         settings_valid = false;
         return false;
     }

@@ -219,10 +219,10 @@ class RadarProtocol:
             return None
 
         sr = StatusResponse()
-        # Word 0: {0xFF, 3'b0, mode[1:0], 5'b0, stream[2:0], threshold[15:0]}
+        # Word 0: {0xFF[31:24], mode[23:22], stream[21:19], 3'b000[18:16], threshold[15:0]}
         sr.cfar_threshold = words[0] & 0xFFFF
-        sr.stream_ctrl = (words[0] >> 16) & 0x07
-        sr.radar_mode = (words[0] >> 21) & 0x03
+        sr.stream_ctrl = (words[0] >> 19) & 0x07
+        sr.radar_mode = (words[0] >> 22) & 0x03
         # Word 1: {long_chirp[31:16], long_listen[15:0]}
         sr.long_listen = words[1] & 0xFFFF
         sr.long_chirp = (words[1] >> 16) & 0xFFFF

@@ -258,10 +258,9 @@ always @(posedge ft601_clk_in or negedge ft601_reset_n) begin
         // Gap 2: Capture status snapshot when request arrives in ft601 domain
         if (status_req_ft601) begin
             // Pack register values into 5x 32-bit status words
-            // Word 0: {0xFF, mode[1:0], stream_ctrl[2:0], cfar_threshold[15:0]}
-            status_words[0] <= {8'hFF, 3'b000, status_radar_mode,
-                                5'b00000, status_stream_ctrl,
-                                status_cfar_threshold};
+            // Word 0: {0xFF[31:24], mode[23:22], stream[21:19], 3'b000[18:16], threshold[15:0]}
+            status_words[0] <= {8'hFF, status_radar_mode, status_stream_ctrl,
+                                3'b000, status_cfar_threshold};
             // Word 1: {long_chirp_cycles[15:0], long_listen_cycles[15:0]}
             status_words[1] <= {status_long_chirp, status_long_listen};
             // Word 2: {guard_cycles[15:0], short_chirp_cycles[15:0]}
