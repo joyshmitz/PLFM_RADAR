@@ -37,7 +37,7 @@ from PyQt6.QtWidgets import (
     QTableWidget, QTableWidgetItem, QHeaderView,
     QPlainTextEdit, QStatusBar, QMessageBox,
 )
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal, pyqtSlot, QObject
+from PyQt6.QtCore import Qt, QLocale, QTimer, pyqtSignal, pyqtSlot, QObject
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
@@ -71,6 +71,17 @@ logger = logging.getLogger(__name__)
 # Frame dimensions from FPGA
 NUM_RANGE_BINS = 64
 NUM_DOPPLER_BINS = 32
+
+# Force C locale (period as decimal separator) for all QDoubleSpinBox instances.
+_C_LOCALE = QLocale(QLocale.Language.C)
+_C_LOCALE.setNumberOptions(QLocale.NumberOption.RejectGroupSeparator)
+
+
+def _make_dspin() -> QDoubleSpinBox:
+    """Create a QDoubleSpinBox with C locale (no comma decimals)."""
+    sb = QDoubleSpinBox()
+    sb.setLocale(_C_LOCALE)
+    return sb
 
 
 # =============================================================================
@@ -447,7 +458,7 @@ class RadarDashboard(QMainWindow):
         pb_layout.addWidget(self._pb_stop_btn)
 
         pb_layout.addWidget(QLabel("FPS:"))
-        self._pb_fps_spin = QDoubleSpinBox()
+        self._pb_fps_spin = _make_dspin()
         self._pb_fps_spin.setRange(0.1, 60.0)
         self._pb_fps_spin.setValue(10.0)
         self._pb_fps_spin.setSingleStep(1.0)
@@ -534,25 +545,25 @@ class RadarDashboard(QMainWindow):
         pos_group = QGroupBox("Radar Position")
         pos_layout = QGridLayout(pos_group)
 
-        self._lat_spin = QDoubleSpinBox()
+        self._lat_spin = _make_dspin()
         self._lat_spin.setRange(-90, 90)
         self._lat_spin.setDecimals(6)
         self._lat_spin.setValue(self._radar_position.latitude)
         self._lat_spin.valueChanged.connect(self._on_position_changed)
 
-        self._lon_spin = QDoubleSpinBox()
+        self._lon_spin = _make_dspin()
         self._lon_spin.setRange(-180, 180)
         self._lon_spin.setDecimals(6)
         self._lon_spin.setValue(self._radar_position.longitude)
         self._lon_spin.valueChanged.connect(self._on_position_changed)
 
-        self._alt_spin = QDoubleSpinBox()
+        self._alt_spin = _make_dspin()
         self._alt_spin.setRange(0, 50000)
         self._alt_spin.setDecimals(1)
         self._alt_spin.setValue(0.0)
         self._alt_spin.setSuffix(" m")
 
-        self._heading_spin = QDoubleSpinBox()
+        self._heading_spin = _make_dspin()
         self._heading_spin.setRange(0, 360)
         self._heading_spin.setDecimals(1)
         self._heading_spin.setValue(0.0)
@@ -575,7 +586,7 @@ class RadarDashboard(QMainWindow):
         cov_group = QGroupBox("Coverage")
         cov_layout = QGridLayout(cov_group)
 
-        self._coverage_spin = QDoubleSpinBox()
+        self._coverage_spin = _make_dspin()
         self._coverage_spin.setRange(1, 200)
         self._coverage_spin.setDecimals(1)
         self._coverage_spin.setValue(self._settings.coverage_radius / 1000)
@@ -991,7 +1002,7 @@ class RadarDashboard(QMainWindow):
         for spine in self._agc_ax_sat.spines.values():
             spine.set_color(DARK_BORDER)
         self._agc_sat_line, = self._agc_ax_sat.plot(
-            [], [], color=DARK_ERROR, linewidth=1.0)
+            [], [], color=DARK_ERROR, linewidth=1.0, label="Saturation")
         self._agc_sat_fill_artist = None
         self._agc_ax_sat.legend(
             loc="upper right", fontsize=8,
@@ -1139,7 +1150,7 @@ class RadarDashboard(QMainWindow):
         row += 1
 
         p_layout.addWidget(QLabel("DBSCAN eps:"), row, 0)
-        self._cluster_eps_spin = QDoubleSpinBox()
+        self._cluster_eps_spin = _make_dspin()
         self._cluster_eps_spin.setRange(1.0, 5000.0)
         self._cluster_eps_spin.setDecimals(1)
         self._cluster_eps_spin.setValue(self._processing_config.clustering_eps)

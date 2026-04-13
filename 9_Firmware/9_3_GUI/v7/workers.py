@@ -292,6 +292,7 @@ class RawIQReplayWorker(QThread):
     def run(self):
         self._running = True
         self._frame_count = 0
+        self._last_emitted_state: str | None = None
         logger.info("RawIQReplayWorker started")
 
         info = self._controller.info
@@ -322,9 +323,13 @@ class RawIQReplayWorker(QThread):
                 idx = self._controller.frame_index
                 self.frameIndexChanged.emit(idx, total_frames)
 
-                # Emit playback state
+                # Emit playback state only on transitions (avoid race
+                # where a stale "playing" signal overwrites a pause)
                 state = self._controller.state
-                self.playbackStateChanged.emit(state.name.lower())
+                state_str = state.name.lower()
+                if state_str != self._last_emitted_state:
+                    self._last_emitted_state = state_str
+                    self.playbackStateChanged.emit(state_str)
 
                 # Run host-side DSP if configured
                 if self._host_processor is not None:

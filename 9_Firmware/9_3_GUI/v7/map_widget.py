@@ -17,7 +17,8 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QFrame,
     QComboBox, QCheckBox, QPushButton, QLabel,
 )
-from PyQt6.QtCore import Qt, pyqtSignal, pyqtSlot, QObject
+from PyQt6.QtCore import Qt, QUrl, pyqtSignal, pyqtSlot, QObject
+from PyQt6.QtWebEngineCore import QWebEngineSettings
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWebChannel import QWebChannel
 
@@ -517,8 +518,20 @@ document.addEventListener('DOMContentLoaded', function() {{
     # ---- load / helpers ----------------------------------------------------
 
     def _load_map(self):
-        self._web_view.setHtml(self._get_map_html())
-        logger.info("Leaflet map HTML loaded")
+        # Enable remote resource access so Leaflet CDN scripts/tiles can load.
+        settings = self._web_view.page().settings()
+        settings.setAttribute(
+            QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls,
+            True,
+        )
+        # Provide an HTTP base URL so the page has a proper origin;
+        # without this, setHtml() defaults to about:blank which blocks
+        # external resource loading in modern Chromium.
+        self._web_view.setHtml(
+            self._get_map_html(),
+            QUrl("http://localhost/radar_map"),
+        )
+        logger.info("Leaflet map HTML loaded (with HTTP base URL)")
 
     def _on_map_ready(self):
         self._status_label.setText(f"Map ready - {len(self._targets)} targets")
