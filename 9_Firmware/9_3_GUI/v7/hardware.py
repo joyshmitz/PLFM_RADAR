@@ -3,14 +3,11 @@ v7.hardware — Hardware interface classes for the PLFM Radar GUI V7.
 
 Provides:
   - FT2232H radar data + command interface via production radar_protocol module
-  - ReplayConnection for offline .npy replay via production radar_protocol module
   - STM32USBInterface for GPS data only (USB CDC)
 
 The FT2232H interface uses the production protocol layer (radar_protocol.py)
 which sends 4-byte {opcode, addr, value_hi, value_lo} register commands and
-parses 0xAA data / 0xBB status packets from the FPGA. The old magic-packet
-and 'SET'...'END' binary settings protocol has been removed — it was
-incompatible with the FPGA register interface.
+parses 0xAA data / 0xBB status packets from the FPGA.
 """
 
 import sys
@@ -28,7 +25,6 @@ if USB_AVAILABLE:
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from radar_protocol import (  # noqa: F401 — re-exported for v7 package
     FT2232HConnection,
-    ReplayConnection,
     RadarProtocol,
     Opcode,
     RadarAcquisition,

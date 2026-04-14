@@ -186,3 +186,59 @@ class TileServer(Enum):
     GOOGLE_SATELLITE = "google_sat"
     GOOGLE_HYBRID = "google_hybrid"
     ESRI_SATELLITE = "esri_sat"
+
+
+# ---------------------------------------------------------------------------
+# Waveform configuration (physical parameters for bin→unit conversion)
+# ---------------------------------------------------------------------------
+
+@dataclass
+class WaveformConfig:
+    """Physical waveform parameters for converting bins to SI units.
+
+    Encapsulates the radar waveform so that range/velocity resolution
+    can be derived automatically instead of hardcoded in RadarSettings.
+
+    Defaults match the ADI CN0566 Phaser capture parameters used in
+    the golden_reference cosim (4 MSPS, 500 MHz BW, 300 us chirp).
+    """
+
+    sample_rate_hz: float = 4e6          # ADC sample rate
+    bandwidth_hz: float = 500e6          # Chirp bandwidth
+    chirp_duration_s: float = 300e-6     # Chirp ramp time
+    center_freq_hz: float = 10.525e9     # Carrier frequency
+    n_range_bins: int = 64               # After decimation
+    n_doppler_bins: int = 32             # After Doppler FFT
+    fft_size: int = 1024                 # Pre-decimation FFT length
+    decimation_factor: int = 16          # 1024 → 64
+
+    @property
+    def range_resolution_m(self) -> float:
+        """Meters per decimated range bin (FMCW deramped baseband).
+
+        For deramped FMCW: bin spacing = c * Fs * T / (2 * N_FFT * BW).
+        After decimation the bin spacing grows by *decimation_factor*.
+        """
+        c = 299_792_458.0
+        raw_bin = (
+            c * self.sample_rate_hz * self.chirp_duration_s
+            / (2.0 * self.fft_size * self.bandwidth_hz)
+        )
+        return raw_bin * self.decimation_factor
+
+    @property
+    def velocity_resolution_mps(self) -> float:
+        """m/s per Doppler bin.  lambda / (2 * n_doppler * chirp_duration)."""
+        c = 299_792_458.0
+        wavelength = c / self.center_freq_hz
+        return wavelength / (2.0 * self.n_doppler_bins * self.chirp_duration_s)
+
+    @property
+    def max_range_m(self) -> float:
+        """Maximum unambiguous range in meters."""
+        return self.range_resolution_m * self.n_range_bins
+
+    @property
+    def max_velocity_mps(self) -> float:
+        """Maximum unambiguous velocity (±) in m/s."""
+        return self.velocity_resolution_mps * self.n_doppler_bins / 2.0

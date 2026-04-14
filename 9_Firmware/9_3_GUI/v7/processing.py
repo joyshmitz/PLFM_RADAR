@@ -451,3 +451,103 @@ class USBPacketParser:
         except (ValueError, struct.error) as e:
             logger.error(f"Error parsing binary GPS: {e}")
             return None
+
+
+# ============================================================================
+# Utility: polar → geographic coordinate conversion
+# ============================================================================
+
+def polar_to_geographic(
+    radar_lat: float,
+    radar_lon: float,
+    range_m: float,
+    azimuth_deg: float,
+) -> tuple:
+    """Convert polar (range, azimuth) relative to radar → (lat, lon).
+
+    azimuth_deg: 0 = North, clockwise.
+    """
+    r_earth = 6_371_000.0  # Earth radius in metres
+
+    lat1 = math.radians(radar_lat)
+    lon1 = math.radians(radar_lon)
+    bearing = math.radians(azimuth_deg)
+
+    lat2 = math.asin(
+        math.sin(lat1) * math.cos(range_m / r_earth)
+        + math.cos(lat1) * math.sin(range_m / r_earth) * math.cos(bearing)
+    )
+    lon2 = lon1 + math.atan2(
+        math.sin(bearing) * math.sin(range_m / r_earth) * math.cos(lat1),
+        math.cos(range_m / r_earth) - math.sin(lat1) * math.sin(lat2),
+    )
+    return (math.degrees(lat2), math.degrees(lon2))
+
+
+# ============================================================================
+# Shared target extraction (used by both RadarDataWorker and ReplayWorker)
+# ============================================================================
+
+def extract_targets_from_frame(
+    frame,
+    range_resolution: float = 1.0,
+    velocity_resolution: float = 1.0,
+    gps: GPSData | None = None,
+) -> list[RadarTarget]:
+    """Extract RadarTarget list from a RadarFrame's detection mask.
+
+    This is the bin-to-physical conversion + geo-mapping shared between
+    the live and replay data paths.
+
+    Parameters
+    ----------
+    frame : RadarFrame
+        Frame with populated ``detections``, ``magnitude``, ``range_doppler_i/q``.
+    range_resolution : float
+        Meters per range bin.
+    velocity_resolution : float
+        m/s per Doppler bin.
+    gps : GPSData | None
+        GPS position for geo-mapping (latitude/longitude).
+
+    Returns
+    -------
+    list[RadarTarget]
+        One target per detection cell.
+    """
+    det_indices = np.argwhere(frame.detections > 0)
+    n_doppler = frame.detections.shape[1] if frame.detections.ndim == 2 else 32
+    doppler_center = n_doppler // 2
+
+    targets: list[RadarTarget] = []
+    for idx in det_indices:
+        rbin, dbin = int(idx[0]), int(idx[1])
+        mag = float(frame.magnitude[rbin, dbin])
+        snr = 10.0 * math.log10(max(mag, 1.0)) if mag > 0 else 0.0
+
+        range_m = float(rbin) * range_resolution
+        velocity_ms = float(dbin - doppler_center) * velocity_resolution
+
+        lat, lon, azimuth, elevation = 0.0, 0.0, 0.0, 0.0
+        if gps is not None:
+            azimuth = gps.heading
+            # Spread detections across ±15° sector for single-beam radar
+            if len(det_indices) > 1:
+                spread = (dbin - doppler_center) / max(doppler_center, 1) * 15.0
+                azimuth = gps.heading + spread
+            lat, lon = polar_to_geographic(
+                gps.latitude, gps.longitude, range_m, azimuth,
+            )
+
+        targets.append(RadarTarget(
+            id=len(targets),
+            range=range_m,
+            velocity=velocity_ms,
+            azimuth=azimuth,
+            elevation=elevation,
+            latitude=lat,
+            longitude=lon,
+            snr=snr,
+            timestamp=frame.timestamp,
+        ))
+    return targets

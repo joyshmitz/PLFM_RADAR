@@ -14,7 +14,7 @@ RadarDashboard is a QMainWindow with six tabs:
 
 Uses production radar_protocol.py for all FPGA communication:
   - FT2232HConnection for real hardware
-  - ReplayConnection for offline .npy replay
+  - Unified replay via SoftwareFPGA + ReplayEngine + ReplayWorker
   - Mock mode (FT2232HConnection(mock=True)) for development
 
 The old STM32 magic-packet start flow has been removed. FPGA registers
@@ -22,9 +22,12 @@ are controlled directly via 4-byte {opcode, addr, value_hi, value_lo}
 commands sent over FT2232H.
 """
 
+from __future__ import annotations
+
 import time
 import logging
 from collections import deque
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -32,11 +35,11 @@ from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
     QTabWidget, QSplitter, QGroupBox, QFrame, QScrollArea,
     QLabel, QPushButton, QComboBox, QCheckBox,
-    QDoubleSpinBox, QSpinBox, QLineEdit,
+    QDoubleSpinBox, QSpinBox, QLineEdit, QSlider, QFileDialog,
     QTableWidget, QTableWidgetItem, QHeaderView,
     QPlainTextEdit, QStatusBar, QMessageBox,
 )
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal, pyqtSlot, QObject
+from PyQt6.QtCore import Qt, QLocale, QTimer, pyqtSignal, pyqtSlot, QObject
 
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
@@ -52,7 +55,6 @@ from .models import (
 )
 from .hardware import (
     FT2232HConnection,
-    ReplayConnection,
     RadarProtocol,
     RadarFrame,
     StatusResponse,
@@ -60,14 +62,29 @@ from .hardware import (
     STM32USBInterface,
 )
 from .processing import RadarProcessor, USBPacketParser
-from .workers import RadarDataWorker, GPSDataWorker, TargetSimulator
+from .workers import RadarDataWorker, GPSDataWorker, TargetSimulator, ReplayWorker
 from .map_widget import RadarMapWidget
+
+if TYPE_CHECKING:
+    from .software_fpga import SoftwareFPGA
+    from .replay import ReplayEngine
 
 logger = logging.getLogger(__name__)
 
 # Frame dimensions from FPGA
 NUM_RANGE_BINS = 64
 NUM_DOPPLER_BINS = 32
+
+# Force C locale (period as decimal separator) for all QDoubleSpinBox instances.
+_C_LOCALE = QLocale(QLocale.Language.C)
+_C_LOCALE.setNumberOptions(QLocale.NumberOption.RejectGroupSeparator)
+
+
+def _make_dspin() -> QDoubleSpinBox:
+    """Create a QDoubleSpinBox with C locale (no comma decimals)."""
+    sb = QDoubleSpinBox()
+    sb.setLocale(_C_LOCALE)
+    return sb
 
 
 # =============================================================================
@@ -141,6 +158,12 @@ class RadarDashboard(QMainWindow):
         self._radar_worker: RadarDataWorker | None = None
         self._gps_worker: GPSDataWorker | None = None
         self._simulator: TargetSimulator | None = None
+
+        # Replay-specific objects (created when entering replay mode)
+        self._replay_worker: ReplayWorker | None = None
+        self._replay_engine: ReplayEngine | None = None
+        self._software_fpga: SoftwareFPGA | None = None
+        self._replay_mode = False
 
         # State
         self._running = False
@@ -341,7 +364,7 @@ class RadarDashboard(QMainWindow):
         # Row 0: connection mode + device combos + buttons
         ctrl_layout.addWidget(QLabel("Mode:"), 0, 0)
         self._mode_combo = QComboBox()
-        self._mode_combo.addItems(["Mock", "Live FT2232H", "Replay (.npy)"])
+        self._mode_combo.addItems(["Mock", "Live FT2232H", "Replay"])
         self._mode_combo.setCurrentIndex(0)
         ctrl_layout.addWidget(self._mode_combo, 0, 1)
 
@@ -389,6 +412,55 @@ class RadarDashboard(QMainWindow):
         self._status_label_main = QLabel("Status: Ready")
         self._status_label_main.setAlignment(Qt.AlignmentFlag.AlignRight)
         ctrl_layout.addWidget(self._status_label_main, 1, 5, 1, 5)
+
+        # Row 2: replay transport controls (hidden until replay mode)
+        self._replay_file_label = QLabel("No file loaded")
+        self._replay_file_label.setMinimumWidth(200)
+        ctrl_layout.addWidget(self._replay_file_label, 2, 0, 1, 2)
+
+        self._replay_browse_btn = QPushButton("Browse...")
+        self._replay_browse_btn.clicked.connect(self._browse_replay_file)
+        ctrl_layout.addWidget(self._replay_browse_btn, 2, 2)
+
+        self._replay_play_btn = QPushButton("Play")
+        self._replay_play_btn.clicked.connect(self._replay_play_pause)
+        ctrl_layout.addWidget(self._replay_play_btn, 2, 3)
+
+        self._replay_stop_btn = QPushButton("Stop")
+        self._replay_stop_btn.clicked.connect(self._replay_stop)
+        ctrl_layout.addWidget(self._replay_stop_btn, 2, 4)
+
+        self._replay_slider = QSlider(Qt.Orientation.Horizontal)
+        self._replay_slider.setMinimum(0)
+        self._replay_slider.setMaximum(0)
+        self._replay_slider.valueChanged.connect(self._replay_seek)
+        ctrl_layout.addWidget(self._replay_slider, 2, 5, 1, 2)
+
+        self._replay_frame_label = QLabel("0 / 0")
+        ctrl_layout.addWidget(self._replay_frame_label, 2, 7)
+
+        self._replay_speed_combo = QComboBox()
+        self._replay_speed_combo.addItems(["50 ms", "100 ms", "200 ms", "500 ms"])
+        self._replay_speed_combo.setCurrentIndex(1)
+        self._replay_speed_combo.currentIndexChanged.connect(self._replay_speed_changed)
+        ctrl_layout.addWidget(self._replay_speed_combo, 2, 8)
+
+        self._replay_loop_cb = QCheckBox("Loop")
+        self._replay_loop_cb.stateChanged.connect(self._replay_loop_changed)
+        ctrl_layout.addWidget(self._replay_loop_cb, 2, 9)
+
+        # Collect replay widgets to toggle visibility
+        self._replay_controls = [
+            self._replay_file_label, self._replay_browse_btn,
+            self._replay_play_btn, self._replay_stop_btn,
+            self._replay_slider, self._replay_frame_label,
+            self._replay_speed_combo, self._replay_loop_cb,
+        ]
+        for w in self._replay_controls:
+            w.setVisible(False)
+
+        # Show/hide replay row when mode changes
+        self._mode_combo.currentTextChanged.connect(self._on_mode_changed)
 
         layout.addWidget(ctrl)
 
@@ -452,19 +524,19 @@ class RadarDashboard(QMainWindow):
         pos_group = QGroupBox("Radar Position")
         pos_layout = QGridLayout(pos_group)
 
-        self._lat_spin = QDoubleSpinBox()
+        self._lat_spin = _make_dspin()
         self._lat_spin.setRange(-90, 90)
         self._lat_spin.setDecimals(6)
         self._lat_spin.setValue(self._radar_position.latitude)
         self._lat_spin.valueChanged.connect(self._on_position_changed)
 
-        self._lon_spin = QDoubleSpinBox()
+        self._lon_spin = _make_dspin()
         self._lon_spin.setRange(-180, 180)
         self._lon_spin.setDecimals(6)
         self._lon_spin.setValue(self._radar_position.longitude)
         self._lon_spin.valueChanged.connect(self._on_position_changed)
 
-        self._alt_spin = QDoubleSpinBox()
+        self._alt_spin = _make_dspin()
         self._alt_spin.setRange(0, 50000)
         self._alt_spin.setDecimals(1)
         self._alt_spin.setValue(0.0)
@@ -483,7 +555,7 @@ class RadarDashboard(QMainWindow):
         cov_group = QGroupBox("Coverage")
         cov_layout = QGridLayout(cov_group)
 
-        self._coverage_spin = QDoubleSpinBox()
+        self._coverage_spin = _make_dspin()
         self._coverage_spin.setRange(1, 200)
         self._coverage_spin.setDecimals(1)
         self._coverage_spin.setValue(self._settings.coverage_radius / 1000)
@@ -899,7 +971,7 @@ class RadarDashboard(QMainWindow):
         for spine in self._agc_ax_sat.spines.values():
             spine.set_color(DARK_BORDER)
         self._agc_sat_line, = self._agc_ax_sat.plot(
-            [], [], color=DARK_ERROR, linewidth=1.0)
+            [], [], color=DARK_ERROR, linewidth=1.0, label="Saturation")
         self._agc_sat_fill_artist = None
         self._agc_ax_sat.legend(
             loc="upper right", fontsize=8,
@@ -1047,7 +1119,7 @@ class RadarDashboard(QMainWindow):
         row += 1
 
         p_layout.addWidget(QLabel("DBSCAN eps:"), row, 0)
-        self._cluster_eps_spin = QDoubleSpinBox()
+        self._cluster_eps_spin = _make_dspin()
         self._cluster_eps_spin.setRange(1.0, 5000.0)
         self._cluster_eps_spin.setDecimals(1)
         self._cluster_eps_spin.setValue(self._processing_config.clustering_eps)
@@ -1164,7 +1236,11 @@ class RadarDashboard(QMainWindow):
             logger.error(f"Failed to send FPGA cmd: 0x{opcode:02X}")
 
     def _send_fpga_validated(self, opcode: int, value: int, bits: int):
-        """Clamp value to bit-width and send."""
+        """Clamp value to bit-width and send.
+
+        In replay mode, also dispatch to the SoftwareFPGA setter and
+        re-process the current frame so the user sees immediate effect.
+        """
         max_val = (1 << bits) - 1
         clamped = max(0, min(value, max_val))
         if clamped != value:
@@ -1174,7 +1250,18 @@ class RadarDashboard(QMainWindow):
             key = f"0x{opcode:02X}"
             if key in self._param_spins:
                 self._param_spins[key].setValue(clamped)
-        self._send_fpga_cmd(opcode, clamped)
+
+        # Dispatch to real FPGA (live/mock mode)
+        if not self._replay_mode:
+            self._send_fpga_cmd(opcode, clamped)
+            return
+
+        # Dispatch to SoftwareFPGA (replay mode)
+        if self._software_fpga is not None:
+            self._dispatch_to_software_fpga(opcode, clamped)
+            # Re-process current frame so the effect is visible immediately
+            if self._replay_worker is not None:
+                self._replay_worker.seek(self._replay_worker.current_index)
 
     def _send_custom_command(self):
         """Send custom opcode + value from the FPGA Control tab."""
@@ -1191,36 +1278,112 @@ class RadarDashboard(QMainWindow):
 
     def _start_radar(self):
         """Start radar data acquisition using production protocol."""
+        # Mutual exclusion: stop demo if running
+        if self._demo_mode:
+            self._stop_demo()
+
         try:
             mode = self._mode_combo.currentText()
 
             if "Mock" in mode:
+                self._replay_mode = False
                 self._connection = FT2232HConnection(mock=True)
                 if not self._connection.open():
                     QMessageBox.critical(self, "Error", "Failed to open mock connection.")
                     return
             elif "Live" in mode:
+                self._replay_mode = False
                 self._connection = FT2232HConnection(mock=False)
                 if not self._connection.open():
                     QMessageBox.critical(self, "Error",
                                          "Failed to open FT2232H. Check USB connection.")
                     return
             elif "Replay" in mode:
-                from PyQt6.QtWidgets import QFileDialog
-                npy_dir = QFileDialog.getExistingDirectory(
-                    self, "Select .npy replay directory")
-                if not npy_dir:
+                self._replay_mode = True
+                replay_path = self._replay_file_label.text()
+                if replay_path == "No file loaded" or not replay_path:
+                    QMessageBox.warning(
+                        self, "Replay",
+                        "Use 'Browse...' to select a replay"
+                        " file or directory first.")
                     return
-                self._connection = ReplayConnection(npy_dir)
-                if not self._connection.open():
-                    QMessageBox.critical(self, "Error",
-                                         "Failed to open replay connection.")
+
+                from .software_fpga import SoftwareFPGA
+                from .replay import ReplayEngine
+
+                self._software_fpga = SoftwareFPGA()
+                # Enable CFAR by default for raw IQ replay (avoids 2000+ detections)
+                self._software_fpga.set_cfar_enable(True)
+
+                try:
+                    self._replay_engine = ReplayEngine(
+                        replay_path, self._software_fpga)
+                except (OSError, ValueError, RuntimeError) as exc:
+                    QMessageBox.critical(self, "Replay Error",
+                                         f"Failed to open replay data:\n{exc}")
+                    self._software_fpga = None
                     return
+
+                if self._replay_engine.total_frames == 0:
+                    QMessageBox.warning(self, "Replay", "No frames found in the selected source.")
+                    self._replay_engine.close()
+                    self._replay_engine = None
+                    self._software_fpga = None
+                    return
+
+                speed_map = {0: 50, 1: 100, 2: 200, 3: 500}
+                interval = speed_map.get(self._replay_speed_combo.currentIndex(), 100)
+
+                self._replay_worker = ReplayWorker(
+                    replay_engine=self._replay_engine,
+                    settings=self._settings,
+                    gps=self._radar_position,
+                    frame_interval_ms=interval,
+                )
+                self._replay_worker.frameReady.connect(self._on_frame_ready)
+                self._replay_worker.targetsUpdated.connect(self._on_radar_targets)
+                self._replay_worker.statsUpdated.connect(self._on_radar_stats)
+                self._replay_worker.errorOccurred.connect(self._on_worker_error)
+                self._replay_worker.playbackStateChanged.connect(
+                    self._on_playback_state_changed)
+                self._replay_worker.frameIndexChanged.connect(
+                    self._on_frame_index_changed)
+                self._replay_worker.set_loop(self._replay_loop_cb.isChecked())
+
+                self._replay_slider.setMaximum(
+                    self._replay_engine.total_frames - 1)
+                self._replay_slider.setValue(0)
+                self._replay_frame_label.setText(
+                    f"0 / {self._replay_engine.total_frames}")
+
+                self._replay_worker.start()
+                # Update CFAR enable spinbox to reflect default-on for replay
+                if "0x25" in self._param_spins:
+                    self._param_spins["0x25"].setValue(1)
+
+                # UI state
+                self._running = True
+                self._start_time = time.time()
+                self._frame_count = 0
+                self._start_btn.setEnabled(False)
+                self._stop_btn.setEnabled(True)
+                self._mode_combo.setEnabled(False)
+                self._demo_btn_main.setEnabled(False)
+                self._demo_btn_map.setEnabled(False)
+                n_frames = self._replay_engine.total_frames
+                self._status_label_main.setText(
+                    f"Status: Replay ({n_frames} frames)")
+                self._sb_status.setText(f"Replay ({n_frames} frames)")
+                self._sb_mode.setText("Replay")
+                logger.info(
+                    "Replay started: %s (%d frames)",
+                    replay_path, n_frames)
+                return
             else:
                 QMessageBox.warning(self, "Warning", "Unknown connection mode.")
                 return
 
-            # Start radar worker
+            # Start radar worker (mock / live — NOT replay)
             self._radar_worker = RadarDataWorker(
                 connection=self._connection,
                 processor=self._processor,
@@ -1254,6 +1417,8 @@ class RadarDashboard(QMainWindow):
             self._start_btn.setEnabled(False)
             self._stop_btn.setEnabled(True)
             self._mode_combo.setEnabled(False)
+            self._demo_btn_main.setEnabled(False)
+            self._demo_btn_map.setEnabled(False)
             self._status_label_main.setText(f"Status: Running ({mode})")
             self._sb_status.setText(f"Running ({mode})")
             self._sb_mode.setText(mode)
@@ -1271,6 +1436,18 @@ class RadarDashboard(QMainWindow):
             self._radar_worker.wait(2000)
             self._radar_worker = None
 
+        if self._replay_worker:
+            self._replay_worker.stop()
+            self._replay_worker.wait(2000)
+            self._replay_worker = None
+
+        if self._replay_engine:
+            self._replay_engine.close()
+            self._replay_engine = None
+
+        self._software_fpga = None
+        self._replay_mode = False
+
         if self._gps_worker:
             self._gps_worker.stop()
             self._gps_worker.wait(2000)
@@ -1285,10 +1462,119 @@ class RadarDashboard(QMainWindow):
         self._start_btn.setEnabled(True)
         self._stop_btn.setEnabled(False)
         self._mode_combo.setEnabled(True)
+        self._demo_btn_main.setEnabled(True)
+        self._demo_btn_map.setEnabled(True)
         self._status_label_main.setText("Status: Radar stopped")
         self._sb_status.setText("Radar stopped")
         self._sb_mode.setText("Idle")
         logger.info("Radar system stopped")
+
+    # =====================================================================
+    # Replay helpers
+    # =====================================================================
+
+    def _on_mode_changed(self, text: str):
+        """Show/hide replay transport controls based on mode selection."""
+        is_replay = "Replay" in text
+        for w in self._replay_controls:
+            w.setVisible(is_replay)
+
+    def _browse_replay_file(self):
+        """Open file/directory picker for replay source."""
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select replay file",
+            "",
+            "All supported (*.npy *.h5);;NumPy files (*.npy);;HDF5 files (*.h5);;All files (*)",
+        )
+        if path:
+            self._replay_file_label.setText(path)
+            return
+        # If no file selected, try directory (for co-sim)
+        dir_path = QFileDialog.getExistingDirectory(
+            self, "Select co-sim replay directory")
+        if dir_path:
+            self._replay_file_label.setText(dir_path)
+
+    def _replay_play_pause(self):
+        """Toggle play/pause on the replay worker."""
+        if self._replay_worker is None:
+            return
+        if self._replay_worker.is_playing:
+            self._replay_worker.pause()
+            self._replay_play_btn.setText("Play")
+        else:
+            self._replay_worker.play()
+            self._replay_play_btn.setText("Pause")
+
+    def _replay_stop(self):
+        """Stop replay playback (keeps data loaded)."""
+        if self._replay_worker is not None:
+            self._replay_worker.pause()
+            self._replay_worker.seek(0)
+            self._replay_play_btn.setText("Play")
+
+    def _replay_seek(self, value: int):
+        """Seek to a specific frame from the slider."""
+        if self._replay_worker is not None and not self._replay_worker.is_playing:
+            self._replay_worker.seek(value)
+
+    def _replay_speed_changed(self, index: int):
+        """Update replay frame interval from speed combo."""
+        speed_map = {0: 50, 1: 100, 2: 200, 3: 500}
+        ms = speed_map.get(index, 100)
+        if self._replay_worker is not None:
+            self._replay_worker.set_frame_interval(ms)
+
+    def _replay_loop_changed(self, state: int):
+        """Update replay loop setting."""
+        if self._replay_worker is not None:
+            self._replay_worker.set_loop(state == Qt.CheckState.Checked.value)
+
+    @pyqtSlot(str)
+    def _on_playback_state_changed(self, state: str):
+        """Update UI when replay playback state changes."""
+        if state == "playing":
+            self._replay_play_btn.setText("Pause")
+        elif state in ("paused", "stopped"):
+            self._replay_play_btn.setText("Play")
+        if state == "stopped" and self._replay_worker is not None:
+            self._status_label_main.setText("Status: Replay finished")
+
+    @pyqtSlot(int, int)
+    def _on_frame_index_changed(self, current: int, total: int):
+        """Update slider and frame label from replay worker."""
+        self._replay_slider.blockSignals(True)
+        self._replay_slider.setValue(current)
+        self._replay_slider.blockSignals(False)
+        self._replay_frame_label.setText(f"{current} / {total}")
+
+    def _dispatch_to_software_fpga(self, opcode: int, value: int):
+        """Route an FPGA opcode+value to the SoftwareFPGA setter."""
+        fpga = self._software_fpga
+        if fpga is None:
+            return
+        _opcode_dispatch = {
+            0x03: lambda v: fpga.set_detect_threshold(v),
+            0x16: lambda v: fpga.set_gain_shift(v),
+            0x21: lambda v: fpga.set_cfar_guard(v),
+            0x22: lambda v: fpga.set_cfar_train(v),
+            0x23: lambda v: fpga.set_cfar_alpha(v),
+            0x24: lambda v: fpga.set_cfar_mode(v),
+            0x25: lambda v: fpga.set_cfar_enable(bool(v)),
+            0x26: lambda v: fpga.set_mti_enable(bool(v)),
+            0x27: lambda v: fpga.set_dc_notch_width(v),
+            0x28: lambda v: fpga.set_agc_enable(bool(v)),
+            0x29: lambda v: fpga.set_agc_params(target=v),
+            0x2A: lambda v: fpga.set_agc_params(attack=v),
+            0x2B: lambda v: fpga.set_agc_params(decay=v),
+            0x2C: lambda v: fpga.set_agc_params(holdoff=v),
+        }
+        handler = _opcode_dispatch.get(opcode)
+        if handler is not None:
+            handler(value)
+            logger.info(f"SoftwareFPGA: 0x{opcode:02X} = {value}")
+        else:
+            logger.debug(f"SoftwareFPGA: opcode 0x{opcode:02X} not handled (no-op)")
 
     # =====================================================================
     # Demo mode
@@ -1296,6 +1582,10 @@ class RadarDashboard(QMainWindow):
 
     def _start_demo(self):
         if self._simulator:
+            return
+        # Mutual exclusion: do not start demo while radar/replay is running
+        if self._running:
+            logger.warning("Cannot start demo while radar is running")
             return
         self._simulator = TargetSimulator(self._radar_position, self)
         self._simulator.targetsUpdated.connect(self._on_demo_targets)
@@ -1315,7 +1605,7 @@ class RadarDashboard(QMainWindow):
         self._demo_mode = False
         if not self._running:
             mode = "Idle"
-        elif isinstance(self._connection, ReplayConnection):
+        elif self._replay_mode:
             mode = "Replay"
         else:
             mode = "Live"

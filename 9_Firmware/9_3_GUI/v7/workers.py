@@ -13,7 +13,6 @@ All packet parsing now uses the production radar_protocol.py which matches
 the actual FPGA packet format (0xAA data 11-byte, 0xBB status 26-byte).
 """
 
-import math
 import time
 import random
 import queue
@@ -36,43 +35,10 @@ from .processing import (
     RadarProcessor,
     USBPacketParser,
     apply_pitch_correction,
+    polar_to_geographic,
 )
 
 logger = logging.getLogger(__name__)
-
-
-# =============================================================================
-# Utility: polar → geographic
-# =============================================================================
-
-def polar_to_geographic(
-    radar_lat: float,
-    radar_lon: float,
-    range_m: float,
-    azimuth_deg: float,
-) -> tuple:
-    """
-    Convert polar coordinates (range, azimuth) relative to radar
-    to geographic (latitude, longitude).
-
-    azimuth_deg: 0 = North, clockwise.
-    Returns (lat, lon).
-    """
-    R = 6_371_000  # Earth radius in meters
-
-    lat1 = math.radians(radar_lat)
-    lon1 = math.radians(radar_lon)
-    bearing = math.radians(azimuth_deg)
-
-    lat2 = math.asin(
-        math.sin(lat1) * math.cos(range_m / R)
-        + math.cos(lat1) * math.sin(range_m / R) * math.cos(bearing)
-    )
-    lon2 = lon1 + math.atan2(
-        math.sin(bearing) * math.sin(range_m / R) * math.cos(lat1),
-        math.cos(range_m / R) - math.sin(lat1) * math.sin(lat2),
-    )
-    return (math.degrees(lat2), math.degrees(lon2))
 
 
 # =============================================================================
@@ -81,13 +47,13 @@ def polar_to_geographic(
 
 class RadarDataWorker(QThread):
     """
-    Background worker that reads radar data from FT2232H (or ReplayConnection),
-    parses 0xAA/0xBB packets via production RadarAcquisition, runs optional
-    host-side DSP, and emits PyQt signals with results.
+    Background worker that reads radar data from FT2232H, parses 0xAA/0xBB
+    packets via production RadarAcquisition, runs optional host-side DSP,
+    and emits PyQt signals with results.
 
-    This replaces the old V7 worker which used an incompatible packet format.
-    Now uses production radar_protocol.py for all packet parsing and frame
+    Uses production radar_protocol.py for all packet parsing and frame
     assembly (11-byte 0xAA data packets → 64x32 RadarFrame).
+    For replay, use ReplayWorker instead.
 
     Signals:
         frameReady(RadarFrame)    — a complete 64x32 radar frame
@@ -105,7 +71,7 @@ class RadarDataWorker(QThread):
 
     def __init__(
         self,
-        connection,  # FT2232HConnection or ReplayConnection
+        connection,  # FT2232HConnection
         processor: RadarProcessor | None = None,
         recorder: DataRecorder | None = None,
         gps_data_ref: GPSData | None = None,
@@ -436,3 +402,172 @@ class TargetSimulator(QObject):
 
         self._targets = updated
         self.targetsUpdated.emit(updated)
+
+
+# =============================================================================
+# Replay Worker (QThread) — unified replay playback
+# =============================================================================
+
+class ReplayWorker(QThread):
+    """Background worker for replay data playback.
+
+    Emits the same signals as ``RadarDataWorker`` so the dashboard
+    treats live and replay identically.  Additionally emits playback
+    state and frame-index signals for the transport controls.
+
+    Signals
+    -------
+    frameReady(object)           RadarFrame
+    targetsUpdated(list)         list[RadarTarget]
+    statsUpdated(dict)           processing stats
+    errorOccurred(str)           error message
+    playbackStateChanged(str)    "playing" | "paused" | "stopped"
+    frameIndexChanged(int, int)  (current_index, total_frames)
+    """
+
+    frameReady = pyqtSignal(object)
+    targetsUpdated = pyqtSignal(list)
+    statsUpdated = pyqtSignal(dict)
+    errorOccurred = pyqtSignal(str)
+    playbackStateChanged = pyqtSignal(str)
+    frameIndexChanged = pyqtSignal(int, int)
+
+    def __init__(
+        self,
+        replay_engine,
+        settings: RadarSettings | None = None,
+        gps: GPSData | None = None,
+        frame_interval_ms: int = 100,
+        parent: QObject | None = None,
+    ) -> None:
+        super().__init__(parent)
+        import threading
+
+        from .processing import extract_targets_from_frame
+        from .models import WaveformConfig
+
+        self._engine = replay_engine
+        self._settings = settings or RadarSettings()
+        self._gps = gps
+        self._waveform = WaveformConfig()
+        self._frame_interval_ms = frame_interval_ms
+        self._extract_targets = extract_targets_from_frame
+
+        self._current_index = 0
+        self._last_emitted_index = 0
+        self._playing = False
+        self._stop_flag = False
+        self._loop = False
+        self._lock = threading.Lock()  # guards _current_index and _emit_frame
+
+    # -- Public control API --
+
+    @property
+    def current_index(self) -> int:
+        """Index of the last frame emitted (for re-seek on param change)."""
+        return self._last_emitted_index
+
+    @property
+    def total_frames(self) -> int:
+        return self._engine.total_frames
+
+    def set_gps(self, gps: GPSData | None) -> None:
+        self._gps = gps
+
+    def set_waveform(self, wf) -> None:
+        self._waveform = wf
+
+    def set_loop(self, loop: bool) -> None:
+        self._loop = loop
+
+    def set_frame_interval(self, ms: int) -> None:
+        self._frame_interval_ms = max(10, ms)
+
+    def play(self) -> None:
+        self._playing = True
+        # If at EOF, rewind so play actually does something
+        with self._lock:
+            if self._current_index >= self._engine.total_frames:
+                self._current_index = 0
+        self.playbackStateChanged.emit("playing")
+
+    def pause(self) -> None:
+        self._playing = False
+        self.playbackStateChanged.emit("paused")
+
+    def stop(self) -> None:
+        self._playing = False
+        self._stop_flag = True
+        self.playbackStateChanged.emit("stopped")
+
+    @property
+    def is_playing(self) -> bool:
+        """Thread-safe read of playback state (for GUI queries)."""
+        return self._playing
+
+    def seek(self, index: int) -> None:
+        """Jump to a specific frame and emit it (thread-safe)."""
+        with self._lock:
+            idx = max(0, min(index, self._engine.total_frames - 1))
+            self._current_index = idx
+            self._emit_frame(idx)
+            self._last_emitted_index = idx
+
+    # -- Thread entry --
+
+    def run(self) -> None:
+        self._stop_flag = False
+        self._playing = True
+        self.playbackStateChanged.emit("playing")
+
+        try:
+            while not self._stop_flag:
+                if self._playing:
+                    with self._lock:
+                        if self._current_index < self._engine.total_frames:
+                            self._emit_frame(self._current_index)
+                            self._last_emitted_index = self._current_index
+                            self._current_index += 1
+
+                            # Loop or pause at end
+                            if self._current_index >= self._engine.total_frames:
+                                if self._loop:
+                                    self._current_index = 0
+                                else:
+                                    # Pause — keep thread alive for restart
+                                    self._playing = False
+                                    self.playbackStateChanged.emit("stopped")
+
+                self.msleep(self._frame_interval_ms)
+        except (OSError, ValueError, RuntimeError, IndexError) as exc:
+            self.errorOccurred.emit(str(exc))
+
+        self.playbackStateChanged.emit("stopped")
+
+    # -- Internal --
+
+    def _emit_frame(self, index: int) -> None:
+        try:
+            frame = self._engine.get_frame(index)
+        except (OSError, ValueError, RuntimeError, IndexError) as exc:
+            self.errorOccurred.emit(f"Frame {index}: {exc}")
+            return
+
+        self.frameReady.emit(frame)
+        self.frameIndexChanged.emit(index, self._engine.total_frames)
+
+        # Target extraction
+        targets = self._extract_targets(
+            frame,
+            range_resolution=self._waveform.range_resolution_m,
+            velocity_resolution=self._waveform.velocity_resolution_mps,
+            gps=self._gps,
+        )
+        self.targetsUpdated.emit(targets)
+        self.statsUpdated.emit({
+            "frame_number": frame.frame_number,
+            "detection_count": frame.detection_count,
+            "target_count": len(targets),
+            "replay_index": index,
+            "replay_total": self._engine.total_frames,
+        })
