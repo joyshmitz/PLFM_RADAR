@@ -21,7 +21,6 @@
 #include "usb_device.h"
 #include "USBHandler.h"
 #include "usbd_cdc_if.h"
-#include "adar1000.h"
 #include "ADAR1000_Manager.h"
 #include "ADAR1000_AGC.h"
 extern "C" {
