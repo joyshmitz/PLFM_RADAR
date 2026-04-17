@@ -314,6 +314,68 @@ class TestTier1StatusFieldPositions:
             f"but Verilog status_words[0] has mode at bit {expected_shift}."
         )
 
+    @pytest.mark.parametrize(
+        "usb_variant",
+        ["usb_data_interface_ft2232h.v", "usb_data_interface.v"],
+    )
+    def test_status_field_positions_match_verilog_concat_layout(self, usb_variant):
+        """
+        Independent static check: every Python field in parse_status_packet()
+        must sit at the (word_idx, lsb, width) where Verilog places it inside
+        status_words[0..5]. Walks each Verilog concat MSB->LSB and compares to
+        what the Python parser extracts. Exercised across both USB variants
+        because both are live post PR #89.
+        """
+        rtl_path = cp.FPGA_DIR / usb_variant
+        if not rtl_path.exists():
+            pytest.skip(f"{usb_variant} not present")
+
+        concats = cp.parse_verilog_status_word_concats(rtl_path)
+        port_widths = cp.get_usb_interface_port_widths(rtl_path)
+
+        # Build verilog_layout: signal_name -> (word_idx, lsb, width)
+        verilog_layout: dict[str, tuple[int, int, int]] = {}
+        literal_re = re.compile(r"^\d+'[bdhoBDHO]")
+        for word_idx, concat_expr in concats.items():
+            result = cp.count_concat_bits(concat_expr, port_widths)
+            # Skip malformed words; total-width assertion belongs to
+            # TestTier1StatusWordTruncation, not this test.
+            if result.total_bits != 32:
+                continue
+            running_lsb = result.total_bits  # MSB-first walk
+            for name_or_literal, width in result.fragments:
+                running_lsb -= width
+                if literal_re.match(name_or_literal):
+                    continue
+                verilog_layout[name_or_literal] = (word_idx, running_lsb, width)
+
+        py_fields = cp.parse_python_status_fields()
+
+        mismatches: list[str] = []
+        for f in py_fields:
+            v_name = f"status_{f.name}"
+            v_pos = verilog_layout.get(v_name)
+            if v_pos is None:
+                mismatches.append(
+                    f"  {f.name}: py=(word={f.word_index}, lsb={f.lsb}, "
+                    f"width={f.width})  v=<no '{v_name}' fragment in Verilog>"
+                )
+                continue
+            v_word, v_lsb, v_width = v_pos
+            if (v_word, v_lsb, v_width) != (f.word_index, f.lsb, f.width):
+                mismatches.append(
+                    f"  {f.name}: py=(word={f.word_index}, lsb={f.lsb}, "
+                    f"width={f.width})  v=(word={v_word}, lsb={v_lsb}, "
+                    f"width={v_width})"
+                )
+
+        if mismatches:
+            pytest.fail(
+                f"Status field layout drift between Python parse_status_packet() "
+                f"and Verilog status_words[] in {usb_variant}:\n"
+                + "\n".join(mismatches)
+            )
+
 
 class TestTier1PacketConstants:
     """Verify packet header/footer/size constants match across layers."""
