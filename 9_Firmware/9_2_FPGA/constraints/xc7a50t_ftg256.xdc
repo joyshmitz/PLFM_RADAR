@@ -354,6 +354,18 @@ set_property DRIVE 8 [get_ports {ft_oe_n}]
 set_property DRIVE 8 [get_ports {ft_siwu}]
 set_property DRIVE 8 [get_ports {ft_data[*]}]
 
+# IOB packing: force output/tristate FFs to pack into the IOB to meet the
+# FT2232H 5 ns FPGA launch budget (period 16.667 ns − t_su 11.667 ns ≈ 5 ns).
+# Without this, fabric→OBUFT routing eats 2-3 ns and Vivado starts
+# replicating the tristate driver (ft_data_TRI[*]_repN) trying to rescue
+# timing. The FSM flops in usb_data_interface_ft2232h.v already sit at
+# the output boundary, so packing is safe and does not require RTL change.
+set_property IOB TRUE [get_ports {ft_data[*]}]
+set_property IOB TRUE [get_ports {ft_rd_n}]
+set_property IOB TRUE [get_ports {ft_wr_n}]
+set_property IOB TRUE [get_ports {ft_oe_n}]
+set_property IOB TRUE [get_ports {ft_siwu}]
+
 # ft_clkout constrained above in CLOCK CONSTRAINTS section (C4, 60 MHz)
 
 # --------------------------------------------------------------------------
