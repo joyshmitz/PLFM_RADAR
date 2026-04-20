@@ -2054,6 +2054,10 @@ int main(void)
 	            HAL_GPIO_TogglePin(LED_3_GPIO_Port, LED_3_Pin);
 	            HAL_GPIO_TogglePin(LED_4_GPIO_Port, LED_4_Pin);
 	            HAL_Delay(250);
+	            if (usbHandler.isFaultAckReceived()) {
+	                system_emergency_state = false;
+	                usbHandler.clearFaultAck();
+	            }
 	        }
 	        DIAG("SYS", "Exited safe mode blink loop -- system_emergency_state cleared");
 	    }
