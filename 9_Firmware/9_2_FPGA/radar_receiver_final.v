@@ -74,7 +74,16 @@ module radar_receiver_final (
     // AGC status outputs (for status readback / STM32 outer loop)
     output wire [7:0]  agc_saturation_count, // Per-frame clipped sample count
     output wire [7:0]  agc_peak_magnitude,   // Per-frame peak (upper 8 bits)
-    output wire [3:0]  agc_current_gain      // Effective gain_shift encoding
+    output wire [3:0]  agc_current_gain,     // Effective gain_shift encoding
+
+    // DDC overflow diagnostics (audit F-6.1 — previously deleted at boundary).
+    // Not yet plumbed into the USB status packet (protocol contract is frozen);
+    // exposed here for gpio aggregation and ILA mark_debug visibility.
+    output wire        ddc_overflow_any,
+    output wire [2:0]  ddc_saturation_count,
+
+    // MTI 2-pulse canceller saturation count (audit F-6.3).
+    output wire [7:0]  mti_saturation_count_out
 );
 
 // ========== INTERNAL SIGNALS ==========
@@ -211,6 +220,16 @@ wire signed [17:0] ddc_out_q;
 wire ddc_valid_i;
 wire ddc_valid_q;
 
+// DDC diagnostic signals (audit F-6.1 — all outputs previously unconnected)
+wire [1:0] ddc_status_w;
+wire [7:0] ddc_diagnostics_w;
+wire       ddc_mixer_saturation;
+wire       ddc_filter_overflow;
+
+(* mark_debug = "true" *) wire ddc_mixer_saturation_dbg = ddc_mixer_saturation;
+(* mark_debug = "true" *) wire ddc_filter_overflow_dbg  = ddc_filter_overflow;
+(* mark_debug = "true" *) wire [7:0] ddc_diagnostics_dbg = ddc_diagnostics_w;
+
 ddc_400m_enhanced ddc(
     .clk_400m(clk_400m),           // 400MHz clock from ADC DCO
     .clk_100m(clk),           // 100MHz system clock //used by the 2 FIR
@@ -219,11 +238,27 @@ ddc_400m_enhanced ddc(
     .adc_data_valid_i(adc_valid),     // Valid at 400MHz
     .adc_data_valid_q(adc_valid),     // Valid at 400MHz
     .baseband_i(ddc_out_i), // I output at 100MHz
-    .baseband_q(ddc_out_q), // Q output at 100MHz  
+    .baseband_q(ddc_out_q), // Q output at 100MHz
     .baseband_valid_i(ddc_valid_i),     // Valid at 100MHz
-	 .baseband_valid_q(ddc_valid_q),
- 	 .mixers_enable(1'b1)
+    .baseband_valid_q(ddc_valid_q),
+    .mixers_enable(1'b1),
+    // Diagnostics (audit F-6.1) — previously all unconnected
+    .ddc_status(ddc_status_w),
+    .ddc_diagnostics(ddc_diagnostics_w),
+    .mixer_saturation(ddc_mixer_saturation),
+    .filter_overflow(ddc_filter_overflow),
+    // Test/debug inputs — explicit tie-low (were floating)
+    .test_mode(2'b00),
+    .test_phase_inc(16'h0000),
+    .force_saturation(1'b0),
+    .reset_monitors(1'b0),
+    .debug_sample_count(),
+    .debug_internal_i(),
+    .debug_internal_q()
 );
+
+assign ddc_overflow_any     = ddc_mixer_saturation | ddc_filter_overflow;
+assign ddc_saturation_count = ddc_diagnostics_w[7:5];
 
 ddc_input_interface ddc_if (
     .clk(clk),
@@ -391,7 +426,8 @@ mti_canceller #(
     .range_valid_out(mti_range_valid),
     .range_bin_out(mti_range_bin),
     .mti_enable(host_mti_enable),
-    .mti_first_chirp(mti_first_chirp)
+    .mti_first_chirp(mti_first_chirp),
+    .mti_saturation_count(mti_saturation_count_out)
 );
 
 // ========== FRAME SYNC FROM TRANSMITTER ==========

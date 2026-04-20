@@ -88,8 +88,9 @@ set_false_path -hold -from [get_ports {adc_d_p[*]}] -to [get_clocks adc_dco_p]
 # Timing margin for 400 MHz critical paths
 # --------------------------------------------------------------------------
 # Extra setup uncertainty forces Vivado to leave margin for temperature/voltage/
-# aging variation. Reduced from 200 ps to 100 ps after NCO→mixer pipeline
-# register fix eliminated the dominant timing bottleneck (WNS went from +0.002ns
-# to comfortable margin). 100 ps still provides ~4% guardband on the 2.5ns period.
-# This is additive to the existing jitter-based uncertainty (~53 ps).
-set_clock_uncertainty -setup -add 0.100 [get_clocks clk_mmcm_out0]
+# aging variation. 150 ps absolute covers the built-in jitter-based value
+# (~53 ps) plus ~100 ps temperature/voltage/aging guardband.
+# NOTE: Vivado's set_clock_uncertainty does NOT accept -add; prior use of
+# -add 0.100 was silently rejected as a CRITICAL WARNING, so no guardband
+# was applied. Use an absolute value. (audit finding F-0.8)
+set_clock_uncertainty -setup 0.150 [get_clocks clk_mmcm_out0]

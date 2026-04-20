@@ -58,7 +58,12 @@ module mti_canceller #(
     input wire mti_enable,   // 1=MTI active, 0=pass-through
 
     // ========== STATUS ==========
-    output reg mti_first_chirp  // 1 during first chirp (output muted)
+    output reg mti_first_chirp, // 1 during first chirp (output muted)
+
+    // Audit F-6.3: count of saturated samples since last reset. Saturation
+    // here produces spurious Doppler harmonics (phantom targets at ±fs/2)
+    // and was previously invisible to the MCU. Saturates at 0xFF.
+    output reg [7:0] mti_saturation_count
 );
 
 // ============================================================================
@@ -104,18 +109,30 @@ assign diff_q_sat = (diff_q_full > $signed({{2{1'b0}}, {(DATA_WIDTH-1){1'b1}}}))
                   ? $signed({1'b1, {(DATA_WIDTH-1){1'b0}}})
                   : diff_q_full[DATA_WIDTH-1:0];
 
+// Saturation detection (F-6.3): the top two bits of the DATA_WIDTH+1 signed
+// difference disagree iff the value exceeds the DATA_WIDTH signed range.
+wire diff_i_overflow = (diff_i_full[DATA_WIDTH] != diff_i_full[DATA_WIDTH-1]);
+wire diff_q_overflow = (diff_q_full[DATA_WIDTH] != diff_q_full[DATA_WIDTH-1]);
+
 // ============================================================================
 // MAIN LOGIC
 // ============================================================================
 always @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
-        range_i_out     <= {DATA_WIDTH{1'b0}};
-        range_q_out     <= {DATA_WIDTH{1'b0}};
-        range_valid_out <= 1'b0;
-        range_bin_out   <= 6'd0;
-        has_previous    <= 1'b0;
-        mti_first_chirp <= 1'b1;
+        range_i_out          <= {DATA_WIDTH{1'b0}};
+        range_q_out          <= {DATA_WIDTH{1'b0}};
+        range_valid_out      <= 1'b0;
+        range_bin_out        <= 6'd0;
+        has_previous         <= 1'b0;
+        mti_first_chirp      <= 1'b1;
+        mti_saturation_count <= 8'd0;
     end else begin
+        // Count saturated MTI-active samples (F-6.3). Clamp at 0xFF.
+        if (range_valid_in && mti_enable && has_previous
+            && (diff_i_overflow || diff_q_overflow)
+            && (mti_saturation_count != 8'hFF)) begin
+            mti_saturation_count <= mti_saturation_count + 8'd1;
+        end
         // Default: no valid output
         range_valid_out <= 1'b0;
 

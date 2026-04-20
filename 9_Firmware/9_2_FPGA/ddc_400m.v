@@ -634,6 +634,11 @@ cdc_adc_to_processing #(
 // FIR Filter Instances
 // ============================================================================
 
+// FIR overflow flags (audit F-6.2 — previously dangling, now OR'd into
+// module-level filter_overflow so the receiver can see FIR arithmetic overflow)
+wire fir_i_overflow;
+wire fir_q_overflow;
+
 // FIR I channel
 fir_lowpass_parallel_enhanced fir_i_inst (
     .clk(clk_100m),
@@ -643,10 +648,10 @@ fir_lowpass_parallel_enhanced fir_i_inst (
     .data_out(fir_i_out),
     .data_out_valid(fir_valid_i),
     .fir_ready(fir_i_ready),
-    .filter_overflow()
+    .filter_overflow(fir_i_overflow)
 );
 
-// FIR Q channel  
+// FIR Q channel
 fir_lowpass_parallel_enhanced fir_q_inst (
     .clk(clk_100m),
     .reset_n(reset_n),
@@ -655,10 +660,11 @@ fir_lowpass_parallel_enhanced fir_q_inst (
     .data_out(fir_q_out),
     .data_out_valid(fir_valid_q),
     .fir_ready(fir_q_ready),
-    .filter_overflow()
+    .filter_overflow(fir_q_overflow)
 );
 
 assign fir_valid = fir_valid_i & fir_valid_q;
+assign filter_overflow = fir_i_overflow | fir_q_overflow;
 
 // ============================================================================
 // Enhanced Output Stage

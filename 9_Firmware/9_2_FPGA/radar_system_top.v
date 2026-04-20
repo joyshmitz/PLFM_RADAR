@@ -198,6 +198,14 @@ wire [7:0]  rx_agc_saturation_count;
 wire [7:0]  rx_agc_peak_magnitude;
 wire [3:0]  rx_agc_current_gain;
 
+// DDC overflow diagnostics (audit F-6.1) — plumbed out of receiver so the
+// DDC mixer_saturation / filter_overflow ports are no longer deleted at
+// the boundary. Aggregated into gpio_dig5 alongside AGC saturation.
+wire        rx_ddc_overflow_any;
+wire [2:0]  rx_ddc_saturation_count;
+// MTI saturation count (audit F-6.3). OR'd into gpio_dig5 for MCU visibility.
+wire [7:0]  rx_mti_saturation_count;
+
 // Data packing for USB
 wire [31:0] usb_range_profile;
 wire usb_range_valid;
@@ -562,7 +570,12 @@ radar_receiver_final rx_inst (
     // AGC status outputs
     .agc_saturation_count(rx_agc_saturation_count),
     .agc_peak_magnitude(rx_agc_peak_magnitude),
-    .agc_current_gain(rx_agc_current_gain)
+    .agc_current_gain(rx_agc_current_gain),
+    // DDC overflow diagnostics (audit F-6.1)
+    .ddc_overflow_any(rx_ddc_overflow_any),
+    .ddc_saturation_count(rx_ddc_saturation_count),
+    // MTI saturation count (audit F-6.3)
+    .mti_saturation_count_out(rx_mti_saturation_count)
 );
 
 // ============================================================================
@@ -1040,7 +1053,13 @@ assign system_status = status_reg;
 // DIG_6: AGC enable flag — mirrors host_agc_enable so STM32 outer-loop AGC
 //        tracks the FPGA register as single source of truth.
 // DIG_7: Reserved (tied low for future use).
-assign gpio_dig5 = (rx_agc_saturation_count != 8'd0);
+// gpio_dig5: "signal-chain clipped" — asserts on AGC saturation, DDC mixer/FIR
+// overflow, or MTI 2-pulse saturation. Audit F-6.1/F-6.3: these were all
+// previously invisible to the MCU.
+assign gpio_dig5 = (rx_agc_saturation_count != 8'd0)
+                 | rx_ddc_overflow_any
+                 | (rx_ddc_saturation_count != 3'd0)
+                 | (rx_mti_saturation_count != 8'd0);
 assign gpio_dig6 = host_agc_enable;
 assign gpio_dig7 = 1'b0;
 

@@ -433,10 +433,15 @@ bool ADAR1000Manager::initializeSingleDevice(uint8_t deviceIndex) {
     adarWrite(deviceIndex, REG_ADC_CONTROL, ADAR1000_ADC_2MHZ_CLK | ADAR1000_ADC_EN, BROADCAST_OFF);
 
     // Verify communication with scratchpad test
+    // Audit F-4.4: on SPI failure, previously marked the device initialized
+    // anyway, so downstream (e.g. PA enable) could drive PA gates out-of-spec
+    // on a dead bus. Now propagate the failure so initializeAllDevices aborts.
     DIAG("BF", "  dev[%u] verifying SPI communication...", deviceIndex);
     bool comms_ok = verifyDeviceCommunication(deviceIndex);
     if (!comms_ok) {
-        DIAG_WARN("BF", "  dev[%u] scratchpad verify FAILED but marking initialized anyway", deviceIndex);
+        DIAG_ERR("BF", "  dev[%u] scratchpad verify FAILED -- device NOT marked initialized", deviceIndex);
+        devices_[deviceIndex]->initialized = false;
+        return false;
     }
 
     devices_[deviceIndex]->initialized = true;
@@ -835,12 +840,26 @@ uint8_t ADAR1000Manager::adarRead(uint8_t deviceIndex, uint32_t mem_addr) {
 }
 
 void ADAR1000Manager::adarSetBit(uint8_t deviceIndex, uint32_t mem_addr, uint8_t bit, uint8_t broadcast) {
+    // Audit F-4.2: broadcast-RMW is unsafe. The read samples a single device
+    // but the write fans out to all four, overwriting the other three with
+    // deviceIndex's state. Reject and surface the mistake.
+    if (broadcast == BROADCAST_ON) {
+        DIAG_ERR("BF", "adarSetBit: broadcast RMW is unsafe, ignored (dev=%u addr=0x%03lX bit=%u)",
+                 deviceIndex, (unsigned long)mem_addr, bit);
+        return;
+    }
     uint8_t temp = adarRead(deviceIndex, mem_addr);
     uint8_t data = temp | (1 << bit);
     adarWrite(deviceIndex, mem_addr, data, broadcast);
 }
 
 void ADAR1000Manager::adarResetBit(uint8_t deviceIndex, uint32_t mem_addr, uint8_t bit, uint8_t broadcast) {
+    // Audit F-4.2: see adarSetBit.
+    if (broadcast == BROADCAST_ON) {
+        DIAG_ERR("BF", "adarResetBit: broadcast RMW is unsafe, ignored (dev=%u addr=0x%03lX bit=%u)",
+                 deviceIndex, (unsigned long)mem_addr, bit);
+        return;
+    }
     uint8_t temp = adarRead(deviceIndex, mem_addr);
     uint8_t data = temp & ~(1 << bit);
     adarWrite(deviceIndex, mem_addr, data, broadcast);
@@ -904,7 +923,7 @@ void ADAR1000Manager::adarSetTxPhase(uint8_t deviceIndex, uint8_t channel, uint8
 
     adarWrite(deviceIndex, mem_addr_i, i_val, broadcast);
     adarWrite(deviceIndex, mem_addr_q, q_val, broadcast);
-    adarWrite(deviceIndex, REG_LOAD_WORKING, 0x1, broadcast);
+    adarWrite(deviceIndex, REG_LOAD_WORKING, LD_WRK_REGS_LDTX_OVERRIDE, broadcast);
 }
 
 void ADAR1000Manager::adarSetRxVgaGain(uint8_t deviceIndex, uint8_t channel, uint8_t gain, uint8_t broadcast) {
