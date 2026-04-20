@@ -89,7 +89,11 @@ set_false_path -through [get_pins -hierarchical -filter {REF_PIN_NAME == LOCKED}
 #
 # Waiving hold on these 8 paths (adc_d_p[0..7] → IDDR) is standard practice
 # for source-synchronous LVDS ADC interfaces using BUFIO capture.
-set_false_path -hold -from [get_ports {adc_d_p[*]}] -to [get_clocks adc_dco_p]
+# adc_or_p (AD9484 overrange, audit F-0.1) shares the same IBUFDS→BUFIO
+# source-synchronous capture topology as adc_d_p[*] — same ~1.9 ns STA hold
+# violation for the same reason (BUFIO clock insertion ~4 ns vs data IBUFDS
+# ~0.9 ns), resolved by the same external-timing argument.
+set_false_path -hold -from [get_ports {adc_d_p[*] adc_or_p}] -to [get_clocks adc_dco_p]
 
 # --------------------------------------------------------------------------
 # Timing margin for 400 MHz critical paths
