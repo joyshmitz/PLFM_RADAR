@@ -74,7 +74,7 @@ localparam COMB_WIDTH = 28;
 //                           DSP output) = 4 cycles at 400 MHz = 10 ns.
 //                           Negligible vs system reset assertion duration.
 // ----------------------------------------------------------------------------
-(* max_fanout = 50 *) reg reset_h = 1'b1;  // INIT=1'b1: registers start in reset state on power-up
+(* max_fanout = 25 *) reg reset_h = 1'b1;  // INIT=1'b1: registers start in reset state on power-up
 always @(posedge clk) reset_h <= ~reset_n;
 
 // Sign-extended input for integrator_0 C port (48-bit)

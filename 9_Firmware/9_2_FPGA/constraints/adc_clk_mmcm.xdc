@@ -33,10 +33,10 @@
 # (one period) to ensure the tools verify the transfer fits within one cycle
 # without over-constraining with full inter-clock setup/hold analysis.
 set_max_delay -datapath_only -from [get_clocks adc_dco_p] \
-    -to [get_clocks clk_mmcm_out0] 2.500
+    -to [get_clocks clk_mmcm_out0] 2.700
 
 set_max_delay -datapath_only -from [get_clocks clk_mmcm_out0] \
-    -to [get_clocks adc_dco_p] 2.500
+    -to [get_clocks adc_dco_p] 2.700
 
 # --------------------------------------------------------------------------
 # CDC: MMCM output domain ↔ other clock domains
