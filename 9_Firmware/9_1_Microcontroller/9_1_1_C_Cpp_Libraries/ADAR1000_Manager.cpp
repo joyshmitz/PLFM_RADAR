@@ -811,14 +811,25 @@ void ADAR1000Manager::setChipSelect(uint8_t deviceIndex, bool state) {
 }
 
 void ADAR1000Manager::adarWrite(uint8_t deviceIndex, uint32_t mem_addr, uint8_t data, uint8_t broadcast) {
-    uint8_t instruction[3];
-
-    if (broadcast) {
-        instruction[0] = 0x08;
-    } else {
-        instruction[0] = ((devices_[deviceIndex]->dev_addr & 0x03) << 5);
+    // Audit F-4.1: the broadcast SPI opcode path (`instruction[0] = 0x08`)
+    // has never been exercised on silicon and is structurally questionable —
+    // setChipSelect() only toggles ONE device's CS line, so even if a caller
+    // opts into the broadcast opcode today, only the single selected chip
+    // actually sees the frame. Until a HIL test confirms multi-CS semantics,
+    // route every broadcast write through a per-device unicast loop. This
+    // preserves caller intent (all four devices take the write) and makes
+    // the dead opcode-0x08 path unreachable at runtime.
+    if (broadcast == BROADCAST_ON) {
+        DIAG_WARN("BF", "adarWrite: broadcast=1 lowered to per-device unicast (addr=0x%03lX data=0x%02X)",
+                  (unsigned long)mem_addr, data);
+        for (uint8_t d = 0; d < devices_.size(); ++d) {
+            adarWrite(d, mem_addr, data, BROADCAST_OFF);
+        }
+        return;
     }
 
+    uint8_t instruction[3];
+    instruction[0] = ((devices_[deviceIndex]->dev_addr & 0x03) << 5);
     instruction[0] |= (0x1F00 & mem_addr) >> 8;
     instruction[1] = (0xFF & mem_addr);
     instruction[2] = data;
