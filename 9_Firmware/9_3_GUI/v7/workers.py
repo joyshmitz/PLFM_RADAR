@@ -186,7 +186,8 @@ class RadarDataWorker(QThread):
         det_indices = np.argwhere(frame.detections > 0)
         r_res = self._waveform.range_resolution_m
         v_res = self._waveform.velocity_resolution_mps
-        n_doppler = frame.detections.shape[1] if frame.detections.ndim == 2 else self._waveform.n_doppler_bins
+        n_doppler = (frame.detections.shape[1] if frame.detections.ndim == 2
+                     else self._waveform.n_doppler_bins)
         doppler_center = n_doppler // 2
 
         for idx in det_indices:
