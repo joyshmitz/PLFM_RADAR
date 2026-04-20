@@ -735,10 +735,21 @@ void ADAR1000Manager::setLNABias(bool enable) {
 }
 
 void ADAR1000Manager::delayUs(uint32_t microseconds) {
-    // Simple implementation - for F7 @ 216MHz, each loop ~7 cycles ≈ 0.032us
-    volatile uint32_t cycles = microseconds * 10; // Adjust this multiplier for your clock
-    while (cycles--) {
-        __NOP();
+    // Audit F-4.7: the prior implementation was a calibrated __NOP() busy-loop
+    // that silently drifted with compiler optimization, cache state, and flash
+    // wait-states. The ADAR1000 PLL/TX settling times require a real clock, so
+    // we poll the DWT cycle counter instead. One-time TRCENA/CYCCNTENA enable
+    // is idempotent; subsequent calls skip the init branch via DWT->CTRL read.
+    if ((DWT->CTRL & DWT_CTRL_CYCCNTENA_Msk) == 0U) {
+        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+        DWT->CYCCNT       = 0U;
+        DWT->CTRL        |= DWT_CTRL_CYCCNTENA_Msk;
+    }
+    const uint32_t cycles_per_us = SystemCoreClock / 1000000U;
+    const uint32_t start         = DWT->CYCCNT;
+    const uint32_t target        = microseconds * cycles_per_us;
+    while ((DWT->CYCCNT - start) < target) {
+        /* CYCCNT wraps cleanly modulo 2^32 — subtraction stays correct. */
     }
 }
 

@@ -205,6 +205,11 @@ wire        rx_ddc_overflow_any;
 wire [2:0]  rx_ddc_saturation_count;
 // MTI saturation count (audit F-6.3). OR'd into gpio_dig5 for MCU visibility.
 wire [7:0]  rx_mti_saturation_count;
+// Range-bin decimator watchdog (audit F-6.4). High = decimator stalled.
+wire        rx_range_decim_watchdog;
+// CIC→FIR CDC overrun sticky (audit F-1.2). High = at least one baseband
+// sample has been silently dropped between the 400 MHz CIC and 100 MHz FIR.
+wire        rx_ddc_cic_fir_overrun;
 
 // Data packing for USB
 wire [31:0] usb_range_profile;
@@ -575,7 +580,10 @@ radar_receiver_final rx_inst (
     .ddc_overflow_any(rx_ddc_overflow_any),
     .ddc_saturation_count(rx_ddc_saturation_count),
     // MTI saturation count (audit F-6.3)
-    .mti_saturation_count_out(rx_mti_saturation_count)
+    .mti_saturation_count_out(rx_mti_saturation_count),
+    // Range-bin decimator watchdog (audit F-6.4)
+    .range_decim_watchdog(rx_range_decim_watchdog),
+    .ddc_cic_fir_overrun(rx_ddc_cic_fir_overrun)
 );
 
 // ============================================================================
@@ -884,6 +892,19 @@ endgenerate
 // we simply sample them in clk_100m when the CDC'd pulse arrives.
 
 // Step 1: Toggle on cmd_valid pulse (ft601_clk domain)
+//
+// CDC INVARIANT (audit F-1.1): usb_cmd_opcode / usb_cmd_addr / usb_cmd_value
+// / usb_cmd_data MUST be driven to their final values BEFORE usb_cmd_valid
+// asserts, and held stable for at least (STAGES + 1) clk_100m cycles after
+// (i.e., until cmd_valid_100m has pulsed in the destination domain). These
+// buses cross from ft601_clk to clk_100m as quasi-static data, NOT through
+// a synchronizer — only the toggle bit above is CDC'd. If a future edit
+// moves the cmd_* register write to the SAME cycle as the toggle flip, or
+// drops the stability hold, the clk_100m sampler at the command decoder
+// will latch metastable bits and dispatch on a garbage opcode.
+// The source-side FSM in usb_data_interface_ft2232h.v / usb_data_interface.v
+// currently satisfies this by assigning the cmd_* buses several cycles
+// before pulsing cmd_valid and leaving them stable until the next command.
 reg cmd_valid_toggle_ft601;
 always @(posedge ft601_clk_buf or negedge sys_reset_ft601_n) begin
     if (!sys_reset_ft601_n)
@@ -1059,7 +1080,9 @@ assign system_status = status_reg;
 assign gpio_dig5 = (rx_agc_saturation_count != 8'd0)
                  | rx_ddc_overflow_any
                  | (rx_ddc_saturation_count != 3'd0)
-                 | (rx_mti_saturation_count != 8'd0);
+                 | (rx_mti_saturation_count != 8'd0)
+                 | rx_range_decim_watchdog    // audit F-6.4
+                 | rx_ddc_cic_fir_overrun;    // audit F-1.2
 assign gpio_dig6 = host_agc_enable;
 assign gpio_dig7 = 1'b0;
 

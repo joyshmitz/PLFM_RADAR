@@ -83,7 +83,19 @@ module radar_receiver_final (
     output wire [2:0]  ddc_saturation_count,
 
     // MTI 2-pulse canceller saturation count (audit F-6.3).
-    output wire [7:0]  mti_saturation_count_out
+    output wire [7:0]  mti_saturation_count_out,
+
+    // Range-bin decimator watchdog (audit F-6.4 — previously tied off
+    // with an ILA-only note). A high pulse here means the decimator
+    // FSM has not seen the expected number of input samples within
+    // its timeout window, i.e. the upstream FIR/CDC has stalled.
+    output wire        range_decim_watchdog,
+
+    // Audit F-1.2: sticky CIC→FIR CDC overrun flag. Asserts on the first
+    // silent sample drop between the 400 MHz CIC output and the 100 MHz
+    // FIR input; stays high until the next reset. OR'd into the GPIO
+    // diagnostic bit at the top level.
+    output wire        ddc_cic_fir_overrun
 );
 
 // ========== INTERNAL SIGNALS ==========
@@ -254,7 +266,8 @@ ddc_400m_enhanced ddc(
     .reset_monitors(1'b0),
     .debug_sample_count(),
     .debug_internal_i(),
-    .debug_internal_q()
+    .debug_internal_q(),
+    .cdc_cic_fir_overrun(ddc_cic_fir_overrun)
 );
 
 assign ddc_overflow_any     = ddc_mixer_saturation | ddc_filter_overflow;
@@ -404,7 +417,7 @@ range_bin_decimator #(
     .range_bin_index(decimated_range_bin),
     .decimation_mode(2'b01),           // Peak detection mode
     .start_bin(10'd0),
-    .watchdog_timeout()                // Diagnostic — unconnected (monitored via ILA if needed)
+    .watchdog_timeout(range_decim_watchdog)  // Audit F-6.4 — plumbed out
 );
 
 // ========== MTI CANCELLER (Ground Clutter Removal) ==========

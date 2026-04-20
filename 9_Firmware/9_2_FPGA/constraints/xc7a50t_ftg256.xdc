@@ -107,8 +107,15 @@ set_property PACKAGE_PIN C4 [get_ports {ft_clkout}]
 set_property IOSTANDARD LVCMOS33 [get_ports {ft_clkout}]
 create_clock -name ft_clkout -period 16.667 [get_ports {ft_clkout}]
 set_input_jitter [get_clocks ft_clkout] 0.2
-# N-type MRCC pin requires dedicated route override (Place 30-876)
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets {ft_clkout_IBUF}]
+# N-type MRCC pin requires dedicated route override (Place 30-876).
+# Audit F-0.4: the literal net name `ft_clkout_IBUF` exists post-synth but
+# the XDC scan happens before synthesis, when the IBUF net does not yet
+# exist — Vivado reported `No nets matched 'ft_clkout_IBUF'` + CRITICAL
+# WARNING. Use -hierarchical -filter + -quiet so the constraint matches
+# post-synth without warning during pre-synth XDC scan. The TCL duplicate
+# at scripts/50t/build_50t.tcl:119 remains as belt-and-suspenders.
+set_property -quiet CLOCK_DEDICATED_ROUTE FALSE \
+    [get_nets -quiet -hierarchical -filter {NAME =~ *ft_clkout_IBUF}]
 
 # ============================================================================
 # RESET (Active-Low)
@@ -408,7 +415,17 @@ set_false_path -from [get_ports {stm32_mixers_enable}]
 #   - Reset deassertion order is not functionally critical — all registers
 #     come out of reset within a few cycles of each other
 # --------------------------------------------------------------------------
-set_false_path -from [get_cells reset_sync_reg[*]] -to [get_pins -filter {REF_PIN_NAME == CLR} -of_objects [get_cells -hierarchical -filter {PRIMITIVE_TYPE =~ REGISTER.*.*}]]
+# Audit F-0.5: the literal cell name `reset_sync_reg[*]` does not match any
+# cell in the post-synth netlist. The actual sync regs are
+# `u_core/reset_sync_reg[0..1]`, `u_core/rx_inst/ddc/reset_sync_400m_reg[*]`,
+# `u_core/gen_ft2232h.usb_inst/ft_reset_sync_reg[*]`, and peers under
+# `u_core/reset_sync_120m_reg[*]`, `u_core/reset_sync_ft601_reg[*]`,
+# `u_core/rx_inst/adc/reset_sync_400m_reg[*]`. The waiver below covers all
+# of them by matching any register whose name contains `reset_sync`.
+# Without this, STA runs recovery/removal on the fanout of each sync-chain
+# output register (up to ~1000 loads pre-PR#113 replication).
+set_false_path -from [get_cells -hierarchical -filter {NAME =~ *reset_sync*_reg*}] \
+               -to   [get_pins  -hierarchical -filter {REF_PIN_NAME == CLR || REF_PIN_NAME == PRE}]
 
 # --------------------------------------------------------------------------
 # Clock Domain Crossing false paths

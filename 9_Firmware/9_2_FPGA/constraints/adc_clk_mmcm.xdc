@@ -47,8 +47,16 @@ set_max_delay -datapath_only -from [get_clocks clk_mmcm_out0] \
 set_false_path -from [get_clocks clk_100m] -to [get_clocks clk_mmcm_out0]
 set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks clk_100m]
 
-set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks ft601_clk_in]
-set_false_path -from [get_clocks ft601_clk_in] -to [get_clocks clk_mmcm_out0]
+# Audit F-0.6: the clock name `ft601_clk_in` does not exist on either 50T
+# (FT2232H, clock is `ft_clkout`) or 200T builds in the current RTL. Waive
+# against whichever USB-domain clock is actually defined in the build.
+foreach _usb_clk {ft_clkout ft601_clk ft601_clk_in} {
+    if {[llength [get_clocks -quiet $_usb_clk]] > 0} {
+        set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks $_usb_clk]
+        set_false_path -from [get_clocks $_usb_clk] -to [get_clocks clk_mmcm_out0]
+    }
+}
+unset _usb_clk
 
 set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks clk_120m_dac]
 set_false_path -from [get_clocks clk_120m_dac] -to [get_clocks clk_mmcm_out0]
@@ -59,7 +67,10 @@ set_false_path -from [get_clocks clk_120m_dac] -to [get_clocks clk_mmcm_out0]
 # LOCKED is not a valid timing startpoint (it's a combinational output of the
 # MMCM primitive). Use -through instead of -from to waive all paths that pass
 # through the LOCKED net. This avoids the CRITICAL WARNING from Build 19/20.
-set_false_path -through [get_pins rx_inst/adc/mmcm_inst/mmcm_adc_400m/LOCKED]
+# Audit F-0.7: the literal hierarchical path was missing the `u_core/`
+# prefix and silently matched no pins. Use a hierarchical wildcard to
+# catch the MMCM LOCKED pin regardless of wrapper hierarchy.
+set_false_path -through [get_pins -hierarchical -filter {REF_PIN_NAME == LOCKED}]
 
 # --------------------------------------------------------------------------
 # Hold waiver for source-synchronous ADC capture (BUFIO-clocked IDDR)

@@ -17,7 +17,12 @@ module cdc_adc_to_processing #(
     input wire [WIDTH-1:0] src_data,
     input wire src_valid,
     output wire [WIDTH-1:0] dst_data,
-    output wire dst_valid
+    output wire dst_valid,
+    // Audit F-1.2: overrun pulse in src_clk domain. Asserts for 1 src cycle
+    // whenever src_valid fires while the previous sample has not yet been
+    // acknowledged by the destination edge-detector (i.e., the transaction
+    // the CDC is silently dropping). Hold/count externally.
+    output wire overrun
 `ifdef FORMAL
     ,output wire [WIDTH-1:0] fv_src_data_reg,
     output wire [1:0]       fv_src_toggle
@@ -129,6 +134,36 @@ module cdc_adc_to_processing #(
     
     assign dst_data = dst_data_reg;
     assign dst_valid = dst_valid_reg;
+
+    // ------------------------------------------------------------------
+    // Audit F-1.2: overrun detection
+    //
+    // The src-side `src_toggle` counter flips on each latched src_valid.
+    // We feed back a 1-bit "ack" toggle from the dst domain (flipped each
+    // time dst_valid fires) through a STAGES-deep synchronizer into the
+    // src domain. If a new src_valid arrives while src_toggle[0] already
+    // differs from the acked value, the previous sample is still in flight
+    // and this new latch drops it. Emit a 1-cycle overrun pulse.
+    // ------------------------------------------------------------------
+    reg dst_ack_toggle;
+    always @(posedge dst_clk) begin
+        if (!dst_reset_n)      dst_ack_toggle <= 1'b0;
+        else if (dst_valid_reg) dst_ack_toggle <= ~dst_ack_toggle;
+    end
+
+    (* ASYNC_REG = "TRUE" *) reg [STAGES-1:0] ack_sync_chain;
+    always @(posedge src_clk) begin
+        if (!src_reset_n) ack_sync_chain <= {STAGES{1'b0}};
+        else              ack_sync_chain <= {ack_sync_chain[STAGES-2:0], dst_ack_toggle};
+    end
+    wire ack_in_src = ack_sync_chain[STAGES-1];
+
+    reg overrun_r;
+    always @(posedge src_clk) begin
+        if (!src_reset_n) overrun_r <= 1'b0;
+        else              overrun_r <= src_valid && (src_toggle[0] != ack_in_src);
+    end
+    assign overrun = overrun_r;
 
 `ifdef FORMAL
     assign fv_src_data_reg = src_data_reg;

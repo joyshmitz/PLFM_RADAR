@@ -25,7 +25,10 @@ module ddc_400m_enhanced (
     input wire reset_monitors,
     output wire [31:0] debug_sample_count,
     output wire [17:0] debug_internal_i,
-    output wire [17:0] debug_internal_q
+    output wire [17:0] debug_internal_q,
+    // Audit F-1.2: sticky CIC→FIR CDC overrun flag (clk_400m domain). Goes
+    // high on the first dropped sample and stays high until reset_monitors.
+    output wire cdc_cic_fir_overrun
 );
 
 // Parameters for numerical precision
@@ -148,22 +151,20 @@ always @(posedge clk_400m or negedge reset_n) begin
     end
 end
 
-// CDC synchronization for control signals (2-stage synchronizers)
-(* ASYNC_REG = "TRUE" *) reg [1:0] mixers_enable_sync_chain;
+// CDC synchronization for control signals (2-stage synchronizers).
+// Audit F-1.3: the mixers_enable synchronizer was dead — its _sync output
+// was never consumed (the NCO phase_valid uses the raw port), and the only
+// caller (radar_receiver_final.v) ties the port to 1'b1. Removed.
 (* ASYNC_REG = "TRUE" *) reg [1:0] force_saturation_sync_chain;
-wire mixers_enable_sync;
 wire force_saturation_sync;
-assign mixers_enable_sync = mixers_enable_sync_chain[1];
 assign force_saturation_sync = force_saturation_sync_chain[1];
 
 // Sync reset via reset_400m (replicated, max_fanout=50). Was async on
 // reset_n_400m — see "400 MHz RESET DISTRIBUTION" comment above.
 always @(posedge clk_400m) begin
     if (reset_400m) begin
-        mixers_enable_sync_chain <= 2'b00;
         force_saturation_sync_chain <= 2'b00;
     end else begin
-        mixers_enable_sync_chain <= {mixers_enable_sync_chain[0], mixers_enable};
         force_saturation_sync_chain <= {force_saturation_sync_chain[0], force_saturation};
     end
 end
@@ -600,7 +601,10 @@ assign cic_valid = cic_valid_i & cic_valid_q;
 wire fir_in_valid_i, fir_in_valid_q;
 wire fir_valid_i, fir_valid_q;
 wire fir_i_ready, fir_q_ready;
-wire [17:0] fir_d_in_i, fir_d_in_q; 
+wire [17:0] fir_d_in_i, fir_d_in_q;
+// Audit F-1.2: per-lane CIC→FIR CDC overrun pulses (clk_400m domain)
+wire cdc_fir_i_overrun;
+wire cdc_fir_q_overrun;
 
 cdc_adc_to_processing #(
     .WIDTH(18),
@@ -613,7 +617,8 @@ cdc_adc_to_processing #(
     .src_data(cic_i_out),
     .src_valid(cic_valid_i),
     .dst_data(fir_d_in_i),
-    .dst_valid(fir_in_valid_i)
+    .dst_valid(fir_in_valid_i),
+    .overrun(cdc_fir_i_overrun)
 );
 
 cdc_adc_to_processing #(
@@ -627,8 +632,20 @@ cdc_adc_to_processing #(
     .src_data(cic_q_out),
     .src_valid(cic_valid_q),
     .dst_data(fir_d_in_q),
-    .dst_valid(fir_in_valid_q)
+    .dst_valid(fir_in_valid_q),
+    .overrun(cdc_fir_q_overrun)
 );
+
+// Audit F-1.2: sticky-latch the two per-lane overrun pulses in the 400 MHz
+// domain and expose a single module-level flag. Cleared only by
+// reset_monitors (or reset_n via reset_400m), matching the other DDC
+// diagnostic latches (overflow/saturation).
+reg  cdc_cic_fir_overrun_sticky;
+always @(posedge clk_400m) begin
+    if (reset_400m || reset_monitors)                         cdc_cic_fir_overrun_sticky <= 1'b0;
+    else if (cdc_fir_i_overrun || cdc_fir_q_overrun)          cdc_cic_fir_overrun_sticky <= 1'b1;
+end
+assign cdc_cic_fir_overrun = cdc_cic_fir_overrun_sticky;
 
 // ============================================================================
 // FIR Filter Instances
