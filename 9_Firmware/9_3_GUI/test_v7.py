@@ -672,16 +672,19 @@ class TestLiveReplayPhysicalUnitsParity(unittest.TestCase):
         return False
 
     def test_live_path_uses_waveform_config(self):
-        """_run_host_dsp must call WaveformConfig() and read
-        wf.range_resolution_m / wf.velocity_resolution_mps — not
-        self._settings.range_resolution / velocity_resolution."""
+        """RadarDataWorker.__init__ must instantiate WaveformConfig() into
+        self._waveform; _run_host_dsp must read self._waveform.range_resolution_m
+        / velocity_resolution_mps — not self._settings equivalents."""
+        init = self._parse_method("RadarDataWorker", "__init__")
+        self.assertTrue(self._has_call_to(init, "WaveformConfig"),
+            "RadarDataWorker.__init__ must instantiate WaveformConfig() into self._waveform.")
         method = self._parse_method("RadarDataWorker", "_run_host_dsp")
-        self.assertTrue(self._has_call_to(method, "WaveformConfig"),
-            "Live path must instantiate WaveformConfig().")
-        self.assertTrue(self._has_attribute_chain(method, ("wf", "range_resolution_m")),
-            "Live path must read wf.range_resolution_m.")
-        self.assertTrue(self._has_attribute_chain(method, ("wf", "velocity_resolution_mps")),
-            "Live path must read wf.velocity_resolution_mps. "
+        self.assertTrue(
+            self._has_attribute_chain(method, ("self", "_waveform", "range_resolution_m")),
+            "Live path must read self._waveform.range_resolution_m.")
+        self.assertTrue(
+            self._has_attribute_chain(method, ("self", "_waveform", "velocity_resolution_mps")),
+            "Live path must read self._waveform.velocity_resolution_mps. "
             "RadarSettings.velocity_resolution default 1.0 caused ~5.34x "
             "underreport vs replay (test_v7.py:449 pins ~5.343).")
         self.assertFalse(self._has_attribute_chain(
