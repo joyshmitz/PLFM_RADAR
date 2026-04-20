@@ -463,6 +463,10 @@ set_false_path -from [get_clocks ft_clkout] -to [get_clocks clk_100m]
 set_false_path -from [get_clocks clk_120m_dac] -to [get_clocks ft_clkout]
 set_false_path -from [get_clocks ft_clkout] -to [get_clocks clk_120m_dac]
 
+# MMCM 400 MHz domain ↔ FT2232H USB clock (see adc_clk_mmcm.xdc for rationale)
+set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks ft_clkout]
+set_false_path -from [get_clocks ft_clkout] -to [get_clocks clk_mmcm_out0]
+
 # ============================================================================
 # PHYSICAL CONSTRAINTS
 # ============================================================================

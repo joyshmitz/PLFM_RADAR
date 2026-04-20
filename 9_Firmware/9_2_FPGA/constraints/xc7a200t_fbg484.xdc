@@ -637,6 +637,10 @@ set_false_path -from [get_clocks ft601_clk_in] -to [get_clocks clk_120m_dac]
 set_false_path -from [get_clocks adc_dco_p] -to [get_clocks ft601_clk_in]
 set_false_path -from [get_clocks ft601_clk_in] -to [get_clocks adc_dco_p]
 
+# MMCM 400 MHz domain ↔ FT601 USB clock (see adc_clk_mmcm.xdc for rationale)
+set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks ft601_clk_in]
+set_false_path -from [get_clocks ft601_clk_in] -to [get_clocks clk_mmcm_out0]
+
 # Generated clock cross-domain paths:
 # dac_clk_fwd and ft601_clk_fwd are generated from their respective source
 # clocks. Vivado automatically inherits the source clock false paths for

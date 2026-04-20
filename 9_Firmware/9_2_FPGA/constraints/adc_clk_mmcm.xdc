@@ -47,16 +47,12 @@ set_max_delay -datapath_only -from [get_clocks clk_mmcm_out0] \
 set_false_path -from [get_clocks clk_100m] -to [get_clocks clk_mmcm_out0]
 set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks clk_100m]
 
-# Audit F-0.6: the clock name `ft601_clk_in` does not exist on either 50T
-# (FT2232H, clock is `ft_clkout`) or 200T builds in the current RTL. Waive
-# against whichever USB-domain clock is actually defined in the build.
-foreach _usb_clk {ft_clkout ft601_clk ft601_clk_in} {
-    if {[llength [get_clocks -quiet $_usb_clk]] > 0} {
-        set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks $_usb_clk]
-        set_false_path -from [get_clocks $_usb_clk] -to [get_clocks clk_mmcm_out0]
-    }
-}
-unset _usb_clk
+# Audit F-0.6: the USB-domain clock name differs per board
+# (50T: ft_clkout, 200T: ft601_clk_in). XDC files only support a
+# restricted Tcl subset — `foreach`/`unset` trigger CRITICAL WARNING
+# [Designutils 20-1307]. The clk_mmcm_out0 ↔ USB-clock false paths
+# are declared in the per-board XDC (xc7a50t_ftg256.xdc and
+# xc7a200t_fbg484.xdc) where the USB clock name is already known.
 
 set_false_path -from [get_clocks clk_mmcm_out0] -to [get_clocks clk_120m_dac]
 set_false_path -from [get_clocks clk_120m_dac] -to [get_clocks clk_mmcm_out0]
