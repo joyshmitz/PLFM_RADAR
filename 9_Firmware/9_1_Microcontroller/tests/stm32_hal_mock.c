@@ -406,3 +406,11 @@ static int mock_spi_init_stub(void) { return 0; }
 const struct no_os_spi_platform_ops stm32_spi_ops = {
     .init = mock_spi_init_stub,
 };
+
+/* ========================= CMSIS-Core stub storage ======================= */
+/* See stm32_hal_mock.h for rationale. SystemCoreClock = 0 forces delayUs() to
+ * return immediately under host test builds. DWT->CTRL pre-enabled so the
+ * one-time-init branch is skipped deterministically. */
+struct _DWT_Mock_Type       _dwt_mock       = { .CTRL = DWT_CTRL_CYCCNTENA_Msk, .CYCCNT = 0 };
+struct _CoreDebug_Mock_Type _coredebug_mock = { .DEMCR = 0 };
+uint32_t                    SystemCoreClock = 0U;

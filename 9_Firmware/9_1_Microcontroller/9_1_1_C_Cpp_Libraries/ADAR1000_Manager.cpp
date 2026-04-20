@@ -163,8 +163,10 @@ void ADAR1000Manager::switchToTXMode() {
     DIAG("BF", "Step 3: PA bias ON");
     setPABias(true);
     delayUs(50);
-    DIAG("BF", "Step 4: ADTR1107 -> TX");
-    setADTR1107Control(true);
+    // Step 4 (former setADTR1107Control(true)) removed: TR pin is FPGA-owned.
+    // Chip follows adar_tr_x; TX path is asserted by the FPGA chirp FSM, not
+    // by SPI here. Write per-channel TX enables so the FPGA TR override has
+    // something to gate.
 
     for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
         adarWrite(dev, REG_RX_ENABLES, 0x00, BROADCAST_OFF);
@@ -185,8 +187,7 @@ void ADAR1000Manager::switchToRXMode() {
     DIAG("BF", "Step 2: Disable PA supplies");
     disablePASupplies();
     delayUs(10);
-    DIAG("BF", "Step 3: ADTR1107 -> RX");
-    setADTR1107Control(false);
+    // Step 3 (former setADTR1107Control(false)) removed: FPGA owns TR pin.
     DIAG("BF", "Step 4: Enable LNA supplies");
     enableLNASupplies();
     delayUs(50);
@@ -204,39 +205,11 @@ void ADAR1000Manager::switchToRXMode() {
     DIAG("BF", "switchToRXMode() complete");
 }
 
-void ADAR1000Manager::fastTXMode() {
-    DIAG("BF", "fastTXMode(): ADTR1107 -> TX (no bias sequencing)");
-    setADTR1107Control(true);
-    for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
-        adarWrite(dev, REG_RX_ENABLES, 0x00, BROADCAST_OFF);
-        adarWrite(dev, REG_TX_ENABLES, 0x0F, BROADCAST_OFF);
-        devices_[dev]->current_mode = BeamDirection::TX;
-    }
-    current_mode_ = BeamDirection::TX;
-}
-
-void ADAR1000Manager::fastRXMode() {
-    DIAG("BF", "fastRXMode(): ADTR1107 -> RX (no bias sequencing)");
-    setADTR1107Control(false);
-    for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
-        adarWrite(dev, REG_TX_ENABLES, 0x00, BROADCAST_OFF);
-        adarWrite(dev, REG_RX_ENABLES, 0x0F, BROADCAST_OFF);
-        devices_[dev]->current_mode = BeamDirection::RX;
-    }
-    current_mode_ = BeamDirection::RX;
-}
-
-void ADAR1000Manager::pulseTXMode() {
-    DIAG("BF", "pulseTXMode(): TR switch only");
-    setADTR1107Control(true);
-    last_switch_time_us_ = HAL_GetTick() * 1000;
-}
-
-void ADAR1000Manager::pulseRXMode() {
-    DIAG("BF", "pulseRXMode(): TR switch only");
-    setADTR1107Control(false);
-    last_switch_time_us_ = HAL_GetTick() * 1000;
-}
+// fastTXMode, fastRXMode, pulseTXMode, pulseRXMode: REMOVED.
+// The chirp hot path owns T/R switching via the FPGA adar_tr_x pins
+// (see 9_Firmware/9_2_FPGA/plfm_chirp_controller.v). The old SPI-RMW per
+// chirp was architecturally redundant, raced the FPGA, and toggled the
+// wrong bit of REG_SW_CONTROL (TR_SOURCE instead of TR_SPI).
 
 // Beam Steering
 bool ADAR1000Manager::setBeamAngle(float angle_degrees, BeamDirection direction) {
@@ -368,25 +341,10 @@ void ADAR1000Manager::writeRegister(uint8_t deviceIndex, uint32_t address, uint8
 }
 
 // Configuration
-void ADAR1000Manager::setSwitchSettlingTime(uint32_t us) {
-    switch_settling_time_us_ = us;
-}
-
-void ADAR1000Manager::setFastSwitchMode(bool enable) {
-    DIAG("BF", "setFastSwitchMode(%s)", enable ? "ON" : "OFF");
-    fast_switch_mode_ = enable;
-    if (enable) {
-        switch_settling_time_us_ = 10;
-        DIAG("BF", "  settling time = 10 us, enabling PA+LNA supplies and bias simultaneously");
-        enablePASupplies();
-        enableLNASupplies();
-        setPABias(true);
-        setLNABias(true);
-    } else {
-        switch_settling_time_us_ = 50;
-        DIAG("BF", "  settling time = 50 us");
-    }
-}
+// setSwitchSettlingTime, setFastSwitchMode: REMOVED.
+// Their only reader was the deleted setADTR1107Control; setFastSwitchMode(true)
+// also violated the ADTR1107 datasheet bias sequence (PA + LNA biased to
+// operational simultaneously). Per-chirp T/R is FPGA-owned now.
 
 void ADAR1000Manager::setBeamDwellTime(uint32_t ms) {
     beam_dwell_time_ms_ = ms;
@@ -427,6 +385,16 @@ bool ADAR1000Manager::initializeSingleDevice(uint8_t deviceIndex) {
     adarWriteConfigA(deviceIndex, INTERFACE_CONFIG_A_SDO_ACTIVE, BROADCAST_OFF);
     DIAG("BF", "  dev[%u] set RAM bypass (bias+beam)", deviceIndex);
     adarSetRamBypass(deviceIndex, BROADCAST_OFF);
+
+    // Hand per-chirp T/R switching to the FPGA.
+    // Set TR_SOURCE (REG_SW_CONTROL bit 2) = 1 so the chip's internal
+    // RX_EN_OVERRIDE / TX_EN_OVERRIDE follow the external TR pin (driven by
+    // plfm_chirp_controller's adar_tr_x output). See ADAR1000 datasheet
+    // "Theory of Operation" -- SPI Control vs TR Pin Control.
+    // Without this write, the FPGA's TR pin is ignored and the chip stays
+    // in RX state (TR_SPI POR default).
+    DIAG("BF", "  dev[%u] SW_CONTROL: TR_SOURCE=1 (FPGA owns TR pin)", deviceIndex);
+    adarWrite(deviceIndex, REG_SW_CONTROL, (1 << 2), BROADCAST_OFF);
 
     // Initialize ADC
     DIAG("BF", "  dev[%u] enable ADC (2MHz clk)", deviceIndex);
@@ -469,9 +437,11 @@ bool ADAR1000Manager::initializeADTR1107Sequence() {
     HAL_GPIO_WritePin(EN_P_3V3_SW_GPIO_Port, EN_P_3V3_SW_Pin, GPIO_PIN_SET);
     HAL_Delay(1);
 
-    // Step 4: Set CTRL_SW to RX mode initially via GPIO
-    DIAG("BF", "Step 4: CTRL_SW -> RX (initial safe mode)");
-    setADTR1107Control(false); // RX mode
+    // Step 4: CTRL_SW safe-default is RX.
+    // FPGA-owned path: with TR_SOURCE=1 (set in initializeSingleDevice) the
+    // chip follows adar_tr_x, which is 0 in the FPGA FSM's IDLE state = RX.
+    // No SPI write needed here.
+    DIAG("BF", "Step 4: CTRL_SW -> RX (FPGA adar_tr_x idle-low == RX)");
     HAL_Delay(1);
 
     // Step 5: Set VGG_LNA to 0
@@ -573,7 +543,7 @@ bool ADAR1000Manager::setAllDevicesRXMode() {
 void ADAR1000Manager::setADTR1107Mode(BeamDirection direction) {
     if (direction == BeamDirection::TX) {
         DIAG_SECTION("ADTR1107 -> TX MODE");
-        setADTR1107Control(true); // TX mode
+        // setADTR1107Control(true) removed: TR pin is FPGA-driven.
 
         // Step 1: Disable LNA power first
         DIAG("BF", "  Disable LNA supplies");
@@ -603,10 +573,11 @@ void ADAR1000Manager::setADTR1107Mode(BeamDirection direction) {
         }
         HAL_Delay(5);
 
-        // Step 5: Set TR switch to TX mode
-        DIAG("BF", "  TR switch -> TX (TR_SOURCE=1, BIAS_EN)");
+        // Step 5: TR switch state is FPGA-driven. TR_SOURCE=1 is set once in
+        // initializeSingleDevice, so the chip already follows adar_tr_x.
+        // Only BIAS_EN needs to be asserted here.
+        DIAG("BF", "  BIAS_EN (TR source still = FPGA adar_tr_x)");
         for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
-            adarSetBit(dev, REG_SW_CONTROL, 2, BROADCAST_OFF); // TR_SOURCE = 1 (TX)
             adarSetBit(dev, REG_MISC_ENABLES, 5, BROADCAST_OFF); // BIAS_EN
         }
         DIAG("BF", "  ADTR1107 TX mode complete");
@@ -614,7 +585,7 @@ void ADAR1000Manager::setADTR1107Mode(BeamDirection direction) {
     } else {
         // RECEIVE MODE: Enable LNA, Disable PA
         DIAG_SECTION("ADTR1107 -> RX MODE");
-        setADTR1107Control(false); // RX mode
+        // setADTR1107Control(false) removed: TR pin is FPGA-driven.
 
         // Step 1: Disable PA power first
         DIAG("BF", "  Disable PA supplies");
@@ -645,34 +616,21 @@ void ADAR1000Manager::setADTR1107Mode(BeamDirection direction) {
         }
         HAL_Delay(5);
 
-        // Step 5: Set TR switch to RX mode
-        DIAG("BF", "  TR switch -> RX (TR_SOURCE=0, LNA_BIAS_OUT_EN)");
+        // Step 5: TR switch state is FPGA-driven (TR_SOURCE left at 1).
+        // Only LNA_BIAS_OUT_EN needs to be asserted here.
+        DIAG("BF", "  LNA_BIAS_OUT_EN (TR source still = FPGA adar_tr_x)");
         for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
-            adarResetBit(dev, REG_SW_CONTROL, 2, BROADCAST_OFF); // TR_SOURCE = 0 (RX)
             adarSetBit(dev, REG_MISC_ENABLES, 4, BROADCAST_OFF); // LNA_BIAS_OUT_EN
         }
         DIAG("BF", "  ADTR1107 RX mode complete");
     }
 }
 
-void ADAR1000Manager::setADTR1107Control(bool tx_mode) {
-    DIAG("BF", "setADTR1107Control(%s): setting TR switch on all %u devices, settling %lu us",
-         tx_mode ? "TX" : "RX", (unsigned)devices_.size(), (unsigned long)switch_settling_time_us_);
-    for (uint8_t dev = 0; dev < devices_.size(); ++dev) {
-        setTRSwitchPosition(dev, tx_mode);
-    }
-    delayUs(switch_settling_time_us_);
-}
-
-void ADAR1000Manager::setTRSwitchPosition(uint8_t deviceIndex, bool tx_mode) {
-    if (tx_mode) {
-        // TX mode: Set TR_SOURCE = 1
-        adarSetBit(deviceIndex, REG_SW_CONTROL, 2, BROADCAST_OFF);
-    } else {
-        // RX mode: Set TR_SOURCE = 0
-        adarResetBit(deviceIndex, REG_SW_CONTROL, 2, BROADCAST_OFF);
-    }
-}
+// setADTR1107Control, setTRSwitchPosition: REMOVED.
+// The per-device SPI RMW of REG_SW_CONTROL bit 2 (TR_SOURCE) was both wrong
+// (it toggled the *control source*, not the TX/RX state -- TR_SPI is bit 1)
+// and redundant with the FPGA's plfm_chirp_controller adar_tr_x output.
+// TR_SOURCE is now set to 1 exactly once in initializeSingleDevice.
 
 // Add the new public method
 bool ADAR1000Manager::setCustomBeamPattern16(const uint8_t phase_pattern[16], BeamDirection direction) {

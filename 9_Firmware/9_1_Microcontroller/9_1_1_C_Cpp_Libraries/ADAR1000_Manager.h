@@ -48,10 +48,11 @@ public:
     // Mode Switching
     void switchToTXMode();
     void switchToRXMode();
-    void fastTXMode();
-    void fastRXMode();
-    void pulseTXMode();
-    void pulseRXMode();
+    // fastTXMode/fastRXMode/pulseTXMode/pulseRXMode were removed: per-chirp T/R
+    // switching is owned by the FPGA (plfm_chirp_controller -> adar_tr_x pins,
+    // requires TR_SOURCE=1 in REG_SW_CONTROL, set in initializeSingleDevice).
+    // The old SPI RMW path was architecturally redundant and also toggled the
+    // wrong bit (TR_SOURCE instead of TR_SPI). See PR for details.
 
     // Beam Steering
     bool setBeamAngle(float angle_degrees, BeamDirection direction);
@@ -69,7 +70,8 @@ public:
     bool setAllDevicesTXMode();
     bool setAllDevicesRXMode();
     void setADTR1107Mode(BeamDirection direction);
-    void setADTR1107Control(bool tx_mode);
+    // setADTR1107Control removed -- it only wrapped the now-deleted
+    // setTRSwitchPosition SPI path. FPGA drives the TR pin directly.
 
     // Monitoring and Diagnostics
     float readTemperature(uint8_t deviceIndex);
@@ -78,8 +80,11 @@ public:
     void writeRegister(uint8_t deviceIndex, uint32_t address, uint8_t value);
 
     // Configuration
-    void setSwitchSettlingTime(uint32_t us);
-    void setFastSwitchMode(bool enable);
+    // setSwitchSettlingTime / setFastSwitchMode removed: their only reader was
+    // the deleted setADTR1107Control SPI path, and setFastSwitchMode(true)
+    // also bundled a datasheet-violating PA+LNA-biased-simultaneously side
+    // effect. Per-chirp settling is now FPGA-owned. Callers that need a
+    // warm-up bias state should use switchToTXMode / switchToRXMode instead.
     void setBeamDwellTime(uint32_t ms);
 
     // Getters
@@ -100,8 +105,8 @@ public:
     };
 
     // Configuration
-    bool fast_switch_mode_ = false;
-    uint32_t switch_settling_time_us_ = 50;
+    // fast_switch_mode_ / switch_settling_time_us_ removed: both had no
+    // readers after the FPGA-owned TR refactor.
     uint32_t beam_dwell_time_ms_ = 100;
     uint32_t last_switch_time_us_ = 0;
 
@@ -167,7 +172,7 @@ public:
     void adarSetTxVgaGain(uint8_t deviceIndex, uint8_t channel, uint8_t gain, uint8_t broadcast);
     void adarSetTxBias(uint8_t deviceIndex, uint8_t broadcast);
     uint8_t adarAdcRead(uint8_t deviceIndex, uint8_t broadcast);
-    void setTRSwitchPosition(uint8_t deviceIndex, bool tx_mode);
+    // setTRSwitchPosition removed -- FPGA owns TR pin. See PR.
 
 private:
 

@@ -242,6 +242,26 @@ uint8_t ADS7830_Measure_SingleEnded(ADC_HandleTypeDef *hadc, uint8_t channel);
  * if desired via a global flag. */
 extern int mock_printf_enabled;
 
+/* ========================= CMSIS-Core stubs ======================= */
+/* Minimum surface to let F-4.7's DWT-based delayUs() in ADAR1000_Manager.cpp
+ * compile under the host mock build. SystemCoreClock is intentionally 0 so
+ * target = microseconds * (SystemCoreClock / 1000000) is also 0, making the
+ * busy-wait loop exit immediately regardless of argument. Pre-setting
+ * DWT->CTRL with CYCCNTENA also skips the one-time init branch.            */
+
+#define DWT_CTRL_CYCCNTENA_Msk     (1UL << 0)
+#define CoreDebug_DEMCR_TRCENA_Msk (1UL << 24)
+
+struct _DWT_Mock_Type       { uint32_t CTRL; uint32_t CYCCNT; };
+struct _CoreDebug_Mock_Type { uint32_t DEMCR; };
+
+extern struct _DWT_Mock_Type       _dwt_mock;
+extern struct _CoreDebug_Mock_Type _coredebug_mock;
+extern uint32_t                    SystemCoreClock;
+
+#define DWT       (&_dwt_mock)
+#define CoreDebug (&_coredebug_mock)
+
 #ifdef __cplusplus
 }
 #endif
