@@ -627,7 +627,7 @@ typedef enum {
 
 static SystemError_t last_error = ERROR_NONE;
 static uint32_t error_count = 0;
-static bool system_emergency_state = false;
+static volatile bool system_emergency_state = false;
 
 // Error handler function
 SystemError_t checkSystemHealth(void) {
