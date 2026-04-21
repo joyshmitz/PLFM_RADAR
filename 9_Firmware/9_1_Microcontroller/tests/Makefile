@@ -70,7 +70,8 @@ TESTS_STANDALONE := test_bug12_pa_cal_loop_inverted \
                     test_gap3_idq_periodic_reread \
                     test_gap3_emergency_state_ordering \
                     test_gap3_overtemp_emergency_stop \
-                    test_gap3_health_watchdog_cold_start
+                    test_gap3_health_watchdog_cold_start \
+                    test_gap3_fault_ack_clears_emergency
 
 # Tests that need platform_noos_stm32.o + mocks
 TESTS_WITH_PLATFORM := test_bug11_platform_spi_transmit_only
@@ -176,6 +177,9 @@ test_gap3_overtemp_emergency_stop: test_gap3_overtemp_emergency_stop.c
 	$(CC) $(CFLAGS) $< -o $@
 
 test_gap3_health_watchdog_cold_start: test_gap3_health_watchdog_cold_start.c
+	$(CC) $(CFLAGS) $< -o $@
+
+test_gap3_fault_ack_clears_emergency: test_gap3_fault_ack_clears_emergency.c
 	$(CC) $(CFLAGS) $< -o $@
 
 # Tests that need platform_noos_stm32.o + mocks
