@@ -206,16 +206,19 @@ Anchors: cite source lines proving the freeze rule and why it exists.
 
 ### ⌁ Assertion-Shape-Verify
 
-**Definition**: Read the actual assertion logic of an existing test before claiming coverage, especially when a drift could pass silently on both sides.
+**Definition**: Read the actual assertion logic of an existing test before claiming coverage, and read the actual symbol definitions of every named identifier you plan to reference — whether in code-under-review or in your own draft/comment — before trusting that the identifier exists or behaves as you expect.
 
 **When-to-Use Triggers**:
-- Someone says “the harness already catches this”
+- Someone says "the harness already catches this"
 - A test appears to be ground-truth-based but may really use a static dict or one-sided inequality
 - A candidate gap depends on whether the existing test auto-adapts to upstream changes
+- You are about to publish a review comment, issue, or PR body that names specific functions / macros / symbols from the target code
+- You are about to cite a helper, method, or API by its "natural" semantic name rather than its literal name in the source
 
 **Failure Modes**:
-- Name-trust trap: you trust a test’s name or docstring instead of its assertion shape -> ship a redundant or blind test
-- One-sided coverage illusion: you verify only the target side and miss that the “ground truth” side is stale/static
+- Name-trust trap: you trust a test's name or docstring instead of its assertion shape -> ship a redundant or blind test
+- One-sided coverage illusion: you verify only the target side and miss that the "ground truth" side is stale/static
+- Own-draft hallucinated identifier: you cite a plausible-sounding helper (e.g. `RangeMode.build_range_mode_commands`) that does not actually exist in the source (actual name was `RadarProtocol.apply_range_preset`); external reviewer catches it, own credibility takes the hit
 
 **Prompt Module** (copy/paste for agents):
 ~~~text
@@ -223,10 +226,11 @@ Anchors: cite source lines proving the freeze rule and why it exists.
 1) Read the exact assertions of the claimed covering test, not just its name or comments.
 2) Identify both sides of the contract: target-side parse/assertion and ground-truth-side source.
 3) State explicitly whether a future widen/drift would fail loudly, fail silently, or auto-adapt.
+4) Before publishing any artifact that cites named symbols, grep each such symbol in the actual source; do not trust inferred or remembered names.
 
-Output (required): a short coverage verdict with the exact assertion shape and blind-spot class.
+Output (required): a short coverage verdict with the exact assertion shape and blind-spot class, plus a pass/fail on own-draft identifier check if an outbound artifact is being produced.
 Optional: candidate replacement invariant if the existing check is asymmetric.
-Anchors: cite the assertion lines, not summaries.
+Anchors: cite the assertion lines (not summaries) and the exact grep proof for each own-draft identifier.
 ~~~
 
 **Canonical tag**: assertion-shape-verify
@@ -235,7 +239,7 @@ Anchors: cite the assertion lines, not summaries.
 
 **Source anchors**: [workflow:116-126](/Users/sd/projects/PLFM_RADAR/.local/workflow/aeris10-workflow-pipeline.md:116)
 
-**Sources**: PLFM_RADAR local workflow
+**Sources**: PLFM_RADAR local workflow; own-draft extension learned from PR #121 comment pre-post review (2026-04-22) — Codex caught hallucinated Python helper name in initial draft
 
 ### ∅ No-Delta-No-Work
 
@@ -338,16 +342,18 @@ Anchors: cite the local pattern and the gate requiring maintainer-style sanity.
 
 ### ↻ Trigger-Revalidate
 
-**Definition**: When upstream or review state changes in a way that could invalidate assumptions, re-run evidence and scope checks before continuing.
+**Definition**: When upstream or review state changes in a way that could invalidate assumptions, re-run evidence and scope checks before continuing. Applies at two distinct moments: (a) when a new invalidating trigger is detected during ongoing work, and (b) as a mandatory action-gate re-check immediately before any outbound action (PR comment, issue post, push, merge), because long internal verification loops can leave external state stale.
 
 **When-to-Use Triggers**:
 - Upstream lands a merge on a surface your branch depends on
 - A late review reveals hidden shared-harness or contract risk
 - Maintainer closes/rejects a PR with rationale that attacks premise rather than implementation details
+- **Action-gate:** about to publish/post/push/merge an artifact whose validity depends on external state (target PR still open, target branch still current HEAD, target issue still unresolved)
 
 **Failure Modes**:
 - Momentum blindness: you keep iterating on a stale premise after upstream invalidated it
 - Scope lag: you ship under the original process tier after the change has obviously moved into a riskier class
+- Action-gate stale-premise: internal verification (e.g., Freeze-Artifact multi-round review of own comment) keeps the artifact stable but does not refresh external state; the artifact then lands on a venue that has changed (PR closed, branch retargeted, issue resolved) during the verification window
 
 **Prompt Module** (copy/paste for agents):
 ~~~text
@@ -355,10 +361,11 @@ Anchors: cite the local pattern and the gate requiring maintainer-style sanity.
 1) Detect the invalidating trigger: upstream merge, rejection rationale, or late shared-risk discovery.
 2) Freeze the current branch/artifact state.
 3) Re-run the smallest sufficient checks: evidence, scope, rebase-risk, and process-tier selection.
+4) Action-gate: immediately before any outbound action (post/push/merge), re-fetch the minimal relevant external state (e.g. `gh pr view <n> --json state,mergedAt,closedAt,updatedAt`); abort or adapt if state has changed since the start of the current loop.
 
-Output (required): revalidation verdict: continue, promote to full loop, or drop.
+Output (required): revalidation verdict: continue, promote to full loop, or drop. For action-gate invocations: external-state-still-valid pass/fail with the concrete state snapshot that justified the action.
 Optional: new base branch / new artifact revision plan.
-Anchors: cite the trigger and the re-entry rule.
+Anchors: cite the trigger and the re-entry rule. For action-gate: cite the exact pre-action state query and its response.
 ~~~
 
 **Canonical tag**: trigger-revalidate
@@ -367,7 +374,7 @@ Anchors: cite the trigger and the re-entry rule.
 
 **Source anchors**: [workflow:170-186](/Users/sd/projects/PLFM_RADAR/.local/workflow/aeris10-workflow-pipeline.md:170), [workflow:315-315](/Users/sd/projects/PLFM_RADAR/.local/workflow/aeris10-workflow-pipeline.md:315)
 
-**Sources**: PLFM_RADAR local workflow
+**Sources**: PLFM_RADAR local workflow; action-gate extension learned from PR #121 comment-post slip (2026-04-22) — PR closed 3h before comment landed because Trigger-Revalidate was only applied at Phase 0, not at action gate
 
 ## What is still missing before promotion
 
