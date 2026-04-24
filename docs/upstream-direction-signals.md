@@ -45,6 +45,25 @@ Maintainer commits often lead with a short tag that locates the change in a larg
 
 The specific numbers are less informative than the pattern: a prefix or suffix marker means the commit is not standalone — it belongs to a batch you can partially reconstruct by scrolling `git log`.
 
+## Two lanes: maintainer and owner
+
+The signals above describe the **maintainer lane** — commits from the primary maintainer, which follow conventional-commit prefixes, numbered audit badges (`F-/C-/S-`), wave markers, and a visible branch stack.
+
+The repository owner runs a separate **hardware lane** with different conventions:
+
+- commits land **directly on `main`** without a PR
+- subject lines are plain English — no `fix:/feat:/build()` prefix, no coordinate badge, no wave marker
+- content is hardware artefacts: BOM, Gerbers, mechanical parts, PCB imagery
+
+Observed examples on `main`:
+
+- `Add Mechanical parts` — waveguide and heat sinks
+- `Added BOM and Gerbers`
+- `Add files via upload`
+- `Fix image link and update mixer model in README`
+
+Implication: if your proposal is purely hardware — a mechanical part, a BOM correction, a footprint fix — it does not need to stack on top of the pre-bringup audit branch or match the commit-style conventions described above. Related hardware changes may also land directly on `main` without PR coordination while your contribution is in review, so `main` is worth watching independently of the `develop` stack when scoping hardware work.
+
 ## How to apply this when proposing a PR
 
 1. `git fetch upstream --prune --tags` — check the current stack of branches and recent tags.
