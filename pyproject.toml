@@ -49,3 +49,17 @@ select = [
 "test_*.py" = ["ARG", "T20", "ERA"]
 # Re-export modules: unused imports are intentional
 "v7/hardware.py" = ["F401"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "basic"
+include = [
+    "9_Firmware/9_3_GUI/test_v7.py",
+    "9_Firmware/tests/cross_layer/adar1000_vm_reference.py",
+    "9_Firmware/tests/cross_layer/contract_parser.py",
+    "9_Firmware/tests/cross_layer/test_cross_layer_contract.py",
+]
+extraPaths = [
+    "9_Firmware/9_3_GUI",
+    "9_Firmware/tests/cross_layer",
+]

@@ -396,7 +396,7 @@ class USBPacketParser:
     def __init__(self):
         pass
 
-    def parse_gps_data(self, data: bytes) -> GPSData | None:
+    def parse_gps_data(self, data: bytes | None) -> GPSData | None:
         """Attempt to parse GPS data from a raw USB CDC frame."""
         if not data:
             return None

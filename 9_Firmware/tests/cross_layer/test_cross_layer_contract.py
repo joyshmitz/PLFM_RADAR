@@ -152,9 +152,9 @@ def _strip_cxx_comments_and_strings(src: str) -> str:
     return "".join(out)
 
 
-def _parse_hex_results(text: str) -> list[dict[str, str]]:
+def _parse_hex_results(text: str) -> list[list[str]]:
     """Parse space-separated hex lines from TB output files."""
-    rows = []
+    rows: list[list[str]] = []
     for line in text.strip().splitlines():
         line = line.strip()
         if not line or line.startswith("#"):

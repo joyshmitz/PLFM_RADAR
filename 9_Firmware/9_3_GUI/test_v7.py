@@ -14,6 +14,7 @@ Run with:  python -m unittest test_v7 -v
 import os
 import struct
 import unittest
+import importlib.util
 from dataclasses import asdict
 
 import numpy as np
@@ -216,7 +217,8 @@ class TestUSBPacketParser(unittest.TestCase):
         parser = USBPacketParser()
         data = b"GPS:41.9028,12.4964,100.0,2.5\r\n"
         gps = parser.parse_gps_data(data)
-        self.assertIsNotNone(gps)
+        if gps is None:
+            self.fail("GPS text packet did not parse")
         self.assertAlmostEqual(gps.latitude, 41.9028, places=3)
         self.assertAlmostEqual(gps.longitude, 12.4964, places=3)
         self.assertAlmostEqual(gps.altitude, 100.0)
@@ -244,7 +246,8 @@ class TestUSBPacketParser(unittest.TestCase):
         self.assertEqual(len(pkt), 30)
 
         gps = parser.parse_gps_data(bytes(pkt))
-        self.assertIsNotNone(gps)
+        if gps is None:
+            self.fail("GPS binary packet did not parse")
         self.assertAlmostEqual(gps.latitude, 41.9028, places=3)
 
     def test_no_crc16_func_attribute(self):
@@ -267,8 +270,10 @@ class TestUSBPacketParser(unittest.TestCase):
 
 def _pyqt6_available():
     try:
-        import PyQt6.QtCore  # noqa: F401
-        return True
+        return (
+            importlib.util.find_spec("PyQt6") is not None
+            and importlib.util.find_spec("PyQt6.QtCore") is not None
+        )
     except ImportError:
         return False
 
