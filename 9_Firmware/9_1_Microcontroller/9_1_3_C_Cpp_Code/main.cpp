@@ -388,7 +388,12 @@ void systemPowerUpSequence() {
 
     // Step 4: Set to safe TX mode
     DIAG("PWR", "Step 4: setAllDevicesTXMode()");
-    adarManager.setAllDevicesTXMode();
+    if (!adarManager.setAllDevicesTXMode()) {
+        DIAG_ERR("PWR", "setAllDevicesTXMode() FAILED -- calling Error_Handler()");
+        uint8_t err[] = "ERROR: ADAR1000 TX-mode setup failed!\r\n";
+        HAL_UART_Transmit(&huart3, err, sizeof(err)-1, 1000);
+        Error_Handler();
+    }
     DIAG("PWR", "Step 4 OK: All devices set to TX mode");
 
     uint8_t success[] = "Power Up Sequence Completed Successfully\r\n";
@@ -401,9 +406,15 @@ void systemPowerDownSequence() {
     uint8_t msg[] = "Starting Power Down Sequence...\r\n";
     HAL_UART_Transmit(&huart3, msg, sizeof(msg)-1, 1000);
 
-    // Step 1: Set all devices to RX mode (safest state)
+    // Step 1: Set all devices to RX mode (safest state). Failure here is logged
+    // but NOT fatal -- power-down must always proceed to cut the rails below.
+    // Leaving a stuck PA bias would be more dangerous than losing RX-mode telemetry.
     DIAG("PWR", "Step 1: setAllDevicesRXMode()");
-    adarManager.setAllDevicesRXMode();
+    if (!adarManager.setAllDevicesRXMode()) {
+        DIAG_ERR("PWR", "setAllDevicesRXMode() FAILED during power-down -- continuing to cut rails");
+        uint8_t warn[] = "WARNING: RX-mode setup failed during power-down, cutting rails anyway\r\n";
+        HAL_UART_Transmit(&huart3, warn, sizeof(warn)-1, 1000);
+    }
     HAL_Delay(10);
 
     // Step 2: Disable PA power supplies
@@ -693,6 +704,14 @@ SystemError_t checkSystemHealth(void) {
         }
 
         float temp = adarManager.readTemperature(i);
+        // NaN signals an ADC timeout / comm failure inside the manager. Previously
+        // a hung ADC returned 0, which mapped to -50 C and looked healthy. Map
+        // it to the comm-error bucket so attemptErrorRecovery re-inits the chip.
+        if (isnan(temp)) {
+            current_error = ERROR_ADAR1000_COMM;
+            DIAG_ERR("BF", "Health check: ADAR1000 #%d temperature read returned NaN (ADC timeout)", i);
+            return current_error;
+        }
         if (temp > 85.0f) {
             current_error = ERROR_ADAR1000_TEMP;
             DIAG_ERR("BF", "Health check: ADAR1000 #%d OVERTEMP %.1fC > 85C", i, temp);
@@ -782,11 +801,20 @@ void attemptErrorRecovery(SystemError_t error) {
             break;
 
         case ERROR_ADAR1000_COMM:
-            // Reset ADAR1000 communication
+            // Reset ADAR1000 communication. Previously this discarded the bool
+            // return, so a re-init that failed silently looked like recovery
+            // succeeded -- the next health check would loop right back here.
             DIAG("BF", "Recovery: Re-initializing all ADAR1000 devices");
-            adarManager.initializeAllDevices();
-            HAL_Delay(50);
-            DIAG("BF", "Recovery: ADAR1000 re-init complete");
+            if (!adarManager.initializeAllDevices()) {
+                DIAG_ERR("BF", "Recovery FAILED: ADAR1000 re-init still failing -- escalating to emergency state");
+                uint8_t err[] = "ERROR: ADAR1000 recovery failed, entering emergency state\r\n";
+                HAL_UART_Transmit(&huart3, err, sizeof(err)-1, 1000);
+                system_emergency_state = true;
+                error_count++;
+            } else {
+                HAL_Delay(50);
+                DIAG("BF", "Recovery: ADAR1000 re-init complete");
+            }
             break;
 
         case ERROR_IMU_COMM:
