@@ -491,14 +491,15 @@ void initializeBeamMatrices() {
 void executeChirpSequence(int num_chirps, float T1, float PRI1, float T2, float PRI2) {
     // NOTE: No per-chirp DIAG — this is a us/ns timing-critical path.
     // Only log entry params for post-mortem analysis.
+    
     DIAG("SYS", "executeChirpSequence: num_chirps=%d T1=%.2f PRI1=%.2f T2=%.2f PRI2=%.2f",
          num_chirps, T1, PRI1, T2, PRI2);
     // First chirp sequence (microsecond timing)
     for(int i = 0; i < num_chirps; i++) {
         HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8); // New chirp signal to FPGA
-        adarManager.pulseTXMode();
+        (void)adarManager.pulseTXMode();
         delay_us((uint32_t)T1);
-        adarManager.pulseRXMode();
+        (void)adarManager.pulseRXMode();
         delay_us((uint32_t)(PRI1 - T1));
     }
 
@@ -507,9 +508,9 @@ void executeChirpSequence(int num_chirps, float T1, float PRI1, float T2, float 
     // Second chirp sequence (nanosecond timing)
     for(int i = 0; i < num_chirps; i++) {
     	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8); // New chirp signal to FPGA
-        adarManager.pulseTXMode();
+        (void)adarManager.pulseTXMode();
         delay_ns((uint32_t)(T2 * 1000));
-        adarManager.pulseRXMode();
+        (void)adarManager.pulseRXMode();
         delay_ns((uint32_t)((PRI2 - T2) * 1000));
 
     }
