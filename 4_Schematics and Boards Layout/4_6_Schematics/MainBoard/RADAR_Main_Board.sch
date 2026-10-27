@@ -27643,8 +27643,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND23" library="supply1" deviceset="GND" device=""/>
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
 <part name="XTAL3" library="My_Library" deviceset="NX3225GD-8MHZ-STD-CRA-3" device="" value="NX3215SA-32.768KHz"/>
-<part name="C18" library="eagle-ltspice" deviceset="C" device="C0201" value="2.7pF"/>
-<part name="C19" library="eagle-ltspice" deviceset="C" device="C0201" value="2.7pF"/>
+<part name="C18" library="eagle-ltspice" deviceset="C" device="C0201" value="20pF"/>
+<part name="C19" library="eagle-ltspice" deviceset="C" device="C0201" value="20pF"/>
 <part name="C20" library="eagle-ltspice" deviceset="C" device="C0201" value="4.3pF"/>
 <part name="C21" library="eagle-ltspice" deviceset="C" device="C0201" value="4.3pF"/>
 <part name="GND25" library="supply1" deviceset="GND" device=""/>
@@ -28395,7 +28395,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R29" library="eagle-ltspice" deviceset="R" device="R0201" value="22R"/>
 <part name="R30" library="eagle-ltspice" deviceset="R" device="R0201" value="22R"/>
 <part name="R33" library="eagle-ltspice" deviceset="R" device="R0201" value="3k2"/>
-<part name="C37" library="eagle-ltspice" deviceset="C" device="C0201" value="10uF"/>
+<part name="C37" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="GND50" library="supply1" deviceset="GND" device=""/>
 <part name="GND52" library="supply1" deviceset="GND" device=""/>
 <part name="C38" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
@@ -28403,7 +28403,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C39" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="L6" library="inductors" deviceset="BLM15H" device="" technology="B121SN1"/>
 <part name="L7" library="inductors" deviceset="BLM15H" device="" technology="B121SN1"/>
-<part name="C40" library="eagle-ltspice" deviceset="C" device="C0201" value="10uF"/>
+<part name="C40" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="C42" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="GND54" library="supply1" deviceset="GND" device=""/>
 <part name="C41" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
@@ -29610,6 +29610,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R11" library="eagle-ltspice" deviceset="R" device="R0201" value="100R"/>
 <part name="JP18" library="pinhead" deviceset="PINHD-1X4" device=""/>
 <part name="GND1089" library="supply1" deviceset="GND" device=""/>
+<part name="C352" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
+<part name="GND1094" library="supply1" deviceset="GND" device=""/>
+<part name="C353" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
+<part name="GND1099" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -39467,6 +39471,20 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="113.284" y="162.941" size="1.778" layer="95"/>
 <attribute name="VALUE" x="113.284" y="165.481" size="1.778" layer="96"/>
 </instance>
+<instance part="C352" gate="G$1" x="396.24" y="81.28" smashed="yes">
+<attribute name="NAME" x="394.716" y="83.439" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="394.716" y="80.899" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="GND1094" gate="1" x="396.24" y="73.66" smashed="yes">
+<attribute name="VALUE" x="393.7" y="71.12" size="1.778" layer="96"/>
+</instance>
+<instance part="C353" gate="G$1" x="233.68" y="83.82" smashed="yes">
+<attribute name="NAME" x="232.156" y="85.979" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="232.156" y="83.439" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="GND1099" gate="1" x="233.68" y="76.2" smashed="yes">
+<attribute name="VALUE" x="231.14" y="73.66" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -43598,6 +43616,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="R166" gate="G$1" pin="2"/>
 <pinref part="GND1135" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="C352" gate="G$1" pin="2"/>
+<pinref part="GND1094" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C353" gate="G$1" pin="2"/>
+<pinref part="GND1099" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="+5V0_PA_1" class="0">
 <segment>
@@ -45907,6 +45933,26 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="373.38" y1="99.06" x2="370.84" y2="99.06" width="0.1524" layer="91"/>
 <label x="365.76" y="99.06" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U8" gate="A" pin="ENB"/>
+<wire x1="429.26" y1="111.76" x2="431.8" y2="111.76" width="0.1524" layer="91"/>
+<label x="429.26" y="111.76" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="C352" gate="G$1" pin="1"/>
+<wire x1="396.24" y1="83.82" x2="398.78" y2="83.82" width="0.1524" layer="91"/>
+<label x="398.78" y="83.82" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="C353" gate="G$1" pin="1"/>
+<wire x1="233.68" y1="86.36" x2="236.22" y2="86.36" width="0.1524" layer="91"/>
+<label x="236.22" y="86.36" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U4" gate="A" pin="ENB"/>
+<wire x1="259.08" y1="114.3" x2="261.62" y2="114.3" width="0.1524" layer="91"/>
+<label x="259.08" y="114.3" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="-3V4" class="0">
 <segment>
@@ -46988,13 +47034,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="C49" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="EN_OPAMP_IF_1" class="0">
-<segment>
-<pinref part="U8" gate="A" pin="ENB"/>
-<wire x1="429.26" y1="111.76" x2="431.8" y2="111.76" width="0.1524" layer="91"/>
-<label x="429.26" y="111.76" size="1.778" layer="95"/>
-</segment>
-</net>
 <net name="N$85" class="0">
 <segment>
 <pinref part="U8" gate="A" pin="RDP"/>
@@ -47208,13 +47247,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="601.98" y1="101.6" x2="594.36" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="594.36" y1="106.68" x2="594.36" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="C268" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="EN_OPAMP_IF_2" class="0">
-<segment>
-<pinref part="U4" gate="A" pin="ENB"/>
-<wire x1="259.08" y1="114.3" x2="261.62" y2="114.3" width="0.1524" layer="91"/>
-<label x="259.08" y="114.3" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$41" class="0">
@@ -48110,7 +48142,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="C274" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$26" class="0">
+<net name="N$26" class="2">
 <segment>
 <pinref part="U$1" gate="A" pin="RFC"/>
 <pinref part="C85" gate="G$1" pin="1"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.4.0">
+<eagle version="7.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -26,7 +26,7 @@
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="24" fill="1" visible="no" active="yes"/>
 <layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
@@ -5385,7 +5385,7 @@
 <text x="155.14125625" y="167.554465625" size="1.27" layer="51" rot="R225">RX 2_4</text>
 <text x="122.221528125" y="146.5440625" size="1.27" layer="51" rot="R315">RX 3_4</text>
 <text x="145.05015" y="114.518025" size="1.27" layer="51" rot="R45">RX 4_4</text>
-<text x="150.25345625" y="4.79933125" size="5.4864" layer="51" font="vector">www.abac-industry.com</text>
+<text x="150.25345625" y="4.79933125" size="5.4864" layer="51" font="vector">www.abacindustry.com</text>
 <text x="47.269546875" y="127.64274375" size="1.27" layer="51" rot="R135">+1V0_FPGA</text>
 <text x="47.220515625" y="125.152134375" size="1.27" layer="51" rot="R135">+1V8_FPGA</text>
 <text x="47.270815625" y="122.549565625" size="1.27" layer="51" rot="R135">+3V3_FPGA</text>
@@ -12806,7 +12806,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="174.4" y="-109" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="62.005" y="171.035" size="1.27" layer="27"/>
 </element>
-<element name="C18" library="eagle-ltspice" package="C0201" value="2.7pF" x="92.83" y="95.88" smashed="yes" rot="R270">
+<element name="C18" library="eagle-ltspice" package="C0201" value="20pF" x="92.83" y="95.88" smashed="yes" rot="R270">
 <attribute name="NAME" x="93.465" y="96.515" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-204.35" y="-93.35" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="-204.35" y="-93.35" size="1.778" layer="27" rot="R270" display="off"/>
@@ -12870,7 +12870,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="-278" y="18.4" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="22.355" y="208.265" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="C19" library="eagle-ltspice" package="C0201" value="2.7pF" x="92.82" y="98.42" smashed="yes" rot="R90">
+<element name="C19" library="eagle-ltspice" package="C0201" value="20pF" x="92.82" y="98.42" smashed="yes" rot="R90">
 <attribute name="NAME" x="92.185" y="97.785" size="1.27" layer="25" rot="R90"/>
 <attribute name="SPICEMODEL" value="NONE" x="390" y="294" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="390" y="294" size="1.778" layer="27" rot="R90" display="off"/>
@@ -13902,7 +13902,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="-232.65" y="-69.075" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="62.625" y="158.89" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="C37" library="eagle-ltspice" package="C0201" value="10uF" x="53.98" y="214.805" smashed="yes">
+<element name="C37" library="eagle-ltspice" package="C0201" value="0.1uF" x="53.98" y="214.805" smashed="yes">
 <attribute name="NAME" x="53.345" y="215.44" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="353.7" y="-107.775" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="353.7" y="-107.775" size="1.778" layer="27" display="off"/>
@@ -13926,7 +13926,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="353.05" y="260.15" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="57.775" y="152.835" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="C40" library="eagle-ltspice" package="C0201" value="10uF" x="65.475" y="215.62" smashed="yes" rot="R180">
+<element name="C40" library="eagle-ltspice" package="C0201" value="0.1uF" x="65.475" y="215.62" smashed="yes" rot="R180">
 <attribute name="NAME" x="66.11" y="214.985" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-239.325" y="538.2" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="-239.325" y="538.2" size="1.778" layer="27" rot="R180" display="off"/>
@@ -17402,6 +17402,14 @@ Your PCBWay Team
 <attribute name="NAME" x="38.6062" y="84.6712" size="1.27" layer="25" ratio="10" rot="R180"/>
 <attribute name="POPULARITY" value="91" x="33.45" y="86.5" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="38.53" y="89.675" size="1.27" layer="27" rot="R180"/>
+</element>
+<element name="C352" library="eagle-ltspice" package="C0201" value="0.1uF" x="53.711671875" y="145.40843125" rot="R180">
+<attribute name="SPICEMODEL" value="NONE" x="53.711671875" y="145.40843125" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="SPICEPREFIX" value="C" x="53.711671875" y="145.40843125" size="1.778" layer="27" rot="R180" display="off"/>
+</element>
+<element name="C353" library="eagle-ltspice" package="C0201" value="0.1uF" x="53.7469375" y="136.535715625" rot="R180">
+<attribute name="SPICEMODEL" value="NONE" x="53.7469375" y="136.535715625" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="SPICEPREFIX" value="C" x="53.7469375" y="136.535715625" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 </elements>
 <signals>
@@ -23565,10 +23573,6 @@ Your PCBWay Team
 <wire x1="231" y1="208.1" x2="230.9683875" y2="208.137775" width="0.1" layer="1"/>
 <wire x1="235.6" y1="222.8" x2="235.59691875" y2="222.803084375" width="0.1" layer="1"/>
 <wire x1="235.6" y1="222.8" x2="235.580009375" y2="222.782534375" width="0.1" layer="1"/>
-<wire x1="53.4" y1="133.8" x2="54.05" y2="133.8" width="0.1" layer="1"/>
-<wire x1="53.4" y1="135.25" x2="53.4" y2="133.8" width="0.1" layer="1"/>
-<wire x1="55.35" y1="137.2" x2="53.4" y2="135.25" width="0.1" layer="1"/>
-<wire x1="54.05" y1="133.8" x2="54.05" y2="133.775" width="0.1" layer="1"/>
 <wire x1="55.35" y1="137.2" x2="55.475" y2="137.275" width="0.1" layer="1"/>
 <wire x1="149" y1="146.9" x2="148.15" y2="146.9" width="0.1" layer="1"/>
 <wire x1="149.3" y1="147.2" x2="149" y2="146.9" width="0.1" layer="1"/>
@@ -25555,6 +25559,29 @@ Your PCBWay Team
 <via x="156.628403125" y="129.96081875" extent="1-16" drill="0.2"/>
 <via x="155.6173375" y="130.36523125" extent="1-16" drill="0.2"/>
 <via x="154.144071875" y="131.679571875" extent="1-16" drill="0.2"/>
+<contactref element="C352" pad="2"/>
+<contactref element="C353" pad="2"/>
+<via x="52.962915625" y="146.064375" extent="1-16" drill="0.3"/>
+<via x="52.69336875" y="137.140371875" extent="1-16" drill="0.3"/>
+<wire x1="53.4969375" y1="136.535715625" x2="52.787753125" y2="136.535715625" width="0.2" layer="1"/>
+<wire x1="52.787753125" y1="136.535715625" x2="52.7075375" y2="136.61593125" width="0.2" layer="1"/>
+<wire x1="52.7075375" y1="136.61593125" x2="52.7075375" y2="137.126203125" width="0.2" layer="1"/>
+<wire x1="52.7075375" y1="137.126203125" x2="52.69336875" y2="137.140371875" width="0.2" layer="1"/>
+<wire x1="53.461671875" y1="145.40843125" x2="53.047809375" y2="145.40843125" width="0.2" layer="1"/>
+<wire x1="53.047809375" y1="145.40843125" x2="52.948040625" y2="145.5082" width="0.2" layer="1"/>
+<wire x1="52.948040625" y1="145.5082" x2="52.948040625" y2="146.0495" width="0.2" layer="1"/>
+<wire x1="52.948040625" y1="146.0495" x2="52.962915625" y2="146.064375" width="0.2" layer="1"/>
+<wire x1="55.35" y1="137.2" x2="54.280128125" y2="138.269871875" width="0.2" layer="1"/>
+<wire x1="54.280128125" y1="138.269871875" x2="51.84549375" y2="138.269871875" width="0.2" layer="1"/>
+<wire x1="51.84549375" y1="138.269871875" x2="51.290496875" y2="137.714875" width="0.2" layer="1"/>
+<wire x1="51.290496875" y1="137.714875" x2="51.290496875" y2="136.87815" width="0.2" layer="1"/>
+<wire x1="51.290496875" y1="136.87815" x2="53.39949375" y2="134.769153125" width="0.2" layer="1"/>
+<wire x1="53.39949375" y1="134.769153125" x2="53.39949375" y2="134.04441875" width="0.2" layer="1"/>
+<wire x1="53.39949375" y1="134.04441875" x2="53.515828125" y2="133.928084375" width="0.2" layer="1"/>
+<wire x1="53.515828125" y1="133.928084375" x2="53.515828125" y2="133.75514375" width="0.2" layer="1"/>
+<wire x1="53.515828125" y1="133.75514375" x2="53.536415625" y2="133.73455625" width="0.2" layer="1"/>
+<wire x1="53.536415625" y1="133.73455625" x2="54.00955625" y2="133.73455625" width="0.2" layer="1"/>
+<wire x1="54.00955625" y1="133.73455625" x2="54.05" y2="133.775" width="0.2" layer="1"/>
 </signal>
 <signal name="+1V8_FPGA">
 <contactref element="X10" pad="1"/>
@@ -26999,6 +27026,22 @@ Your PCBWay Team
 <wire x1="57.2" y1="146.25" x2="57.198" y2="146.22" width="0.1" layer="1"/>
 <wire x1="60" y1="146.2" x2="60" y2="146.22" width="0.1" layer="1"/>
 <wire x1="60" y1="146.2" x2="59.982" y2="146.235" width="0.1" layer="1"/>
+<contactref element="U8" pad="15"/>
+<wire x1="57.323" y1="136.22" x2="56.53" y2="136.22" width="0.15" layer="1"/>
+<wire x1="56.53" y1="136.22" x2="56.525" y2="136.225" width="0.15" layer="1"/>
+<via x="56.525" y="136.225" extent="1-16" drill="0.15"/>
+<contactref element="C352" pad="1"/>
+<contactref element="C353" pad="1"/>
+<contactref element="U4" pad="15"/>
+<wire x1="57.188" y1="145.235" x2="56.11" y2="145.235" width="0.15" layer="1"/>
+<wire x1="56.11" y1="145.235" x2="55.925" y2="145.05" width="0.15" layer="1"/>
+<via x="55.925" y="145.05" extent="1-16" drill="0.15"/>
+<wire x1="55.925" y1="145.05" x2="54.320103125" y2="145.05" width="0.2" layer="1"/>
+<wire x1="54.320103125" y1="145.05" x2="53.961671875" y2="145.40843125" width="0.2" layer="1"/>
+<wire x1="56.525" y1="136.225" x2="55.68439375" y2="136.225" width="0.2" layer="1"/>
+<wire x1="55.68439375" y1="136.225" x2="55.439565625" y2="136.469828125" width="0.2" layer="1"/>
+<wire x1="55.439565625" y1="136.469828125" x2="54.062825" y2="136.469828125" width="0.2" layer="1"/>
+<wire x1="54.062825" y1="136.469828125" x2="53.9969375" y2="136.535715625" width="0.2" layer="1"/>
 </signal>
 <signal name="+3V3_AN">
 <contactref element="X9" pad="1"/>
@@ -29208,11 +29251,6 @@ Your PCBWay Team
 <wire x1="224.5" y1="140" x2="224.55" y2="140.025" width="0.1" layer="16"/>
 <wire x1="151.5" y1="220" x2="151.55" y2="219.9" width="0.1" layer="16"/>
 <wire x1="222.25" y1="225.25" x2="227.5" y2="220" width="0.1" layer="14"/>
-<wire x1="161.5" y1="233.5" x2="162.25" y2="234.25" width="0.1" layer="14"/>
-<wire x1="159.5" y1="233.5" x2="161.5" y2="233.5" width="0.1" layer="14"/>
-<wire x1="152.75" y1="226.75" x2="159.5" y2="233.5" width="0.1" layer="14"/>
-<wire x1="152.75" y1="221.25" x2="152.75" y2="226.75" width="0.1" layer="14"/>
-<wire x1="151.5" y1="220" x2="152.75" y2="221.25" width="0.1" layer="14"/>
 <wire x1="227.5" y1="220" x2="227.525" y2="220" width="0.1" layer="14"/>
 <wire x1="151.5" y1="220" x2="151.55" y2="219.9" width="0.1" layer="14"/>
 <wire x1="113.75" y1="211.75" x2="89" y2="187" width="0.1" layer="12"/>
@@ -35437,12 +35475,6 @@ Your PCBWay Team
 <wire x1="55.675" y1="144.16" x2="55.38529375" y2="144.04" width="0.204" layer="1" curve="-45"/>
 <wire x1="55.38529375" y1="144.04" x2="54.62" y2="144.04" width="0.204" layer="1"/>
 </signal>
-<signal name="EN_OPAMP_IF_1">
-<contactref element="U8" pad="15"/>
-<wire x1="57.323" y1="136.22" x2="56.53" y2="136.22" width="0.15" layer="1"/>
-<wire x1="56.53" y1="136.22" x2="56.525" y2="136.225" width="0.15" layer="1"/>
-<via x="56.525" y="136.225" extent="1-16" drill="0.15"/>
-</signal>
 <signal name="N$85">
 <contactref element="U8" pad="1"/>
 <contactref element="R32" pad="2"/>
@@ -35659,12 +35691,6 @@ Your PCBWay Team
 <wire x1="79.51" y1="144.957" x2="79.437" y2="145.03" width="0.204" layer="1"/>
 <wire x1="78.8431375" y1="145.03" x2="78.65" y2="144.95" width="0.204" layer="1" curve="45"/>
 <wire x1="79.437" y1="145.03" x2="78.8431375" y2="145.03" width="0.204" layer="1"/>
-</signal>
-<signal name="EN_OPAMP_IF_2">
-<contactref element="U4" pad="15"/>
-<wire x1="57.188" y1="145.235" x2="56.11" y2="145.235" width="0.15" layer="1"/>
-<wire x1="56.11" y1="145.235" x2="55.925" y2="145.05" width="0.15" layer="1"/>
-<via x="55.925" y="145.05" extent="1-16" drill="0.15"/>
 </signal>
 <signal name="N$41">
 <contactref element="R36" pad="1"/>
@@ -37665,10 +37691,10 @@ Your PCBWay Team
 <wire x1="82.74" y1="142.11" x2="82.74" y2="136.86" width="0.204" layer="1"/>
 <wire x1="82.74" y1="136.86" x2="82.73" y2="136.85" width="0.204" layer="1"/>
 </signal>
-<signal name="N$26">
+<signal name="N$26" class="2">
 <contactref element="U$1" pad="15"/>
 <contactref element="C85" pad="1"/>
-<wire x1="117.58" y1="179.79" x2="183.58" y2="179.79" width="0.1524" layer="1"/>
+<wire x1="117.58" y1="179.79" x2="183.58" y2="179.79" width="0.204" layer="1"/>
 <wire x1="183.58" y1="179.79" x2="183.58" y2="179.76" width="0.1524" layer="1"/>
 </signal>
 <signal name="GND14">
@@ -37948,120 +37974,120 @@ Your PCBWay Team
 <approved hash="5,16,0771c361dd10bbfb"/>
 <approved hash="3,1,d842fa70fa67d855"/>
 <approved hash="3,1,1601203320241616"/>
-<approved hash="19,1,e3ff1d0b192be7df"/>
 <approved hash="19,1,62b01c4410ca6e3e"/>
 <approved hash="19,1,e0ff1e0b1f6ae19e"/>
-<approved hash="19,1,83310d4501c48fb0"/>
+<approved hash="19,1,e3ff1d0b192be7df"/>
 <approved hash="19,1,017e0f0a0e640010"/>
+<approved hash="19,1,83310d4501c48fb0"/>
 <approved hash="19,1,027e0c0a08250651"/>
 <approved hash="19,1,40fe3f0a3b2544d1"/>
-<approved hash="19,1,43fe3c0a3d644290"/>
 <approved hash="19,1,c1b13e4532c4cd30"/>
-<approved hash="19,1,0bb6f8acb4a33749"/>
-<approved hash="19,1,5d531f20be5f1608"/>
+<approved hash="19,1,43fe3c0a3d644290"/>
 <approved hash="19,1,0ab409cbfab1cafd"/>
-<approved hash="19,1,8c56f26bdc0f5449"/>
-<approved hash="19,1,f41ee9fc638fb6df"/>
+<approved hash="19,1,5d531f20be5f1608"/>
+<approved hash="19,1,0bb6f8acb4a33749"/>
 <approved hash="19,1,d98ece06211823cb"/>
+<approved hash="19,1,f41ee9fc638fb6df"/>
 <approved hash="19,1,c9f167cf1de38881"/>
 <approved hash="5,1,0baef99494178fa1"/>
-<approved hash="19,1,6fbd03507c685666"/>
-<approved hash="19,1,1c211cd54275dfb5"/>
 <approved hash="19,1,1346ebd90828e2e4"/>
+<approved hash="19,1,1c211cd54275dfb5"/>
+<approved hash="19,1,6fbd03507c685666"/>
 <approved hash="19,1,415ad9c29c48d112"/>
 <approved hash="19,1,9150e07fea1eb3df"/>
+<approved hash="19,1,8c56f26bdc0f5449"/>
 <approved hash="19,1,e7091afd19b6e442"/>
-<approved hash="19,1,60f81d0c13166ee2"/>
 <approved hash="19,1,e1e91c1d1f19e2ed"/>
-<approved hash="19,1,607b0c0f02166e62"/>
-<approved hash="19,1,e16a0d1e0e19e26d"/>
+<approved hash="19,1,60f81d0c13166ee2"/>
 <approved hash="19,1,e78a0bfe08b6e4c2"/>
+<approved hash="19,1,e16a0d1e0e19e26d"/>
+<approved hash="19,1,607b0c0f02166e62"/>
+<approved hash="19,1,82e9bc1dbf0781f3"/>
 <approved hash="19,1,8409bafdb9a8875c"/>
 <approved hash="19,1,03f8bd0cb3080dfc"/>
-<approved hash="19,1,82e9bc1dbf0781f3"/>
 <approved hash="19,1,abd8e1be84e3621b"/>
 <approved hash="19,1,8636e847e092b5bf"/>
 <approved hash="19,1,ade08954c7d5bf89"/>
 <approved hash="19,1,d750ca85cf7babcd"/>
-<approved hash="19,1,1f5bd5ef366e2eaf"/>
 <approved hash="19,1,7d1d583cb4b193a7"/>
+<approved hash="19,1,1f5bd5ef366e2eaf"/>
 <approved hash="19,1,e1eb8166ceb89e41"/>
-<approved hash="19,1,1b60e3960a0307f4"/>
 <approved hash="19,1,845b9c9884116bd4"/>
 <approved hash="19,1,77fb02b7f9ca8789"/>
+<approved hash="19,1,1b60e3960a0307f4"/>
 <approved hash="19,1,82fed2d8c0bcd799"/>
 <approved hash="19,1,29d5a018fc1138c9"/>
 <approved hash="19,1,43ae6ad3cf1d1082"/>
-<approved hash="19,1,746ac4c797c6ab26"/>
-<approved hash="19,1,ec1b14aebf1a1bf0"/>
-<approved hash="19,1,ec1b14aebf1a1bf0"/>
+<approved hash="19,1,3c6c26d9fabf0758"/>
+<approved hash="19,1,d94f0070e639e6f0"/>
 <approved hash="19,1,bba1159345bfd0d1"/>
 <approved hash="19,1,ec1b14aebf1a1bf0"/>
+<approved hash="19,1,2de3e691f79fb4bb"/>
+<approved hash="19,1,ec1b14aebf1a1bf0"/>
+<approved hash="19,1,ec1b14aebf1a1bf0"/>
+<approved hash="19,1,ec1b14aebf1a1bf0"/>
+<approved hash="19,1,746ac4c797c6ab26"/>
 <approved hash="19,1,dfd9b680440b37e7"/>
 <approved hash="19,1,9ace8e350c3a8fa7"/>
-<approved hash="19,1,ec1b14aebf1a1bf0"/>
-<approved hash="19,1,2de3e691f79fb4bb"/>
-<approved hash="19,1,d4c690d839d28535"/>
-<approved hash="19,1,4d27bbe78811ebd5"/>
 <approved hash="19,1,ffde12f04c4ef629"/>
 <approved hash="19,1,e28536f19c28aca5"/>
+<approved hash="19,1,4d27bbe78811ebd5"/>
+<approved hash="19,1,d4c690d839d28535"/>
 <approved hash="19,1,5540c7d50beab648"/>
 <approved hash="19,1,f070f16d5e6595bc"/>
 <approved hash="19,1,95fd5d808db05b38"/>
 <approved hash="5,1,ad2358ecc7801728"/>
-<approved hash="19,1,3c6c26d9fabf0758"/>
-<approved hash="19,1,d94f0070e639e6f0"/>
+<approved hash="19,1,6ee47e241de0530d"/>
+<approved hash="19,1,6ee47e241de0530d"/>
+<approved hash="19,1,6ee47e241de0530d"/>
+<approved hash="19,1,6ee47e241de0530d"/>
 <approved hash="19,1,ca5bf9cea0629078"/>
-<approved hash="19,1,6ee47e241de0530d"/>
-<approved hash="19,1,6ee47e241de0530d"/>
-<approved hash="19,1,6ee47e241de0530d"/>
-<approved hash="19,1,6ee47e241de0530d"/>
 <approved hash="19,1,fa53d0dce07b4313"/>
 <approved hash="19,1,d9603c72ea121429"/>
 <approved hash="5,1,9d0321067c642e12"/>
-<approved hash="5,1,aca659652364103f"/>
-<approved hash="5,1,d0e10c037adca6e5"/>
-<approved hash="5,1,d0e10c037adca6e5"/>
 <approved hash="19,1,c7daa9af1e6e4b47"/>
 <approved hash="5,1,d0e10c037adca6e5"/>
 <approved hash="5,1,d0e10c037adca6e5"/>
-<approved hash="19,1,eb86efa48db3a7d4"/>
+<approved hash="5,1,d0e10c037adca6e5"/>
+<approved hash="5,1,d0e10c037adca6e5"/>
+<approved hash="5,1,aca659652364103f"/>
 <approved hash="19,1,c63c97fae1b7fa74"/>
+<approved hash="19,1,eb86efa48db3a7d4"/>
 <approved hash="19,1,cc73c289ea3076b9"/>
-<approved hash="19,1,53e8bf32508da198"/>
-<approved hash="19,1,28ded6578918492a"/>
-<approved hash="19,1,2ccefdf68c23fd20"/>
-<approved hash="19,1,f78611a640ed06f6"/>
-<approved hash="19,1,a72b97c2b494be1d"/>
-<approved hash="19,1,e9b1eae0dc3911a8"/>
-<approved hash="19,1,94f7e5eb9a200922"/>
-<approved hash="19,1,4a3407f8391e9ad9"/>
-<approved hash="19,1,caa40dc4bde6dabd"/>
-<approved hash="19,1,f84e14707ed0062d"/>
 <approved hash="19,1,9d652dfaebf02cfd"/>
+<approved hash="19,1,f84e14707ed0062d"/>
 <approved hash="19,1,067eccab85bfb738"/>
 <approved hash="19,1,c41904e9bfc0df0b"/>
 <approved hash="19,1,7174cdcf411a03a1"/>
+<approved hash="19,1,4a3407f8391e9ad9"/>
+<approved hash="19,1,caa40dc4bde6dabd"/>
+<approved hash="19,1,f78611a640ed06f6"/>
+<approved hash="19,1,a72b97c2b494be1d"/>
+<approved hash="19,1,28ded6578918492a"/>
+<approved hash="19,1,53e8bf32508da198"/>
+<approved hash="19,1,2ccefdf68c23fd20"/>
+<approved hash="19,1,94f7e5eb9a200922"/>
+<approved hash="19,1,e9b1eae0dc3911a8"/>
 <approved hash="19,1,45189f5cfbb5d855"/>
 <approved hash="19,1,2afddb9958149310"/>
-<approved hash="19,1,8784c2e90f1a8ad2"/>
 <approved hash="19,1,88e139bcfb4a588e"/>
+<approved hash="19,1,8784c2e90f1a8ad2"/>
 <approved hash="5,1,36779f8e2c286c88"/>
 <approved hash="19,1,f1e53b0ed73658e8"/>
 <approved hash="19,1,42228e368e066b0b"/>
 <approved hash="19,1,7b8161eb60ab7ac1"/>
 <approved hash="19,1,caa42be79d0b057a"/>
 <approved hash="19,1,49b78a8d68831fc0"/>
+<approved hash="19,1,952b46e47b8dfe46"/>
+<approved hash="19,1,830ae15d97e62ddb"/>
 <approved hash="19,1,b6d9665c2a035d8f"/>
 <approved hash="19,1,110a6a1827cf8399"/>
 <approved hash="19,1,7865053a7f0d690e"/>
-<approved hash="19,1,952b46e47b8dfe46"/>
-<approved hash="19,1,830ae15d97e62ddb"/>
 <approved hash="19,1,2771f22c8a30570a"/>
 <approved hash="19,1,f3f89aac4ad591ac"/>
 <approved hash="19,1,f7dd8ae379dc6517"/>
-<approved hash="19,1,3238f49327902cf5"/>
 <approved hash="19,1,43564728c1ce4c2f"/>
+<approved hash="19,1,3238f49327902cf5"/>
 <approved hash="19,1,50669e65ff77b60b"/>
 <approved hash="19,1,8d4c2a262a078f6d"/>
 <approved hash="19,1,555e5a9c5cd80202"/>
@@ -38134,25 +38160,25 @@ Your PCBWay Team
 <approved hash="5,1,06c34106edcf6368"/>
 <approved hash="5,1,2447cb7ecf050bc8"/>
 <approved hash="5,1,704570413bc73bc3"/>
-<approved hash="5,16,14dd4ea05944664b"/>
-<approved hash="5,16,9eb29e1b045d795b"/>
 <approved hash="5,16,d8420e37d9846a83"/>
-<approved hash="5,16,d27c5eeb044b7a43"/>
 <approved hash="5,16,11641efd037b760d"/>
+<approved hash="5,16,14dd4ea05944664b"/>
+<approved hash="5,16,d27c5eeb044b7a43"/>
+<approved hash="5,16,9eb29e1b045d795b"/>
 <approved hash="5,16,c400924fd340f871"/>
+<approved hash="5,16,f6eb6b6b064de570"/>
 <approved hash="5,16,0989d3be5300f449"/>
 <approved hash="5,16,39232b79057de94a"/>
-<approved hash="5,16,f6eb6b6b064de570"/>
 <approved hash="5,16,7d3dea69054bef82"/>
 <approved hash="5,16,100e2679fe046a88"/>
 <approved hash="5,16,39a0363d10fb6589"/>
 <approved hash="5,16,dc9166ee7ec46640"/>
-<approved hash="5,16,fab8762b17cb69c7"/>
 <approved hash="5,16,b676b6db17dd6adf"/>
+<approved hash="5,16,fab8762b17cb69c7"/>
 <approved hash="5,16,33cdebff8180f44c"/>
-<approved hash="5,16,a4f933a915cbff06"/>
 <approved hash="5,16,fe44aa0e01c0f874"/>
 <approved hash="5,16,e0e7f2b915fdf9ce"/>
+<approved hash="5,16,a4f933a915cbff06"/>
 <approved hash="5,16,2f2fb2ab16cdf5f4"/>
 <approved hash="5,16,2bca7fb99d846a94"/>
 <approved hash="5,16,e7553f2e1d44665c"/>
